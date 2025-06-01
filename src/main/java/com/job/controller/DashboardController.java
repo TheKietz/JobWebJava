@@ -4,10 +4,21 @@
  */
 package com.job.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
 /**
  *
- * @author ADMIN
+ * @author 11090
  */
+@Controller
 public class DashboardController {
-    
+    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    public ModelAndView dashboardPage() {
+        ModelAndView mav = new ModelAndView("admin/layout/main");
+        mav.addObject("body", "/WEB-INF/views/admin/dashboard.jsp");
+        return mav;
+    }
 }
