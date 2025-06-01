@@ -1,1 +1,7 @@
+com\job\model\User.class
+com\job\model\Candidate.class
+com\job\model\Application.class
+com\job\model\Employer.class
+com\job\model\Job.class
+com\job\controller\UserController.class
 com\job\controller\DashboardController.class
