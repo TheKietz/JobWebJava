@@ -4,26 +4,29 @@
  */
 package com.job.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author 11090
  */
 public class User {
-    private int userID;    
+
+    private Integer userID;
     private String fullName;
     private String email;
     private String passwordHash;
     private String role;
-    private java.util.Date createdAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate createdAt;
 
     // Getters and Setters
-    public int getUserID() {
+    public Integer getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(Integer userID) {
         this.userID = userID;
     }
 
@@ -59,12 +62,23 @@ public class User {
         this.role = role;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public User() {
+    }
+
+    public User(Integer userID, String fullName, String email, String passwordHash, String role, LocalDate createdAt) {
+        this.userID = userID;
+        this.fullName = fullName;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.role = role;
         this.createdAt = createdAt;
     }
 }
-
