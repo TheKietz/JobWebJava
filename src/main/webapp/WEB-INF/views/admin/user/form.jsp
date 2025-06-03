@@ -12,7 +12,7 @@
                         <div class="card-title">Vertical Form</div>
                         <hr>                    
 
-                        <form:form method="post" modelAttribute="user" action="${pageContext.request.contextPath}/users/save">
+                        <form:form method="post" modelAttribute="user" action="${pageContext.request.contextPath}/admin/users/save">
                             <form:hidden path="userID"/> 
                             <div class="form-group">
                                 <label for="fullName">Name</label>
@@ -31,7 +31,7 @@
 
                             <div class="form-group">
                                 <label for="createdAt">Created At</label>
-                                <form:input path="createdAt" cssClass="form-control" id="createdAt" placeholder="Enter Created At" readonly="true"/>
+                                <form:input path="createdAt" cssClass="form-control" id="createdAt" placeholder="Enter Created At" value="${createAt}" readonly="true"/>
                             </div>
 
                             <div class="form-group">

@@ -4,7 +4,17 @@
 <div class="content-wrapper">
     <div class="container-fluid">
         <div class="card-body">
-            <h5 class="card-title">Basic Table</h5>
+            <div class="row">
+                <div class="col-xm-3">
+                    <h5 class="card-title">Customer List</h5>
+                </div>
+                <div class="col-md-4">
+                    <a href="${pageContext.request.contextPath}/admin/users/add" target="target" class="button-link btn-link">
+                        Add new user
+                    </a>
+                </div>
+                
+            </div>
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -14,6 +24,7 @@
                             <th scope="col">Email</th>                            
                             <th scope="col">Role</th>
                             <th scope="col">Created At</th>
+                            <th scope="col">Function</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -25,8 +36,8 @@
                                 <td>${c.role}</td>                                
                                 <td>${c.createdAt}</td>                        
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/users/edit/${c.userID}" class="btn btn-primary btn-sm">Sửa</a>
-                                    <a href="${pageContext.request.contextPath}/users/delete/${c.userID}" class="btn btn-danger btn-sm"
+                                    <a href="${pageContext.request.contextPath}/admin/users/edit/${c.userID}" class="btn btn-primary btn-sm">Sửa</a>
+                                    <a href="${pageContext.request.contextPath}/admin/users/delete/${c.userID}" class="btn btn-danger btn-sm"
                                        onclick="return confirm('Bạn có chắc muốn xóa khách hàng này?')">Xóa</a>
                                 </td>
                             </tr>

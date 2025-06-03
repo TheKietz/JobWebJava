@@ -46,60 +46,16 @@
                 <ul class="sidebar-menu do-nicescrol">
                     <li class="sidebar-header">MAIN NAVIGATION</li>
                     <li>
-                        <a href="home">
+                        <a href="${pageContext.request.contextPath}/dashboard">
                             <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
                         </a>
                     </li>     
                     <li>
-                        <a href="customers">
-                            <i class="zmdi zmdi-account"></i> <span>Customer</span>
+                        <a href="${pageContext.request.contextPath}/admin/users">
+                            <i class="zmdi zmdi-account"></i> <span>User</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="employees">
-                            <i class="zmdi zmdi-account-box-mail"></i> <span>Employee</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="inventories">
-                            <i class="zmdi zmdi-home"></i> <span>Inventory</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="index.html">
-                            <i class="zmdi zmdi-account"></i> <span>Invoice</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="menuitems">
-                            <i class="zmdi zmdi-account"></i> <span>MenuItem</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="orders">
-                            <i class="zmdi zmdi-account"></i> <span>Order</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="orderdetails">
-                            <i class="zmdi zmdi-account"></i> <span>Order Detail</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="reservations">
-                            <i class="zmdi zmdi-account"></i> <span>Reservation</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="supplier">
-                            <i class="zmdi zmdi-account"></i> <span>Supplier</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="table">
-                            <i class="zmdi zmdi-account"></i> <span>Table</span>
-                        </a>
-                    </li>
+                    
                     <li>
                         <a href="login" target="_blank">
                             <i class="zmdi zmdi-lock"></i> <span>Login</span>
