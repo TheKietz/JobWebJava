@@ -14,24 +14,27 @@
 
                         <form:form method="post" modelAttribute="user" action="${pageContext.request.contextPath}/admin/users/save">
                             <form:hidden path="userID"/> 
+                            <form:hidden path="createdAt"/>
                             <div class="form-group">
                                 <label for="fullName">Name</label>
                                 <form:input path="fullName" cssClass="form-control" id="fullName" placeholder="Enter Your Name"/>
+                                <form:errors path="fullName" cssClass="text-danger"/>
                             </div>
 
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <form:input path="email" cssClass="form-control" id="email" placeholder="Enter Your Email Address"/>
+                                <form:errors path="email" cssClass="text-danger"/>
                             </div>                            
-
+                            <div class="form-group">
+                                <label for="passwordHash">Password</label>
+                                <form:password path="passwordHash" cssClass="form-control" id="passwordHash" placeholder="Enter Your Password"/>
+                                <form:errors path="passwordHash" cssClass="text-danger"/>
+                            </div>
                             <div class="form-group">
                                 <label for="role">Role</label>
                                 <form:input path="role" cssClass="form-control" id="role" placeholder="Enter Role"/>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="createdAt">Created At</label>
-                                <form:input path="createdAt" cssClass="form-control" id="createdAt" placeholder="Enter Created At" value="${createAt}" readonly="true"/>
+                                <form:errors path="role" cssClass="text-danger"/>
                             </div>
 
                             <div class="form-group">

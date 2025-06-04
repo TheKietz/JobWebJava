@@ -28,11 +28,10 @@ public class User {
     private String passwordHash;
 
     @NotBlank(message = "Vai trò không được để trống")
-    @Pattern(regexp = "USER|ADMIN", message = "Vai trò chỉ có thể là USER hoặc ADMIN")
+    @Pattern(regexp = "(?i)CANDIDATE|EMPLOYER|ADMIN", message = "Vai trò chỉ có thể là USER hoặc ADMIN")
     private String role;
 
-    @PastOrPresent(message = "Ngày tạo không được là tương lai")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "MM-dd-yyyy")
     private LocalDate createdAt;
 
     // Getters and Setters
@@ -73,7 +72,7 @@ public class User {
     }
 
     public void setRole(String role) {
-        this.role = role;
+        this.role = (role != null) ? role.toUpperCase() : null;
     }
 
     public LocalDate getCreatedAt() {

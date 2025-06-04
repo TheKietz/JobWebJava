@@ -43,7 +43,15 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute("user") User user) {
+    public String save(@Valid @ModelAttribute("user") User user, 
+                        BindingResult result,
+                        Model model) 
+    {
+        if (result.hasErrors()) {
+        model.addAttribute("user", user);
+        model.addAttribute("body", "/WEB-INF/views/admin/user/form.jsp");
+        return "admin/layout/main";
+    }
         if (user.getUserID() == null) {
             user.setCreatedAt(LocalDate.now());
             userService.add(user);

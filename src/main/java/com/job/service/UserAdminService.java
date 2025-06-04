@@ -25,15 +25,15 @@ public class UserAdminService {
     @PostConstruct
     public void init() {
         add(new User(
-            1, "Nguyen Van A", "a.nguyen@example.com", "hash123A", "Candidate",date));
+            1, "Nguyen Van A", "a.nguyen@example.com", "hash123A", "CANDIDATE",date));
         add(new User(
-            2, "Tran Thi B", "b.tran@example.com", "hash456B", "Employer", LocalDate.now()));
+            2, "Tran Thi B", "b.tran@example.com", "hash456B", "EMPLOYER", LocalDate.now()));
         add(new User(
-            3, "Le Van C", "c.le@example.com", "hash789C", "Candidate", LocalDate.now()));
+            3, "Le Van C", "c.le@example.com", "hash789C", "CANDIDATE", LocalDate.now()));
         add(new User(
-            4, "Pham Thi D", "d.pham@example.com", "hashABC1", "Admin", LocalDate.now()));
+            4, "Pham Thi D", "d.pham@example.com", "hashABC1", "ADMIN", LocalDate.now()));
         add(new User(
-            5, "Hoang Van E", "e.hoang@example.com", "hashXYZ9", "Employer", LocalDate.now()));
+            5, "Hoang Van E", "e.hoang@example.com", "hashXYZ9", "EMPLOYER", LocalDate.now()));
     }
     
     public List<User> findAll() {
