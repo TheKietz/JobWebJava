@@ -4,7 +4,12 @@
  */
 package com.job.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -12,11 +17,25 @@ import java.util.Date;
  */
 public class Application {
     private int applicationID;
+
     private int candidateID;
+
     private int jobID;
+
+    @NotBlank(message = "Thư xin việc không được để trống")
+    @Size(min = 10, max = 2000, message = "Thư xin việc phải từ 10 đến 2000 ký tự")
     private String coverLetter;
+
+    @NotBlank(message = "URL CV không được để trống")
+    @Pattern(regexp = "^(https?://)?(www\\.)?.+\\.(pdf|doc|docx)$", message = "URL CV không hợp lệ")
     private String resumeUrl;
-    private java.util.Date appliedAt;
+
+    @PastOrPresent(message = "Ngày nộp không được ở tương lai")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date appliedAt;
+
+    @NotBlank(message = "Trạng thái không được để trống")
+    @Pattern(regexp = "Pending|Reviewed|Accepted|Rejected", message = "Trạng thái không hợp lệ")
     private String status;
 
     // Getters and Setters

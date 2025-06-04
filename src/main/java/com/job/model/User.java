@@ -6,7 +6,7 @@ package com.job.model;
 
 import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
-
+import jakarta.validation.constraints.*;
 /**
  *
  * @author 11090
@@ -14,10 +14,24 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class User {
 
     private Integer userID;
+
+    @NotBlank(message = "Họ tên không được để trống")
+    @Size(min = 2, max = 50, message = "Họ tên phải từ 2 đến 50 ký tự")
     private String fullName;
+
+    @NotBlank(message = "Email không được để trống")
+    @Email(message = "Email không hợp lệ")
     private String email;
+
+    @NotBlank(message = "Mật khẩu không được để trống")
+    @Size(min = 6, message = "Mật khẩu phải có ít nhất 6 ký tự")
     private String passwordHash;
+
+    @NotBlank(message = "Vai trò không được để trống")
+    @Pattern(regexp = "USER|ADMIN", message = "Vai trò chỉ có thể là USER hoặc ADMIN")
     private String role;
+
+    @PastOrPresent(message = "Ngày tạo không được là tương lai")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate createdAt;
 

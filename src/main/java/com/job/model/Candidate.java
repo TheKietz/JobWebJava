@@ -4,6 +4,10 @@
  */
 package com.job.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 /**
  *
  * @author 11090
@@ -11,9 +15,17 @@ package com.job.model;
 public class Candidate {
 
     private int candidateID;
+
     private int userID;
+
+    @NotBlank(message = "URL CV không được để trống")
+    @Pattern(regexp = "^(https?://)?(www\\.)?.+\\.(pdf|doc|docx)$", message = "URL CV không hợp lệ")
     private String resumeUrl;
+
+    @Size(max = 1000, message = "Tiểu sử không được quá 1000 ký tự")
     private String bio;
+
+    @Size(max = 500, message = "Kỹ năng không được quá 500 ký tự")
     private String skills;
 
     // Getters and Setters

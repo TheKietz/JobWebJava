@@ -4,17 +4,33 @@
  */
 package com.job.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 /**
  *
  * @author 11090
  */
 public class Employer {
     private int employerID;
+
     private int userID;
+
+    @NotBlank(message = "Tên công ty không được để trống")
+    @Size(min = 2, max = 100, message = "Tên công ty phải từ 2 đến 100 ký tự")
     private String companyName;
+
+    @NotBlank(message = "Website không được để trống")
+    @Pattern(regexp = "^(https?://)?(www\\.)?[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}.*$", message = "Website không hợp lệ")
     private String website;
+
+    @Size(max = 1000, message = "Mô tả không được quá 1000 ký tự")
     private String description;
+
+    @Pattern(regexp = "^(https?://)?(www\\.)?[a-zA-Z0-9./_-]+\\.(jpg|jpeg|png|gif)$", message = "URL ảnh logo không hợp lệ")
     private String logoUrl;
+
 
     // Getters and Setters
 

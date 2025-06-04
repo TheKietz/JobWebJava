@@ -4,19 +4,41 @@
  */
 package com.job.model;
 import java.util.Date;
+import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
 /**
  *
  * @author 11090
  */
 public class Job {
     private int jobID;
+
     private int employerID;
+
+    @NotBlank(message = "Tiêu đề không được để trống")
+    @Size(min = 3, max = 100, message = "Tiêu đề phải từ 3 đến 100 ký tự")
     private String title;
+
+    @NotBlank(message = "Mô tả công việc không được để trống")
+    @Size(min = 10, message = "Mô tả phải có ít nhất 10 ký tự")
     private String description;
+
+    @NotBlank(message = "Địa điểm không được để trống")
     private String location;
+
+    @NotBlank(message = "Loại công việc không được để trống")
+    @Pattern(regexp = "Full-Time|Part-Time|Internship|Contract", message = "Loại công việc không hợp lệ")
     private String jobType;
+
+    @NotBlank(message = "Mức lương không được để trống")
     private String salaryRange;
+
+    @PastOrPresent(message = "Ngày đăng không được ở tương lai")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date postedAt;
+
+    @Future(message = "Ngày hết hạn phải ở tương lai")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expiryDate;
 
     // Getters and Setters
