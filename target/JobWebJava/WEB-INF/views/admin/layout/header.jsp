@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +56,7 @@
                             <i class="zmdi zmdi-account"></i> <span>User</span>
                         </a>
                     </li>
-                    
+
                     <li>
                         <a href="login" target="_blank">
                             <i class="zmdi zmdi-lock"></i> <span>Login</span>
@@ -82,11 +83,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <form class="search-bar">
-                                <input type="text" class="form-control" placeholder="Enter keywords">
-                                <a href="javascript:void();"><i class="icon-magnifier"></i></a>
+                            <form class="search-bar" action="${pageContext.request.contextPath}/admin/users" method="get">
+                                <input type="hidden" name="page" value="1">
+                                <input type="hidden" name="size" value="${pageSize}">
+                                <input type="search" class="form-control" name="keyword" aria-label="Search" placeholder="Enter keywords" value="${fn:escapeXml(keyword)}">
+                                <a href="javascript:void();" onclick="this.closest('form').submit();"><i class="icon-magnifier"></i></a>
                             </form>
                         </li>
+
                     </ul>
 
                     <ul class="navbar-nav align-items-center right-nav-link">

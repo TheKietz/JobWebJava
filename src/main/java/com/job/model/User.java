@@ -23,12 +23,10 @@ public class User {
     @Email(message = "Email không hợp lệ")
     private String email;
 
-    @NotBlank(message = "Mật khẩu không được để trống")
-    @Size(min = 6, message = "Mật khẩu phải có ít nhất 6 ký tự")
     private String passwordHash;
 
     @NotBlank(message = "Vai trò không được để trống")
-    @Pattern(regexp = "(?i)CANDIDATE|EMPLOYER|ADMIN", message = "Vai trò chỉ có thể là USER hoặc ADMIN")
+    @Pattern(regexp = "(?i)CANDIDATE|EMPLOYER|ADMIN", message = "Vai trò chỉ có thể là CANDIDATE,EMPLOYER hoặc ADMIN")
     private String role;
 
     @DateTimeFormat(pattern = "MM-dd-yyyy")
