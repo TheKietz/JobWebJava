@@ -14,9 +14,9 @@ import jakarta.validation.constraints.Size;
  */
 public class Candidate {
 
-    private int candidateID;
+    private Integer candidateID;
 
-    private int userID;
+    private Integer userID;
 
     @NotBlank(message = "URL CV không được để trống")
     @Pattern(regexp = "^(https?://)?(www\\.)?.+\\.(pdf|doc|docx)$", message = "URL CV không hợp lệ")
@@ -28,13 +28,23 @@ public class Candidate {
     @Size(max = 500, message = "Kỹ năng không được quá 500 ký tự")
     private String skills;
 
+    public Candidate(){
+        
+    }
+    public Candidate(Integer candidateID, Integer userID, String resumeUrl, String bio, String skills){
+        this.userID = userID;
+        this.candidateID = candidateID;
+        this.resumeUrl = resumeUrl;
+        this.bio = bio;
+        this.skills = skills;
+    }
     // Getters and Setters
 
-    public int getCandidateID() {
+    public Integer getCandidateID() {
         return candidateID;
     }
 
-    public void setCandidateID(int candidateID) {
+    public void setCandidateID(Integer candidateID) {
         this.candidateID = candidateID;
     }
 
@@ -69,4 +79,5 @@ public class Candidate {
     public void setSkills(String skills) {
         this.skills = skills;
     }
+    
 }

@@ -13,32 +13,40 @@ import jakarta.validation.constraints.Size;
  * @author 11090
  */
 public class Employer {
-    private int employerID;
+
+    private Integer employerID;
 
     private int userID;
 
     @NotBlank(message = "Tên công ty không được để trống")
-    @Size(min = 2, max = 100, message = "Tên công ty phải từ 2 đến 100 ký tự")
+    @Size(
+            min = 2,
+            max = 100, 
+            message = "Tên công ty phải từ 2 đến 100 ký tự")
     private String companyName;
 
     @NotBlank(message = "Website không được để trống")
-    @Pattern(regexp = "^(https?://)?(www\\.)?[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}.*$", message = "Website không hợp lệ")
+    @Pattern(
+            regexp = "^(https?://)?(www\\.)?[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}.*$", 
+            message = "Website không hợp lệ")
     private String website;
 
     @Size(max = 1000, message = "Mô tả không được quá 1000 ký tự")
     private String description;
 
-    @Pattern(regexp = "^(https?://)?(www\\.)?[a-zA-Z0-9./_-]+\\.(jpg|jpeg|png|gif)$", message = "URL ảnh logo không hợp lệ")
+    @Pattern(
+            regexp = "^https?://.+\\.(jpg|jpeg|png|gif)$",
+            message = "URL ảnh logo không hợp lệ"
+          )
+
     private String logoUrl;
 
-
     // Getters and Setters
-
-    public int getEmployerID() {
+    public Integer getEmployerID() {
         return employerID;
     }
 
-    public void setEmployerID(int employerID) {
+    public void setEmployerID(Integer employerID) {
         this.employerID = employerID;
     }
 
@@ -81,5 +89,17 @@ public class Employer {
     public void setLogoUrl(String logoUrl) {
         this.logoUrl = logoUrl;
     }
-}
 
+    public Employer() {
+
+    }
+
+    public Employer(int employerID, int userID, String companyName, String website, String description, String logoUrl) {
+        this.employerID = employerID;
+        this.userID = userID;
+        this.companyName = companyName;
+        this.website = website;
+        this.description = description;
+        this.logoUrl = logoUrl;
+    }
+}

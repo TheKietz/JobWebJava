@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class DashboardController {
-    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/dashboard", method = RequestMethod.GET)
     public ModelAndView dashboardPage() {
         ModelAndView mav = new ModelAndView("admin/layout/main");
         mav.addObject("body", "/WEB-INF/views/admin/dashboard.jsp");
