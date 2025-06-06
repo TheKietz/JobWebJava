@@ -1,8 +1,10 @@
 com\job\model\User.class
 com\job\service\EmployerAdminService.class
+com\job\controller\LoginAdminController.class
 com\job\model\Application.class
 com\job\controller\CandidateAdminController.class
 com\job\model\Employer.class
+com\job\controller\LoginAdminController$LoginForm.class
 com\job\model\Candidate.class
 com\job\service\CandidateAdminService.class
 com\job\controller\UserAdminController.class

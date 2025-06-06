@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,7 +23,7 @@ public class UserAdminService {
 
     private final List<User> UserList = new ArrayList<>();
     private final AtomicInteger idGenerator = new AtomicInteger(1);
-    
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PostConstruct
     public void init() {
@@ -105,5 +106,15 @@ public class UserAdminService {
 
     public int countPages(List<User> list, int size) {
         return (int) Math.ceil((double) list.size() / size);
+    }
+        public User findByEmail(String email) {
+        return UserList.stream()
+                .filter(u -> u.getEmail().equalsIgnoreCase(email))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public boolean verifyPassword(String rawPassword, String hashedPassword) {
+        return passwordEncoder.matches(rawPassword, hashedPassword);
     }
 }

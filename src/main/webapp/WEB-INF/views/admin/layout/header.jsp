@@ -88,7 +88,7 @@
 
 
                     <li>
-                        <a href="login" target="_blank">
+                        <a href="${pageContext.request.contextPath}/admin/login" target="_blank">
                             <i class="zmdi zmdi-lock"></i> <span>Login</span>
                         </a>
                     </li>       
