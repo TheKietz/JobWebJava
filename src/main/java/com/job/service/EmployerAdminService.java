@@ -12,11 +12,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
-
-/**
- *
- * @author 11090
- */
 @Service
 public class EmployerAdminService {
     private final List<Employer> EmployerList = new ArrayList<>();

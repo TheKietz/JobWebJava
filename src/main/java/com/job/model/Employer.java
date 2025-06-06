@@ -8,10 +8,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-/**
- *
- * @author 11090
- */
 public class Employer {
 
     private Integer employerID;

@@ -8,10 +8,7 @@ import jakarta.persistence.Entity;
 import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.validation.constraints.*;
-/**
- *
- * @author 11090
- */
+
 @Entity
 public class User {
 

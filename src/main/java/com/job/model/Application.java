@@ -11,10 +11,6 @@ import jakarta.validation.constraints.Size;
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
-/**
- *
- * @author 11090
- */
 public class Application {
     private int applicationID;
 

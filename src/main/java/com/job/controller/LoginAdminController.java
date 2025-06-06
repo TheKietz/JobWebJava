@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/admin")
@@ -32,17 +31,27 @@ public class LoginAdminController {
                                BindingResult result,
                                HttpSession session,
                                Model model) {
+        System.out.println("Login attempt: email=" + loginForm.getEmail() + ", password=" + loginForm.getPassword());
         if (result.hasErrors()) {
+            System.out.println("Validation errors: " + result.getAllErrors());
             return "admin/login";
         }
 
         User user = userService.findByEmail(loginForm.getEmail());
-        if (user == null || !userService.verifyPassword(loginForm.getPassword(), user.getPasswordHash())) {
+        if (user == null) {
+            System.out.println("User not found for email: " + loginForm.getEmail());
+            model.addAttribute("error", "Email hoặc mật khẩu không đúng.");
+            return "admin/login";
+        }
+
+        if (!userService.verifyPassword(loginForm.getPassword(), user.getPasswordHash())) {
+            System.out.println("Password verification failed for email: " + loginForm.getEmail());
             model.addAttribute("error", "Email hoặc mật khẩu không đúng.");
             return "admin/login";
         }
 
         if (!"ADMIN".equalsIgnoreCase(user.getRole())) {
+            System.out.println("Non-admin role: " + user.getRole() + " for email: " + loginForm.getEmail());
             model.addAttribute("error", "Bạn không có quyền truy cập khu vực quản trị.");
             return "admin/login";
         }

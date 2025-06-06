@@ -11,11 +11,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.stereotype.Service;
 
-
-/**
- *
- * @author 11090
- */
 @Service
 public class CandidateAdminService {
 
