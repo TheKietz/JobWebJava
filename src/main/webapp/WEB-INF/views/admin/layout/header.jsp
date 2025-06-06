@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <meta name="description" content=""/>
         <meta name="author" content=""/>
-        <title>Dashtreme Admin - Free Dashboard for Bootstrap 4 by Codervent</title>
+        <title>Admin - Kiet Job Portal</title>
         <!-- loader-->
         <link href="<c:url value='/template/assets/css/pace.min.css'/>" rel="stylesheet"/>
         <script src="<c:url value='/template/assets/js/pace.min.js'/>"></script>
@@ -39,7 +39,7 @@
             <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
                 <div class="brand-logo">
                     <a href="index.html">
-                        <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
+                        <img src="${pageContext.request.contextPath}/template/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
                         <h5 class="logo-text">Dashtreme Admin</h5>
                     </a>
                 </div>

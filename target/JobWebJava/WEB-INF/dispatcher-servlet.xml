@@ -12,6 +12,7 @@
 
     <!-- Component Scan -->
     <context:component-scan base-package="com.job" />
+    <mvc:resources mapping="/template/**" location="/template/"/>
     <!-- View Resolver -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/" />
@@ -21,7 +22,5 @@
     <!-- Enable Spring MVC features -->
     <mvc:annotation-driven />
     <mvc:resources mapping="/template/**" location="/template/"/>
-    
-
 </beans>
 
