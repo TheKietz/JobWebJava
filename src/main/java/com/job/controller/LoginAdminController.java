@@ -4,6 +4,8 @@ import com.job.model.User;
 import com.job.service.UserAdminService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +33,6 @@ public class LoginAdminController {
                                BindingResult result,
                                HttpSession session,
                                Model model) {
-        System.out.println("Login attempt: email=" + loginForm.getEmail() + ", password=" + loginForm.getPassword());
         if (result.hasErrors()) {
             System.out.println("Validation errors: " + result.getAllErrors());
             return "admin/login";
@@ -45,13 +46,11 @@ public class LoginAdminController {
         }
 
         if (!userService.verifyPassword(loginForm.getPassword(), user.getPasswordHash())) {
-            System.out.println("Password verification failed for email: " + loginForm.getEmail());
             model.addAttribute("error", "Email hoặc mật khẩu không đúng.");
             return "admin/login";
         }
 
         if (!"ADMIN".equalsIgnoreCase(user.getRole())) {
-            System.out.println("Non-admin role: " + user.getRole() + " for email: " + loginForm.getEmail());
             model.addAttribute("error", "Bạn không có quyền truy cập khu vực quản trị.");
             return "admin/login";
         }
@@ -60,7 +59,7 @@ public class LoginAdminController {
         session.setAttribute("userRole", user.getRole());
         System.out.println("Admin logged in: userID=" + user.getUserID() + ", email=" + user.getEmail());
 
-        return "redirect:/admin/users";
+        return "redirect:/admin/dashboard";
     }
 
     @GetMapping("/logout")
@@ -71,8 +70,8 @@ public class LoginAdminController {
     }
 
     public static class LoginForm {
-        @jakarta.validation.constraints.NotBlank(message = "Email không được để trống")
-        @jakarta.validation.constraints.Email(message = "Email không hợp lệ")
+        @NotBlank(message = "Email không được để trống")
+        @Email(message = "Email không hợp lệ")
         private String email;
 
         @jakarta.validation.constraints.NotBlank(message = "Mật khẩu không được để trống")

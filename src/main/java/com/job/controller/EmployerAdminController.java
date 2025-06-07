@@ -47,12 +47,6 @@ public class EmployerAdminController {
         model.addAttribute("body", "/WEB-INF/views/admin/employer/list.jsp");
         return "admin/layout/main";
     }
-//    @GetMapping("/add")
-//    public String add(Model model) {
-//        model.addAttribute("employer", new Employer());
-//        model.addAttribute("body", "/WEB-INF/views/admin/employer/form.jsp");
-//        return "admin/layout/main";
-//    }
 
     // Chỉnh sửa
     @GetMapping("/edit/{id}")
@@ -91,59 +85,5 @@ public class EmployerAdminController {
         return "redirect:/admin/employers?page=1&size=" + size;
     }
 }
-    //    @GetMapping
-//    public String list(Model model,
-//            @RequestParam(value = "keyword", required = false) String keyword,
-//            @RequestParam(value = "page", defaultValue = "1") int page,
-//            @RequestParam(value = "size", defaultValue = "5") int size) {
-//        final String trimmedKeyword = (keyword != null) ? keyword.trim() : null;
-//        System.out.println("Request URL: /admin/employers?page=" + page + "&size=" + size + "&keyword=" + trimmedKeyword);
-//
-//        // Validate size
-//        size = Math.max(1, size);
-//        List<Employer> employers = employerService.search(trimmedKeyword);
-//        System.out.println("Search keyword: '" + trimmedKeyword + "', Filtered employers: " + employers.size());
-//
-//        // Validate page number
-//        int totalPages = employerService.countPages(employers, size);
-//        page = Math.max(1, Math.min(page, totalPages == 0 ? 1 : totalPages));
-//        List<Employer> pagedEmployers = employerService.getPage(employers, page, size);
-//        System.out.println("Page: " + page + ", Size: " + size + ", Paged employers: " + pagedEmployers.size());
-//        System.out.println("Total pages: " + totalPages);
-//        System.out.println("Paged employers content: " + pagedEmployers);
-//
-//        model.addAttribute("employers", pagedEmployers);
-//        model.addAttribute("keyword", keyword);
-//        model.addAttribute("currentPage", page);
-//        model.addAttribute("totalPages", totalPages);
-//        model.addAttribute("pageSize", size);
-//        model.addAttribute("body", "/WEB-INF/views/admin/employer/list.jsp");
-//        return "admin/layout/main";
-//    }
-
-//    @GetMapping("/add")
-//    public String add(Model model) {
-//        model.addAttribute("createAt", LocalDate.now());
-//        model.addAttribute("employer", new Employer());
-//        model.addAttribute("body", "/WEB-INF/views/admin/employer/form.jsp");
-//        return "admin/layout/main";
-//    }
-//    @PostMapping("/save")
-//    public String save(@Valid @ModelAttribute("employer") Employer employer,
-//            BindingResult result,
-//            Model model,
-//            @RequestParam(value = "size", defaultValue = "5") int size) {
-//        if (result.hasErrors()) {
-//            result.getAllErrors().forEach(error -> System.out.println("Validation error: " + error));
-//            model.addAttribute("employer", employer);
-//            model.addAttribute("body", "/WEB-INF/views/admin/employer/form.jsp");
-//            return "admin/layout/main";
-//        }
-//        if (employer.getEmployerID() == null) {
-//            employerService.add(employer);
-//        } else {
-//            employerService.update(employer);
-//        }
-//        return "redirect:/admin/employers?page=1&size=" + size;
-//    }
+    
 

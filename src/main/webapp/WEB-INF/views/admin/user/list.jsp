@@ -14,9 +14,7 @@
                         Add New Admin User
                     </a>
                 </div>
-                <div class="col-md-5 text-right">
-                    <!-- Logout Button -->
-                    <a href="${pageContext.request.contextPath}/admin/logout" class="btn btn-danger btn-sm mr-2">Đăng Xuất</a>
+                <div class="col-md-5 text-right">                    
                     <!-- Page Size Selector -->
                     <form action="${pageContext.request.contextPath}/user" method="get" class="form-inline d-inline">
                         <div class="form-group mr-2 mb-0 d-flex align-items-center">

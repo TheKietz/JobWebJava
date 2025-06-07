@@ -40,7 +40,6 @@ public class UserAdminController {
                        @RequestParam(value = "keyword", required = false) String keyword,
                        @RequestParam(value = "page", defaultValue = "1") int page,
                        @RequestParam(value = "size", defaultValue = "5") int size) {
-        // Check session
         if (session.getAttribute("loggedInUser") == null || !"ADMIN".equalsIgnoreCase((String) session.getAttribute("userRole"))) {
             System.out.println("Unauthorized access to /user/admin, redirecting to login");
             return "redirect:/admin/login";
@@ -164,7 +163,6 @@ public class UserAdminController {
             System.out.println("Unauthorized access to /user/delete/" + id + ", redirecting to login");
             return "redirect:/admin/login";
         }
-
         userService.deleteByID(id);
         return "redirect:/user";
     }
