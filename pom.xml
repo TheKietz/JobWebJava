@@ -13,6 +13,23 @@
     </properties>
 
     <dependencies>
+        <!-- Connnect MySQL -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>6.2.5</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.9.0</version> <!-- Or latest stable version -->
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version> <!-- or latest stable -->
+        </dependency>
         <!-- Spring Web MVC -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -22,8 +39,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>6.0.12</version>
+            <version>${spring.version}</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+            <version>6.3.1</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -67,12 +89,6 @@
             <artifactId>jakarta.annotation-api</artifactId>
             <version>2.1.1</version> <!-- Choose a suitable version -->
         </dependency>
-        
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>8.0.27</version> 
-        </dependency>
 
         <!-- Hibernate Validator (Jakarta Bean Validation Implementation) -->
         <dependency>
@@ -97,27 +113,31 @@
             <version>3.1.0</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>2.4.16</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>8.0.0</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
             <id>maven-central</id>
             <url>https://repo.maven.apache.org/maven2</url>
         </repository>
-        
         <repository>
             <id>eclipse-jakartaee</id>
             <url>https://repo.eclipse.org/content/groups/jakartaee</url>
         </repository>
-        
-        <repository>
-            <id>mysql-repo</id>
-            <url>https://repo.mysql.com/maven/</url>
-        </repository>
     </repositories>
- 
     <build>
         <finalName>JobWebJava</finalName>
-        
         <plugins>
             <!-- Maven Compiler Plugin -->
             <plugin>

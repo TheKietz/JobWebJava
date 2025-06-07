@@ -4,10 +4,9 @@
  */
 package com.job.service.client;
 
-/**
- *
- * @author truonghonhatminh
- */
+import org.springframework.stereotype.Service;
+
+@Service
 public class ApplicationService {
     
 }

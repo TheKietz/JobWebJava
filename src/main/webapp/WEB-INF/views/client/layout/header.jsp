@@ -11,19 +11,19 @@
         <link rel="manifest" href="site.webmanifest">
 		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
-		<!-- CSS here -->
-            <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-            <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-            <link rel="stylesheet" href="assets/css/flaticon.css">
-            <link rel="stylesheet" href="assets/css/price_rangs.css">
-            <link rel="stylesheet" href="assets/css/slicknav.css">
-            <link rel="stylesheet" href="assets/css/animate.min.css">
-            <link rel="stylesheet" href="assets/css/magnific-popup.css">
-            <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-            <link rel="stylesheet" href="assets/css/themify-icons.css">
-            <link rel="stylesheet" href="assets/css/slick.css">
-            <link rel="stylesheet" href="assets/css/nice-select.css">
-            <link rel="stylesheet" href="assets/css/style.css">
+        <!-- CSS here -->
+        <link rel="stylesheet" href="/template/assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/template/assets/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="/template/assets/css/flaticon.css">
+        <link rel="stylesheet" href="/template/assets/css/price_rangs.css">
+        <link rel="stylesheet" href="/template/assets/css/slicknav.css">
+        <link rel="stylesheet" href="/template/assets/css/animate.min.css">
+        <link rel="stylesheet" href="/template/assets/css/magnific-popup.css">
+        <link rel="stylesheet" href="/template/assets/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="/template/assets/css/themify-icons.css">
+        <link rel="stylesheet" href="/template/assets/css/slick.css">
+        <link rel="stylesheet" href="/template/assets/css/nice-select.css">
+        <link rel="stylesheet" href="/template/assets/css/style.css">
    </head>
    
     <body>
@@ -34,7 +34,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/logo.png" alt="">
+                    <img src="/template/assets/img/logo/logo.png" alt="">
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="/template/assets/images"><img src="assets/img/logo/logo.png" alt=""></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
