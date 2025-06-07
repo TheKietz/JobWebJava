@@ -33,8 +33,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="role">Role</label>
-                                <form:input path="role" cssClass="form-control" id="role" placeholder="Enter Role"/>
-                                <form:errors path="role" cssClass="text-danger"/>
+                                <form:input path="role" cssClass="form-control" id="role" value="ADMIN" readonly="true"/>
+                                
                             </div>
 
                             <div class="form-group">

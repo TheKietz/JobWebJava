@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-md-4">
                     <a href="${pageContext.request.contextPath}/admin/users/add" class="button-link btn-link">
-                        Add New User
+                        Add New Admin User
                     </a>
                 </div>
                 <div class="col-md-5 text-right">

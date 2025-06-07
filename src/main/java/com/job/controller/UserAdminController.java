@@ -100,6 +100,7 @@ public class UserAdminController {
     @GetMapping("/add")
     public String add(Model model) {
         model.addAttribute("createAt", LocalDate.now());
+        model.addAttribute("admin","ADMIN");
         model.addAttribute("user", new User());
         model.addAttribute("body", "/WEB-INF/views/admin/user/form.jsp");
         return "admin/layout/main";
@@ -118,6 +119,7 @@ public class UserAdminController {
         }
         if (user.getUserID() == null) {
             user.setCreatedAt(LocalDate.now());
+            user.setRole("ADMIN");
             user.setPasswordHash("defaultPassword123");
             userService.add(user);
         } else {

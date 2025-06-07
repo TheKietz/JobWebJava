@@ -10,5 +10,5 @@ com\job\service\CandidateAdminService.class
 com\job\controller\UserAdminController.class
 com\job\service\UserAdminService.class
 com\job\controller\EmployerAdminController.class
+com\job\controller\DashboardAdminController.class
 com\job\model\Job.class
-com\job\controller\DashboardController.class
