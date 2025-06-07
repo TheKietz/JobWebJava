@@ -67,6 +67,12 @@
             <artifactId>jakarta.annotation-api</artifactId>
             <version>2.1.1</version> <!-- Choose a suitable version -->
         </dependency>
+        
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.27</version> 
+        </dependency>
 
         <!-- Hibernate Validator (Jakarta Bean Validation Implementation) -->
         <dependency>
@@ -97,13 +103,21 @@
             <id>maven-central</id>
             <url>https://repo.maven.apache.org/maven2</url>
         </repository>
+        
         <repository>
             <id>eclipse-jakartaee</id>
             <url>https://repo.eclipse.org/content/groups/jakartaee</url>
         </repository>
+        
+        <repository>
+            <id>mysql-repo</id>
+            <url>https://repo.mysql.com/maven/</url>
+        </repository>
     </repositories>
+ 
     <build>
         <finalName>JobWebJava</finalName>
+        
         <plugins>
             <!-- Maven Compiler Plugin -->
             <plugin>

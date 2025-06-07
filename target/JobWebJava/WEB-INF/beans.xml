@@ -3,4 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_4_0.xsd"
        bean-discovery-mode="all">
+    
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://nozomi.proxy.rlwy.net:15661/railway?useSSL=false&serverTimezone=UTC"/>
+        <property name="username" value="root"/>
+        <property name="password" value="sZAjCrremyJWeCgabcTTlADZLksmLjEz"/>
+    </bean>
 </beans>
+

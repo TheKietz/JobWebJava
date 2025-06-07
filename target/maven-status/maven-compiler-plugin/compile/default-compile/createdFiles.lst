@@ -1,3 +1,4 @@
+<<<<<<< Upstream, based on origin/main
 com\job\model\User.class
 com\job\model\Candidate.class
 com\job\model\Application.class
@@ -6,3 +7,5 @@ com\job\service\UserAdminService.class
 com\job\model\Employer.class
 com\job\model\Job.class
 com\job\controller\DashboardController.class
+=======
+>>>>>>> 77bfa20 Add db connection in beans.xml
