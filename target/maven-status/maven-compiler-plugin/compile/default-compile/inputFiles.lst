@@ -3,11 +3,14 @@ D:\Web_Java\JobWebJava\src\main\java\com\job\model\Candidate.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\controller\EmployerAdminController.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\model\Job.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\service\EmployerAdminService.java
+D:\Web_Java\JobWebJava\src\main\java\com\job\controller\client\ApplicationController.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\model\User.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\controller\CandidateAdminController.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\controller\DashboardAdminController.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\controller\UserAdminController.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\service\CandidateAdminService.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\model\Employer.java
+D:\Web_Java\JobWebJava\src\main\java\com\job\service\client\ApplicationService.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\model\Application.java
+D:\Web_Java\JobWebJava\src\main\java\com\job\controller\client\HomeController.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\service\UserAdminService.java
