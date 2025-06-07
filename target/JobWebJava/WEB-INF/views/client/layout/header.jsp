@@ -11,20 +11,20 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="manifest" href="<c:url value='/template/site.webmanifest'/>">
-<link rel="shortcut icon" type="image/x-icon" href="<c:url value='/template/assets/img/favicon.ico'/>">
+<link rel="shortcut icon" type="image/x-icon" href="<c:url value='/template/assets1/img/favicon.ico'/>">
 
-<link rel="stylesheet" href="<c:url value='/template/assets/css/bootstrap.min.css'/>">
-<link rel="stylesheet" href="<c:url value='/template/assets/css/owl.carousel.min.css'/>">
-<link rel="stylesheet" href="<c:url value='/template/assets/css/flaticon.css'/>">
-<link rel="stylesheet" href="<c:url value='/template/assets/css/price_rangs.css'/>">
-<link rel="stylesheet" href="<c:url value='/template/assets/css/slicknav.css'/>">
-<link rel="stylesheet" href="<c:url value='/template/assets/css/animate.min.css'/>">
-<link rel="stylesheet" href="<c:url value='/template/assets/css/magnific-popup.css'/>">
-<link rel="stylesheet" href="<c:url value='/template/assets/css/fontawesome-all.min.css'/>">
-<link rel="stylesheet" href="<c:url value='/template/assets/css/themify-icons.css'/>">
-<link rel="stylesheet" href="<c:url value='/template/assets/css/slick.css'/>">
-<link rel="stylesheet" href="<c:url value='/template/assets/css/nice-select.css'/>">
-<link rel="stylesheet" href="<c:url value='/template/assets/css/style.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets1/css/bootstrap.min.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets1/css/owl.carousel.min.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets1/css/flaticon.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets1/css/price_rangs.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets1/css/slicknav.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets1/css/animate.min.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets1/css/magnific-popup.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets1/css/fontawesome-all.min.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets1/css/themify-icons.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets1/css/slick.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets1/css/nice-select.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets1/css/style.css'/>">
 
    </head>
    
@@ -36,7 +36,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/logo.png" alt="">
+                    <img src="/template/assets1/img/logo/logo.png" alt="">
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="index.html"><img src="<c:url value='/template/assets1/img/logo/logo.png'/>" alt=""></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">

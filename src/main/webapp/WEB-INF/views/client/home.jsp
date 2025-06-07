@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <main>
-    <!-- Slider Area Start-->
+<!--    Slider Area Start-->
     <div class="slider-area">
         <div class="slider-active">
-            <div class="single-slider slider-height d-flex align-items-center" data-background="assets/img/hero/h1_hero.jpg">
+            <div class="single-slider slider-height d-flex align-items-center" data-background="<c:url value='/template/assets1/img/hero/h1_hero.jpg'/>">
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-6 col-lg-9 col-md-10">
@@ -14,7 +14,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Search Box -->
+<!--                    Search Box -->
                     <div class="row">
                         <div class="col-xl-8">
                             <form action="#" class="search-box">
@@ -38,9 +38,9 @@
             </div>
         </div>
     </div>
-    <!-- Slider Area End-->
+<!--    Slider Area End-->
 
-    <!-- Featured Jobs Section Start -->
+<!--    Featured Jobs Section Start -->
     <div class="featured-job-area">
         <div class="container">
             <div class="row">
@@ -51,13 +51,16 @@
                 </div>
             </div>
 
-            <!-- Job Listings -->
+<!--            Job Listings -->
             <div class="row justify-content-center">
                 <div class="col-xl-10">
                     <div class="single-job-items mb-30">
                         <div class="job-items">
                             <div class="company-img">
-                                <a href="job_details.html"><img src="assets/img/icon/job-list1.png" alt=""></a>
+                                <a href="<c:url value='/job_details.html' />">
+                                    <img src="<c:url value='/template/assets1/img/icon/job-list1.png' />" alt="">
+                                </a>
+
                             </div>
                             <div class="job-tittle">
                                 <a href="job_details.html"><h4>Digital Marketer</h4></a>
@@ -73,15 +76,17 @@
                             <span>7 hours ago</span>
                         </div>
                     </div>
-                    <!-- More jobs here -->
+<!--                    More jobs here -->
                 </div>
             </div>
         </div>
     </div>
-    <!-- Featured Jobs Section End -->
+<!--    Featured Jobs Section End -->
 
-    <!-- Online CV Section Start -->
-    <div class="online-cv cv-bg section-overly pt-90 pb-120" data-background="assets/img/gallery/cv_bg.jpg">
+<!--    Online CV Section Start -->
+    <div class="online-cv cv-bg section-overly pt-90 pb-120"
+         data-background="<c:url value='/template/assets1/img/gallery/cv_bg.jpg' />">
+
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-10">
@@ -93,5 +98,5 @@
             </div>
         </div>
     </div>
-    <!-- Online CV Section End-->
+<!--    Online CV Section End-->
 </main>
