@@ -5,20 +5,20 @@
 <div class="content-wrapper">
     <div class="container-fluid">
         <div class="card-body">
-
-
             <div class="row">
                 <div class="col-sm-3">
                     <h5 class="card-title">User List</h5>
                 </div>
                 <div class="col-md-4">
-                    <a href="${pageContext.request.contextPath}/admin/users/add" class="button-link btn-link">
+                    <a href="${pageContext.request.contextPath}/user/add" class="button-link btn-link">
                         Add New Admin User
                     </a>
                 </div>
                 <div class="col-md-5 text-right">
+                    <!-- Logout Button -->
+                    <a href="${pageContext.request.contextPath}/admin/logout" class="btn btn-danger btn-sm mr-2">Đăng Xuất</a>
                     <!-- Page Size Selector -->
-                    <form action="${pageContext.request.contextPath}/admin/users" method="get" class="form-inline d-inline">
+                    <form action="${pageContext.request.contextPath}/user" method="get" class="form-inline d-inline">
                         <div class="form-group mr-2 mb-0 d-flex align-items-center">
                             <label class="mr-2">Users per page:</label>
                             <select name="size" class="form-control form-control-sm" onchange="this.form.submit()">
@@ -53,19 +53,21 @@
                                     <c:choose>
                                         <c:when test="${not empty entityInfo}">
                                             <c:set var="entityParts" value="${fn:split(entityInfo, ':')}" />
+                                            <c:set var="entityType" value="${entityParts[0]}" />
+                                            <c:set var="entityId" value="${entityParts[1]}" />
                                             <c:choose>
-                                                <c:when test="${entityParts[0] == 'employer'}">
-                                                    <a href="${pageContext.request.contextPath}/admin/employers/edit/${entityParts[1]}" class="text-primary" style="cursor: pointer;">
+                                                <c:when test="${entityType == 'employer'}">
+                                                    <a href="${pageContext.request.contextPath}/admin/employers/edit/${entityId}" class="text-primary" style="cursor: pointer;">
                                                         ${fn:escapeXml(c.fullName)}
                                                     </a>
                                                 </c:when>
-                                                <c:when test="${entityParts[0] == 'candidate'}">
-                                                    <a href="${pageContext.request.contextPath}/admin/candidates/edit/${entityParts[1]}" class="text-primary" style="cursor: pointer;">
+                                                <c:when test="${entityType == 'candidate'}">
+                                                    <a href="${pageContext.request.contextPath}/admin/candidates/edit/${entityId}" class="text-primary" style="cursor: pointer;">
                                                         ${fn:escapeXml(c.fullName)}
                                                     </a>
                                                 </c:when>
-                                                <c:when test="${entityParts[0] == 'admin'}">
-                                                    <a href="${pageContext.request.contextPath}/admin/users/edit/${entityParts[1]}" class="text-primary" style="cursor: pointer;">
+                                                <c:when test="${entityType == 'admin'}">
+                                                    <a href="${pageContext.request.contextPath}/admin/users/edit/${entityId}" class="text-primary" style="cursor: pointer;">
                                                         ${fn:escapeXml(c.fullName)}
                                                     </a>
                                                 </c:when>
@@ -105,17 +107,17 @@
                     <ul class="pagination justify-content-center">
                         <c:if test="${currentPage > 1}">
                             <li class="page-item">
-                                <a class="page-link" href="${pageContext.request.contextPath}/admin/users?page=${currentPage - 1}&size=${pageSize}&keyword=${fn:escapeXml(keyword)}">Previous</a>
+                                <a class="page-link" href="${pageContext.request.contextPath}/users?page=${currentPage - 1}&size=${pageSize}&keyword=${fn:escapeXml(keyword)}">Previous</a>
                             </li>
                         </c:if>
                         <c:forEach begin="1" end="${totalPages}" var="i">
                             <li class="page-item ${currentPage == i ? 'active' : ''}">
-                                <a class="page-link" href="${pageContext.request.contextPath}/admin/users?page=${i}&size=${pageSize}&keyword=${fn:escapeXml(keyword)}">${i}</a>
+                                <a class="page-link" href="${pageContext.request.contextPath}/users?page=${i}&size=${pageSize}&keyword=${fn:escapeXml(keyword)}">${i}</a>
                             </li>
                         </c:forEach>
                         <c:if test="${currentPage < totalPages}">
                             <li class="page-item">
-                                <a class="page-link" href="${pageContext.request.contextPath}/admin/users?page=${currentPage + 1}&size=${pageSize}&keyword=${fn:escapeXml(keyword)}">Next</a>
+                                <a class="page-link" href="${pageContext.request.contextPath}/users?page=${currentPage + 1}&size=${pageSize}&keyword=${fn:escapeXml(keyword)}">Next</a>
                             </li>
                         </c:if>
                     </ul>

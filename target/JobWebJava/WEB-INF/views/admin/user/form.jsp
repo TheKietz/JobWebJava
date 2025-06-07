@@ -11,7 +11,6 @@
                     <div class="card-body">
                         <div class="card-title">Vertical Form</div>
                         <hr>                    
-
                         <form:form method="post" modelAttribute="user" action="${pageContext.request.contextPath}/admin/users/save">
                             <form:hidden path="userID"/> 
                             <form:hidden path="createdAt"/>
@@ -20,23 +19,20 @@
                                 <form:input path="fullName" cssClass="form-control" id="fullName" placeholder="Enter Your Name"/>
                                 <form:errors path="fullName" cssClass="text-danger"/>
                             </div>
-
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <form:input path="email" cssClass="form-control" id="email" placeholder="Enter Your Email Address"/>
                                 <form:errors path="email" cssClass="text-danger"/>
                             </div>                            
                             <div class="form-group">
-                                <label for="passwordHash">Password</label>
-                                <form:password path="passwordHash" cssClass="form-control" id="passwordHash" placeholder="Enter Your Password"/>
-                                <form:errors path="passwordHash" cssClass="text-danger"/>
+                                <label for="password">Password</label>
+                                <form:password path="password" cssClass="form-control" id="password" placeholder="Enter Your Password"/>
+                                <form:errors path="password" cssClass="text-danger"/>
                             </div>
                             <div class="form-group">
                                 <label for="role">Role</label>
                                 <form:input path="role" cssClass="form-control" id="role" value="ADMIN" readonly="true"/>
-                                
                             </div>
-
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Lưu</button>
                             </div>
@@ -45,7 +41,6 @@
                 </div>   
             </div>
         </div>
-
         <!--End Row-->
         <!--start overlay-->
         <div class="overlay toggle-menu"></div>

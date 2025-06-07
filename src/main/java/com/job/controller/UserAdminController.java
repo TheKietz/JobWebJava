@@ -1,15 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.job.controller;
 
 import com.job.model.Candidate;
 import com.job.model.Employer;
 import com.job.model.User;
 import com.job.service.EmployerAdminService;
-import com.job.service.UserAdminService;
 import com.job.service.CandidateAdminService;
+import com.job.service.UserAdminService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -39,18 +36,23 @@ public class UserAdminController {
 
     @GetMapping
     public String list(Model model,
-            @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "5") int size) {
-        final String trimmedKeyword = (keyword != null) ? keyword.trim() : null;
-        System.out.println("Request URL: /admin/users?page=" + page + "&size=" + size + "&keyword=" + trimmedKeyword);
+                       HttpSession session,
+                       @RequestParam(value = "keyword", required = false) String keyword,
+                       @RequestParam(value = "page", defaultValue = "1") int page,
+                       @RequestParam(value = "size", defaultValue = "5") int size) {
+        // Check session
+        if (session.getAttribute("loggedInUser") == null || !"ADMIN".equalsIgnoreCase((String) session.getAttribute("userRole"))) {
+            System.out.println("Unauthorized access to /user/admin, redirecting to login");
+            return "redirect:/admin/login";
+        }
 
-        // Validate size
+        final String trimmedKeyword = (keyword != null) ? keyword.trim() : null;
+        System.out.println("Request URL: /user?page=" + page + "&size=" + size + "&keyword=" + trimmedKeyword);
+
         size = Math.max(1, size);
         List<User> users = userService.search(trimmedKeyword);
         System.out.println("Search keyword: '" + trimmedKeyword + "', Filtered users: " + users.size());
 
-        // Validate page number
         int totalPages = userService.countPages(users, size);
         page = Math.max(1, Math.min(page, totalPages == 0 ? 1 : totalPages));
         List<User> pagedUsers = userService.getPage(users, page, size);
@@ -58,7 +60,6 @@ public class UserAdminController {
         System.out.println("Total pages: " + totalPages);
         System.out.println("Paged users content: " + pagedUsers);
 
-        // Create mapping of userID to associated entity ID
         Map<Integer, String> userEntityMap = new HashMap<>();
         for (User user : pagedUsers) {
             System.out.println("Processing user: " + user.getUserID() + ", Role: " + user.getRole());
@@ -98,9 +99,15 @@ public class UserAdminController {
     }
 
     @GetMapping("/add")
-    public String add(Model model) {
+    public String add(Model model, HttpSession session) {
+        // Check session
+        if (session.getAttribute("loggedInUser") == null || !"ADMIN".equalsIgnoreCase((String) session.getAttribute("userRole"))) {
+            System.out.println("Unauthorized access to /user/add, redirecting to login");
+            return "redirect:/admin/login";
+        }
+
         model.addAttribute("createAt", LocalDate.now());
-        model.addAttribute("admin","ADMIN");
+        model.addAttribute("admin", "ADMIN");
         model.addAttribute("user", new User());
         model.addAttribute("body", "/WEB-INF/views/admin/user/form.jsp");
         return "admin/layout/main";
@@ -108,9 +115,16 @@ public class UserAdminController {
 
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute("user") User user,
-            BindingResult result,
-            Model model,
-            @RequestParam(value = "size", defaultValue = "5") int size) {
+                       BindingResult result,
+                       Model model,
+                       HttpSession session,
+                       @RequestParam(value = "size", defaultValue = "5") int size) {
+        // Check session
+        if (session.getAttribute("loggedInUser") == null || !"ADMIN".equalsIgnoreCase((String) session.getAttribute("userRole"))) {
+            System.out.println("Unauthorized access to /user/save, redirecting to login");
+            return "redirect:/admin/login";
+        }
+
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> System.out.println(error.toString()));
             model.addAttribute("user", user);
@@ -127,19 +141,31 @@ public class UserAdminController {
             user.setPasswordHash(existingUser.getPasswordHash());
             userService.update(user);
         }
-        return "redirect:/admin/users?page=1&size=" + size;
+        return "redirect:/user?page=1&size=" + size;
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable int id, Model model) {
+    public String edit(@PathVariable("id") int id, Model model, HttpSession session) {
+        // Check session
+        if (session.getAttribute("loggedInUser") == null || !"ADMIN".equalsIgnoreCase((String) session.getAttribute("userRole"))) {
+            System.out.println("Unauthorized access to /user/edit/" + id + ", redirecting to login");
+            return "redirect:/admin/login";
+        }
+
         model.addAttribute("user", userService.findByID(id));
         model.addAttribute("body", "/WEB-INF/views/admin/user/form.jsp");
         return "admin/layout/main";
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable int id) {
+    public String delete(@PathVariable("id") int id, HttpSession session) {
+        // Check session
+        if (session.getAttribute("loggedInUser") == null || !"ADMIN".equalsIgnoreCase((String) session.getAttribute("userRole"))) {
+            System.out.println("Unauthorized access to /user/delete/" + id + ", redirecting to login");
+            return "redirect:/admin/login";
+        }
+
         userService.deleteByID(id);
-        return "redirect:/admin/users";
+        return "redirect:/user";
     }
 }

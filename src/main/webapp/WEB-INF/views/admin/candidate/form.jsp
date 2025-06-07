@@ -20,8 +20,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="bio">bio <span class="text-danger">*</span></label>
-                                <form:textarea path="website" type="url" cssClass="form-control" id="website" placeholder="Enter Bio" required="true"/>
-                                <form:errors path="website" cssClass="text-danger"/>
+                                <form:textarea path="bio" type="url" cssClass="form-control" id="bio" placeholder="Enter Bio" required="true"/>
+                                <form:errors path="bio" cssClass="text-danger"/>
                             </div>                            
                             <div class="form-group">
                                 <label for="skills">Description</label>

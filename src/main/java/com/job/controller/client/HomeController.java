@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class HomeController {
-    @RequestMapping(value = "/client/home", method = RequestMethod.GET)
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
     public ModelAndView homePage() {
         ModelAndView mav = new ModelAndView("client/layout/main");
         mav.addObject("body", "/WEB-INF/views/client/home.jsp");
