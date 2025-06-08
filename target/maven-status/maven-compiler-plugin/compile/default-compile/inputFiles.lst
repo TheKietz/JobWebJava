@@ -2,6 +2,7 @@ D:\Web_Java\JobWebJava\src\main\java\com\job\controller\ApplicationAdminControll
 D:\Web_Java\JobWebJava\src\main\java\com\job\controller\CandidateAdminController.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\controller\client\ApplicationController.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\controller\client\HomeController.java
+D:\Web_Java\JobWebJava\src\main\java\com\job\controller\client\JobController.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\controller\DashboardAdminController.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\controller\EmployerAdminController.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\controller\JobAdminController.java
@@ -15,6 +16,7 @@ D:\Web_Java\JobWebJava\src\main\java\com\job\model\User.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\service\ApplicationAdminService.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\service\CandidateAdminService.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\service\client\ApplicationService.java
+D:\Web_Java\JobWebJava\src\main\java\com\job\service\client\JobService.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\service\EmployerAdminService.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\service\JobAdminService.java
 D:\Web_Java\JobWebJava\src\main\java\com\job\service\UserAdminService.java

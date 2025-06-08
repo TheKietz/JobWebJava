@@ -3,11 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.job.model;
+
 import java.time.LocalDate;
 import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import java.time.format.DateTimeFormatter;
 
 public class Job {
+
     private Integer jobID;
 
     private int employerID;
@@ -41,8 +44,8 @@ public class Job {
     public Job() {
     }
 
-    public Job(Integer jobID, Integer employerID, String title, String description, String location, 
-               String jobType, String salaryRange, LocalDate postedAt, LocalDate expiryDate) {
+    public Job(Integer jobID, Integer employerID, String title, String description, String location,
+            String jobType, String salaryRange, LocalDate postedAt, LocalDate expiryDate) {
         this.jobID = jobID;
         this.employerID = employerID;
         this.title = title;
@@ -126,5 +129,25 @@ public class Job {
     public void setExpiryDate(LocalDate expiryDate) {
         this.expiryDate = expiryDate;
     }
-}
 
+    public String getPostedDateStr() {
+        if (this.postedAt == null) {
+            return "";
+        }
+        return this.postedAt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    public String getPostedAtFormatted() {
+        if (postedAt == null) {
+            return "";
+        }
+        return postedAt.format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
+    }
+
+    public String getExpiryDateFormatted() {
+        if (expiryDate == null) {
+            return "";
+        }
+        return expiryDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
+    }
+}
