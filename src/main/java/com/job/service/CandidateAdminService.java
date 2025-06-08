@@ -29,33 +29,33 @@ public class CandidateAdminService {
     };
 
     public List<Candidate> findAll() {
-        String sql = "SELECT * FROM candidates";
+        String sql = "SELECT * FROM Candidates";
         return jdbcTemplate.query(sql, candidateRowMapper);
     }
 
     public Candidate findByID(int id) {
-        String sql = "SELECT * FROM candidates WHERE CandidateID = ?";
+        String sql = "SELECT * FROM Candidates WHERE CandidateID = ?";
         List<Candidate> result = jdbcTemplate.query(sql, candidateRowMapper, id);
         return result.isEmpty() ? null : result.get(0);
     }
 
     public void add(Candidate candidate) {
-        String sql = "INSERT INTO candidates (UserID, ResumeUrl, Bio, Skills) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Candidates (UserID, ResumeUrl, Bio, Skills) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, candidate.getUserID(), candidate.getResumeUrl(), candidate.getBio(), candidate.getSkills());
     }
 
     public void update(Candidate candidate) {
-        String sql = "UPDATE candidates SET UserID = ?, ResumeUrl = ?, Bio = ?, Skills = ? WHERE CandidateID = ?";
+        String sql = "UPDATE Candidates SET UserID = ?, ResumeUrl = ?, Bio = ?, Skills = ? WHERE CandidateID = ?";
         jdbcTemplate.update(sql, candidate.getUserID(), candidate.getResumeUrl(), candidate.getBio(), candidate.getSkills(), candidate.getCandidateID());
     }
 
     public void deleteByID(int id) {
-        String sql = "DELETE FROM candidates WHERE CandidateID = ?";
+        String sql = "DELETE FROM Candidates WHERE CandidateID = ?";
         jdbcTemplate.update(sql, id);
     }
 
     public Candidate findByUserID(int userID) {
-        String sql = "SELECT * FROM candidates WHERE UserID = ?";
+        String sql = "SELECT * FROM Candidates WHERE UserID = ?";
         List<Candidate> result = jdbcTemplate.query(sql, candidateRowMapper, userID);
         return result.isEmpty() ? null : result.get(0);
     }

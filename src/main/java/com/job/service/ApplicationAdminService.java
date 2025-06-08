@@ -27,7 +27,7 @@ public class ApplicationAdminService {
     }
 
     public void add(Application application) {
-        String sql = "INSERT INTO Applications (candidateID, jobID, coverLetter, resumeUrl, appliedAt, status) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Applications (CandidateID, JobID, CoverLetter, ResumeUrl, AppliedAt, Status) VALUES (?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql,
                 application.getCandidateID(),
                 application.getJobID(),
@@ -35,11 +35,11 @@ public class ApplicationAdminService {
                 application.getResumeUrl(),
                 java.sql.Date.valueOf(application.getAppliedAt()),
                 application.getStatus());
-        System.out.println("add: Added application with status=" + application.getStatus());
+        System.out.println("add: Added application with Status=" + application.getStatus());
     }
 
     public void update(Application application) {
-        String sql = "UPDATE Applications SET candidateID = ?, jobID = ?, coverLetter = ?, resumeUrl = ?, appliedAt = ?, status = ? WHERE ApplicationID = ?";
+        String sql = "UPDATE Applications SET CandidateID = ?, JobID = ?, CoverLetter = ?, ResumeUrl = ?, AppliedAt = ?, Status = ? WHERE ApplicationID = ?";
         jdbcTemplate.update(sql,
                 application.getCandidateID(),
                 application.getJobID(),
@@ -61,7 +61,7 @@ public class ApplicationAdminService {
         if (keyword == null || keyword.isBlank()) {
             return findAll();
         }
-        String sql = "SELECT * FROM Applications WHERE LOWER(status) LIKE ?";
+        String sql = "SELECT * FROM Applications WHERE LOWER(Status) LIKE ?";
         String like = "%" + keyword.trim().toLowerCase() + "%";
         List<Application> applications = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Application.class), like);
         System.out.println("search: Keyword='" + keyword + "', Found " + applications.size() + " applications");

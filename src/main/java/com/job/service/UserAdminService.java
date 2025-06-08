@@ -32,12 +32,12 @@ public class UserAdminService {
     }
 
     public List<User> findAll() {
-        String sql = "SELECT * FROM users";
+        String sql = "SELECT * FROM Users";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
     }
 
     public User findByID(int id) {
-        String sql = "SELECT * FROM users WHERE userid = ?";
+        String sql = "SELECT * FROM Users WHERE userid = ?";
         try {
             return jdbcTemplate.queryForObject(sql, new Object[]{id}, new BeanPropertyRowMapper<>(User.class));
         } catch (EmptyResultDataAccessException e) {
@@ -46,7 +46,7 @@ public class UserAdminService {
     }
 
     public void add(User user) {
-        String sql = "INSERT INTO users (fullname, email, password, role, createdat) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Users (FullName, Email, Password, Role, CreatedAt) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql,
                 user.getFullName(),
                 user.getEmail(),
@@ -56,7 +56,7 @@ public class UserAdminService {
     }
 
     public void update(User user) {
-        String sql = "UPDATE users SET fullname = ?, email = ?, password = ?, role = ? WHERE userid = ?";
+        String sql = "UPDATE Users SET FullName = ?, Email = ?, Password = ?, Role = ? WHERE userid = ?";
         jdbcTemplate.update(sql,
                 user.getFullName(),
                 user.getEmail(),
@@ -66,7 +66,7 @@ public class UserAdminService {
     }
 
     public void deleteByID(int id) {
-        String sql = "DELETE FROM users WHERE userid = ?";
+        String sql = "DELETE FROM Users WHERE userid = ?";
         jdbcTemplate.update(sql, id);
     }
 
@@ -74,7 +74,7 @@ public class UserAdminService {
         if (keyword == null || keyword.isBlank()) {
             return findAll();
         }
-        String sql = "SELECT * FROM users WHERE LOWER(fullname) LIKE ? OR LOWER(email) LIKE ?";
+        String sql = "SELECT * FROM Users WHERE LOWER(FullName) LIKE ? OR LOWER(Email) LIKE ?";
         String likeKeyword = "%" + keyword.toLowerCase() + "%";
         return jdbcTemplate.query(sql,
                 new Object[]{likeKeyword, likeKeyword},
@@ -85,10 +85,10 @@ public class UserAdminService {
         return (int) Math.ceil((double) list.size() / Math.max(1, size));
     }
 
-    public User findByEmail(String email) {
-        String sql = "SELECT * FROM users WHERE email = ?";
+    public User findByEmail(String Email) {
+        String sql = "SELECT * FROM Users WHERE Email = ?";
         try {
-            return jdbcTemplate.queryForObject(sql, new Object[]{email}, new BeanPropertyRowMapper<>(User.class));
+            return jdbcTemplate.queryForObject(sql, new Object[]{Email}, new BeanPropertyRowMapper<>(User.class));
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
