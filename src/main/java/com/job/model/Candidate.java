@@ -23,10 +23,17 @@ public class Candidate {
 
     @Size(max = 500, message = "Kỹ năng không được quá 500 ký tự")
     private String skills;
-
-    public Candidate(){
-        
+    
+    public Candidate(Integer candidateID, String resumeUrl, String bio, String skills) {
+        this.candidateID = candidateID;
+        this.resumeUrl = resumeUrl;
+        this.bio = bio;
+        this.skills = skills;
     }
+
+    public Candidate() {
+    }
+
     public Candidate(Integer candidateID, Integer userID, String resumeUrl, String bio, String skills){
         this.userID = userID;
         this.candidateID = candidateID;
