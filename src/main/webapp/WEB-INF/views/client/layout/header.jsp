@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
+=======
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+>>>>>>> recover-lost-commits
 
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -8,6 +14,7 @@
          <title>Job board HTML-5 Template </title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< HEAD
         <link rel="manifest" href="site.webmanifest">
 		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
@@ -24,6 +31,24 @@
         <link rel="stylesheet" href="/template/assets/css/slick.css">
         <link rel="stylesheet" href="/template/assets/css/nice-select.css">
         <link rel="stylesheet" href="/template/assets/css/style.css">
+=======
+        <link rel="manifest" href="<c:url value='/template/site.webmanifest'/>">
+<link rel="shortcut icon" type="image/x-icon" href="<c:url value='/template/assets/img/favicon.ico'/>">
+
+<link rel="stylesheet" href="<c:url value='/template/assets/css/bootstrap.min.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets/css/owl.carousel.min.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets/css/flaticon.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets/css/price_rangs.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets/css/slicknav.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets/css/animate.min.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets/css/magnific-popup.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets/css/fontawesome-all.min.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets/css/themify-icons.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets/css/slick.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets/css/nice-select.css'/>">
+<link rel="stylesheet" href="<c:url value='/template/assets/css/style.css'/>">
+
+>>>>>>> recover-lost-commits
    </head>
    
     <body>
@@ -34,7 +59,11 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
+<<<<<<< HEAD
                     <img src="/template/assets/img/logo/logo.png" alt="">
+=======
+                    <img src="assets/img/logo/logo.png" alt="">
+>>>>>>> recover-lost-commits
                 </div>
             </div>
         </div>
@@ -50,7 +79,11 @@
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
+<<<<<<< HEAD
                                 <a href="/template/assets/images"><img src="assets/img/logo/logo.png" alt=""></a>
+=======
+                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+>>>>>>> recover-lost-commits
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">

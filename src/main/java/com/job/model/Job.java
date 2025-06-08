@@ -6,10 +6,7 @@ package com.job.model;
 import java.util.Date;
 import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
-/**
- *
- * @author 11090
- */
+
 public class Job {
     private int jobID;
 

@@ -49,6 +49,12 @@ html{
   height: 100%;
 }
 
+.sidebar-submenu {
+    display: none;
+}
+.sidebar-submenu.active {
+    display: block;
+}
 
 @-ms-viewport {
 	width: device-width
