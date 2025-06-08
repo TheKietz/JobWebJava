@@ -1,0 +1,25 @@
+# Java build output
+target/
+*.class
+*.war
+*.jar
+
+# IDEs
+nbproject/private/
+*.iml
+.idea/
+*.iws
+*.ipr
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# NetBeans-specific
+build/
+nbbuild/
+dist/
+.nb-gradle/
