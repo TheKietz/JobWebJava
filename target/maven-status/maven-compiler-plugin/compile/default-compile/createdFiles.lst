@@ -6,9 +6,13 @@ com\job\service\CandidateAdminService$1.class
 com\job\controller\CandidateAdminController.class
 com\job\model\Employer.class
 com\job\controller\LoginAdminController$LoginForm.class
+com\job\service\JobAdminService.class
+com\job\controller\JobAdminController.class
 com\job\model\Candidate.class
+com\job\controller\ApplicationAdminController.class
 com\job\service\CandidateAdminService.class
 com\job\controller\UserAdminController.class
+com\job\service\ApplicationAdminService.class
 com\job\service\UserAdminService.class
 com\job\controller\EmployerAdminController.class
 com\job\controller\client\HomeController.class

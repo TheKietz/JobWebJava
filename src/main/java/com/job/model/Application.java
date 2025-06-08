@@ -8,11 +8,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Application {
-    private int applicationID;
+    private Integer applicationID;
 
     private int candidateID;
 
@@ -28,19 +28,29 @@ public class Application {
 
     @PastOrPresent(message = "Ngày nộp không được ở tương lai")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date appliedAt;
+    private LocalDate appliedAt;
 
     @NotBlank(message = "Trạng thái không được để trống")
     @Pattern(regexp = "Pending|Reviewed|Accepted|Rejected", message = "Trạng thái không hợp lệ")
     private String status;
 
+    public Application() {
+    }
+    public Application(int candidateID, int jobID, String coverLetter, String resumeUrl, LocalDate appliedAt, String status) {
+        this.candidateID = candidateID;
+        this.jobID = jobID;
+        this.coverLetter = coverLetter;
+        this.resumeUrl = resumeUrl;
+        this.appliedAt = appliedAt;
+        this.status = status;
+    }
     // Getters and Setters
 
-    public int getApplicationID() {
+    public Integer getApplicationID() {
         return applicationID;
     }
 
-    public void setApplicationID(int applicationID) {
+    public void setApplicationID(Integer applicationID) {
         this.applicationID = applicationID;
     }
 
@@ -76,11 +86,11 @@ public class Application {
         this.resumeUrl = resumeUrl;
     }
 
-    public Date getAppliedAt() {
+    public LocalDate getAppliedAt() {
         return appliedAt;
     }
 
-    public void setAppliedAt(Date appliedAt) {
+    public void setAppliedAt(LocalDate appliedAt) {
         this.appliedAt = appliedAt;
     }
 

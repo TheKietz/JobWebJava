@@ -84,14 +84,17 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
-
-
+                    </li>                    
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/login" target="_blank">
-                            <i class="zmdi zmdi-lock"></i> <span>Login</span>
+                        <a href="${pageContext.request.contextPath}/admin/jobs">
+                            <i class="zmdi zmdi-case-check"></i> <span>Jobs</span>
                         </a>
-                    </li>       
+                    </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/applications">
+                            <i class="zmdi zmdi-assignment-account"></i> <span>Applications</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/admin/logout" target="_blank">
                             <i class="zmdi zmdi-lock"></i> <span>Logout</span>

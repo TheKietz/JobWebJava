@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/admin/employers")
 public class EmployerAdminController {
 
-        @Autowired
+    @Autowired
     private EmployerAdminService employerService;
 
     @GetMapping

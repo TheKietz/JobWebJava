@@ -14,17 +14,17 @@
                             <form:hidden path="candidateID"/> 
                             <form:hidden path="userID"/>
                             <div class="form-group">
-                                <label for="resumeUrl">Company Name <span class="text-danger">*</span></label>
+                                <label for="resumeUrl">Resume Url<span class="text-danger">*</span></label>
                                 <form:input path="resumeUrl" cssClass="form-control" id="resumeUrl" placeholder="Enter Resume Url (e.g., https://example.com)" required="true"/>
                                 <form:errors path="resumeUrl" cssClass="text-danger"/>
                             </div>
                             <div class="form-group">
-                                <label for="bio">bio <span class="text-danger">*</span></label>
+                                <label for="bio">Bio <span class="text-danger">*</span></label>
                                 <form:textarea path="bio" type="url" cssClass="form-control" id="bio" placeholder="Enter Bio" required="true"/>
                                 <form:errors path="bio" cssClass="text-danger"/>
                             </div>                            
                             <div class="form-group">
-                                <label for="skills">Description</label>
+                                <label for="skills">Skills</label>
                                 <form:textarea path="skills" cssClass="form-control" id="skills" placeholder="Enter Skills (optional)" rows="4"/>
                                 <form:errors path="skills" cssClass="text-danger"/>
                             </div>

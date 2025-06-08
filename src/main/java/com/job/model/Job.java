@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.job.model;
-import java.util.Date;
+import java.time.LocalDate;
 import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Job {
-    private int jobID;
+    private Integer jobID;
 
     private int employerID;
 
@@ -32,19 +32,34 @@ public class Job {
 
     @PastOrPresent(message = "Ngày đăng không được ở tương lai")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date postedAt;
+    private LocalDate postedAt;
 
     @Future(message = "Ngày hết hạn phải ở tương lai")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date expiryDate;
+    private LocalDate expiryDate;
 
+    public Job() {
+    }
+
+    public Job(Integer jobID, Integer employerID, String title, String description, String location, 
+               String jobType, String salaryRange, LocalDate postedAt, LocalDate expiryDate) {
+        this.jobID = jobID;
+        this.employerID = employerID;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.jobType = jobType;
+        this.salaryRange = salaryRange;
+        this.postedAt = postedAt;
+        this.expiryDate = expiryDate;
+    }
     // Getters and Setters
 
-    public int getJobID() {
+    public Integer getJobID() {
         return jobID;
     }
 
-    public void setJobID(int jobID) {
+    public void setJobID(Integer jobID) {
         this.jobID = jobID;
     }
 
@@ -96,19 +111,19 @@ public class Job {
         this.salaryRange = salaryRange;
     }
 
-    public Date getPostedAt() {
+    public LocalDate getPostedAt() {
         return postedAt;
     }
 
-    public void setPostedAt(Date postedAt) {
+    public void setPostedAt(LocalDate postedAt) {
         this.postedAt = postedAt;
     }
 
-    public Date getExpiryDate() {
+    public LocalDate getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(Date expiryDate) {
+    public void setExpiryDate(LocalDate expiryDate) {
         this.expiryDate = expiryDate;
     }
 }
