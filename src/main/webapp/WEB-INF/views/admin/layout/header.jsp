@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,9 +29,19 @@
         <link href="<c:url value='/template/assets/css/sidebar-menu.css'/>" rel="stylesheet"/>
         <!-- Custom Style-->
         <link href="<c:url value='/template/assets/css/app-style.css'/>" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
 
+        <script>
+            document.querySelectorAll('.sidebar-toggle').forEach(function (toggle) {
+                toggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var submenu = this.nextElementSibling;
+                    submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+        </script>
     </head>
-    <body class="bg-theme bg-theme1">
+    <body class="bg-theme bg-dark">
 
         <!-- Start wrapper-->
         <div id="wrapper">
@@ -46,62 +57,38 @@
                 <ul class="sidebar-menu do-nicescrol">
                     <li class="sidebar-header">MAIN NAVIGATION</li>
                     <li>
-                        <a href="home">
+                        <a href="${pageContext.request.contextPath}/dashboard">
                             <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
                         </a>
                     </li>     
                     <li>
-                        <a href="customers">
-                            <i class="zmdi zmdi-account"></i> <span>Customer</span>
+                        <a href="javascript:void(0);" class="sidebar-toggle">
+                            <i class="zmdi zmdi-account"></i>
+                            <span>User Management</span>
+                            <i class='fas fa-angle-down fa-3x'></i>
                         </a>
+                        <ul class="sidebar-submenu">
+                            <li >
+                                <a href="${pageContext.request.contextPath}/admin/users">
+                                    <i class="zmdi zmdi-dot-circle-alt"></i> Users
+                                </a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/admin/employers">
+                                    <i class="zmdi zmdi-dot-circle-alt"></i> Employers
+                                </a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/admin/candidates">
+                                    <i class="zmdi zmdi-dot-circle-alt"></i> Candidates
+                                </a>
+                            </li>
+                        </ul>
                     </li>
+
+
                     <li>
-                        <a href="employees">
-                            <i class="zmdi zmdi-account-box-mail"></i> <span>Employee</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="inventories">
-                            <i class="zmdi zmdi-home"></i> <span>Inventory</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="index.html">
-                            <i class="zmdi zmdi-account"></i> <span>Invoice</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="menuitems">
-                            <i class="zmdi zmdi-account"></i> <span>MenuItem</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="orders">
-                            <i class="zmdi zmdi-account"></i> <span>Order</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="orderdetails">
-                            <i class="zmdi zmdi-account"></i> <span>Order Detail</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="reservations">
-                            <i class="zmdi zmdi-account"></i> <span>Reservation</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="supplier">
-                            <i class="zmdi zmdi-account"></i> <span>Supplier</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="table">
-                            <i class="zmdi zmdi-account"></i> <span>Table</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="login" target="_blank">
+                        <a href="${pageContext.request.contextPath}/admin/login" target="_blank">
                             <i class="zmdi zmdi-lock"></i> <span>Login</span>
                         </a>
                     </li>       
@@ -126,21 +113,25 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <form class="search-bar">
-                                <input type="text" class="form-control" placeholder="Enter keywords">
-                                <a href="javascript:void();"><i class="icon-magnifier"></i></a>
+
+                            <form class="search-bar" action="${pageContext.request.contextPath}/admin/users" method="get">
+                                <input type="hidden" name="page" value="1">
+                                <input type="hidden" name="size" value="${pageSize}">
+                                <input type="search" class="form-control" name="keyword" aria-label="Search" placeholder="Search by company name or email" value="${fn:escapeXml(keyword)}">
+                                <a href="javascript:void(0);" onclick="this.closest('form').submit();"><i class="icon-magnifier"></i></a>
                             </form>
                         </li>
+
                     </ul>
 
                     <ul class="navbar-nav align-items-center right-nav-link">
                         <li class="nav-item dropdown-lg">
                             <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="javascript:void();">
-                                <i class="fa fa-envelope-open-o"></i></a>
+                                <i class="fa fa-envelope-open-o"></i>Message</a>
                         </li>
                         <li class="nav-item dropdown-lg">
                             <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="javascript:void();">
-                                <i class="fa fa-bell-o"></i></a>
+                                <i class="fa fa-bell-o"></i>Notice</a>
                         </li>
                         <li class="nav-item language">
                             <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="javascript:void();"><i class="fa fa-flag"></i></a>
@@ -183,5 +174,4 @@
             <!--End topbar header-->
 
             <div class="clearfix"></div>
-
 
