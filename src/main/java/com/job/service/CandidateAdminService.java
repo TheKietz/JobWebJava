@@ -1,74 +1,58 @@
+
 package com.job.service;
 
+import com.job.enums.CommonEnums.Role;
 import com.job.model.Candidate;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.job.model.User;
+import com.job.repository.CandidateRepository;
+import com.job.repository.UserRepository;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service for managing Candidate entities in the admin panel.
+ */
 @Service
 public class CandidateAdminService {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    private final RowMapper<Candidate> candidateRowMapper = new RowMapper<Candidate>() {
-        @Override
-        public Candidate mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Candidate c = new Candidate();
-            c.setCandidateID(rs.getInt("CandidateID"));
-            c.setUserID(rs.getInt("UserID"));
-            c.setResumeUrl(rs.getString("ResumeUrl"));
-            c.setBio(rs.getString("Bio"));
-            c.setSkills(rs.getString("Skills"));
-            return c;
-        }
-    };
-
+    private CandidateRepository candidateRepository;
     public List<Candidate> findAll() {
-        String sql = "SELECT * FROM Candidates";
-        return jdbcTemplate.query(sql, candidateRowMapper);
+        return candidateRepository.findAll();
     }
 
-    public Candidate findByID(int id) {
-        String sql = "SELECT * FROM Candidates WHERE CandidateID = ?";
-        List<Candidate> result = jdbcTemplate.query(sql, candidateRowMapper, id);
-        return result.isEmpty() ? null : result.get(0);
+    public Candidate findByID(Integer id) {
+        return candidateRepository.findByID(id);
+    }
+
+    public Candidate findByUserID(Integer userID) {
+        return candidateRepository.findByUserID(userID);
     }
 
     public void add(Candidate candidate) {
-        String sql = "INSERT INTO Candidates (UserID, ResumeUrl, Bio, Skills) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, candidate.getUserID(), candidate.getResumeUrl(), candidate.getBio(), candidate.getSkills());
+        candidateRepository.add(candidate);
     }
 
     public void update(Candidate candidate) {
-        String sql = "UPDATE Candidates SET UserID = ?, ResumeUrl = ?, Bio = ?, Skills = ? WHERE CandidateID = ?";
-        jdbcTemplate.update(sql, candidate.getUserID(), candidate.getResumeUrl(), candidate.getBio(), candidate.getSkills(), candidate.getCandidateID());
+        candidateRepository.update(candidate);
     }
 
-    public void deleteByID(int id) {
-        String sql = "DELETE FROM Candidates WHERE CandidateID = ?";
-        jdbcTemplate.update(sql, id);
+    public boolean deleteByID(Integer id) {
+        return candidateRepository.deleteByID(id);
     }
 
-    public Candidate findByUserID(int userID) {
-        String sql = "SELECT * FROM Candidates WHERE UserID = ?";
-        List<Candidate> result = jdbcTemplate.query(sql, candidateRowMapper, userID);
-        return result.isEmpty() ? null : result.get(0);
+    public List<Candidate> search(String keyword) {
+        return candidateRepository.search(keyword);
     }
 
-    // Phân trang thủ công (dành cho danh sách đã lấy từ DB)
     public List<Candidate> getPage(List<Candidate> list, int page, int size) {
-        if (list.isEmpty()) return List.of();
-        int from = Math.max(0, (page - 1) * size);
-        int to = Math.min(from + size, list.size());
-        return from >= list.size() ? List.of() : list.subList(from, to);
+        return candidateRepository.getPage(list, page, size);
     }
 
     public int countPages(List<Candidate> list, int size) {
-        return (int) Math.ceil((double) list.size() / size);
+        return candidateRepository.countPages(list, size);
     }
+
 }

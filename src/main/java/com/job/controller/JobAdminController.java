@@ -1,12 +1,16 @@
 package com.job.controller;
 
+import com.job.enums.CommonEnums.Role;
 import com.job.model.Job;
+import com.job.model.User;
+import com.job.service.EmployerAdminService;
 import com.job.service.JobAdminService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,102 +20,174 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/jobs")
 public class JobAdminController {
+
     @Autowired
     private JobAdminService jobService;
 
+    @Autowired
+    private EmployerAdminService employerService;
+
     @GetMapping
     public String list(Model model,
-                       HttpSession session,
-                       @RequestParam(value = "keyword", required = false) String keyword,
-                       @RequestParam(value = "page", defaultValue = "1") int page,
-                       @RequestParam(value = "size", defaultValue = "5") int size) {
-        if (session.getAttribute("loggedInUser") == null || !"ADMIN".equalsIgnoreCase((String) session.getAttribute("userRole"))) {
+            HttpSession session,
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/jobs, redirecting to login");
             return "redirect:/admin/login";
         }
 
         final String trimmedKeyword = (keyword != null) ? keyword.trim() : null;
+        System.out.println("Request URL: /admin/jobs?page=" + page + "&size=" + size + "&keyword=" + trimmedKeyword);
+
+        size = Math.max(1, size);
         List<Job> jobs = jobService.search(trimmedKeyword);
+        System.out.println("Search keyword: '" + trimmedKeyword + "', Found " + jobs.size() + " jobs");
 
         int totalPages = jobService.countPages(jobs, size);
         page = Math.max(1, Math.min(page, totalPages == 0 ? 1 : totalPages));
         List<Job> pagedJobs = jobService.getPage(jobs, page, size);
+        System.out.println("Page: " + page + ", Size: " + size + ", Paged Jobs=" + pagedJobs.size());
 
         model.addAttribute("jobs", pagedJobs);
-        model.addAttribute("keyword", keyword);
+        model.addAttribute("keyword", trimmedKeyword);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("pageSize", size);
+        if (pagedJobs.isEmpty()) {
+            model.addAttribute("message", "No jobs found.");
+        }
         model.addAttribute("body", "/WEB-INF/views/admin/job/list.jsp");
         return "admin/layout/main";
     }
 
     @GetMapping("/add")
-    public String add(Model model, HttpSession session) {
-        if (session.getAttribute("loggedInUser") == null || !"ADMIN".equalsIgnoreCase((String) session.getAttribute("userRole"))) {
+    public String add(Model model, HttpSession session,
+            @RequestParam(value = "size", defaultValue = "5") int size,
+            @RequestParam(value = "keyword", required = false) String keyword) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/jobs/add, redirecting to login");
             return "redirect:/admin/login";
         }
 
         model.addAttribute("job", new Job());
-        model.addAttribute("postedAt", LocalDate.now());
+        model.addAttribute("employers", employerService.findAll());
+        model.addAttribute("pageSize", size);
+        model.addAttribute("keyword", keyword);
         model.addAttribute("body", "/WEB-INF/views/admin/job/form.jsp");
         return "admin/layout/main";
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") int id, Model model, HttpSession session) {
-        if (session.getAttribute("loggedInUser") == null || !"ADMIN".equalsIgnoreCase((String) session.getAttribute("userRole"))) {
+    public String edit(@PathVariable("id") Integer id, Model model, HttpSession session,
+            @RequestParam(value = "size", defaultValue = "5") int size,
+            @RequestParam(value = "keyword", required = false) String keyword) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/jobs/edit/" + id + ", redirecting to login");
             return "redirect:/admin/login";
         }
 
         Job job = jobService.findByID(id);
         if (job == null) {
-            return "redirect:/admin/jobs";
+            System.out.println("Job not found for ID: " + id);
+            model.addAttribute("error", "Job not found");
+            return "redirect:/admin/jobs?page=1&size=" + size + "&keyword=" + (keyword != null ? keyword : "");
         }
         model.addAttribute("job", job);
+        model.addAttribute("employers", employerService.findAll());
+        model.addAttribute("pageSize", size);
+        model.addAttribute("keyword", keyword);
         model.addAttribute("body", "/WEB-INF/views/admin/job/form.jsp");
         return "admin/layout/main";
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") int id, HttpSession session) {
-        if (session.getAttribute("loggedInUser") == null || !"ADMIN".equalsIgnoreCase((String) session.getAttribute("userRole"))) {
+    public String delete(@PathVariable("id") Integer id, HttpSession session,
+            @RequestParam(value = "size", defaultValue = "5") int size,
+            @RequestParam(value = "keyword", required = false) String keyword,
+            RedirectAttributes redirectAttributes) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/jobs/delete/" + id + ", redirecting to login");
             return "redirect:/admin/login";
         }
 
-        jobService.deleteByID(id);
-        return "redirect:/admin/jobs";
+        try {
+            if (jobService.deleteByID(id)) {
+                redirectAttributes.addFlashAttribute("success", "Job deleted successfully.");
+            } else {
+                redirectAttributes.addFlashAttribute("error", "Cannot delete job due to linked records.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error deleting job ID=" + id + ": " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Failed to delete job: " + e.getMessage());
+        }
+        return "redirect:/admin/jobs?page=1&size=" + size + "&keyword=" + (keyword != null ? keyword : "");
     }
 
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute("job") Job job,
-                       BindingResult result,
-                       Model model,
-                       HttpSession session,
-                       @RequestParam(value = "size", defaultValue = "5") int size) {
-        if (session.getAttribute("loggedInUser") == null || !"ADMIN".equalsIgnoreCase((String) session.getAttribute("userRole"))) {
+            BindingResult result,
+            Model model,
+            HttpSession session,
+            @RequestParam(value = "size", defaultValue = "5") int size,
+            @RequestParam(value = "keyword", required = false) String keyword) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/jobs/save, redirecting to login");
             return "redirect:/admin/login";
         }
 
+        // Validate employerId exists
+        if (employerService.findByID(job.getEmployerId()) == null) {
+            result.rejectValue("employerId", "error.employerId", "Invalid Employer ID: must exist.");
+        }
+
         if (result.hasErrors()) {
-            result.getAllErrors().forEach(error -> System.out.println(error.toString()));
+            result.getAllErrors().forEach(error -> System.out.println("Validation error: " + error));
+            model.addAttribute("employers", employerService.findAll());
+            model.addAttribute("pageSize", size);
+            model.addAttribute("keyword", keyword);
             model.addAttribute("body", "/WEB-INF/views/admin/job/form.jsp");
             return "admin/layout/main";
         }
-        if (job.getJobID() == null) {
-            job.setPostedAt(LocalDate.now());
-            jobService.add(job);
-        } else {
-            jobService.update(job);
+
+        try {
+            if (job.getId() == null) {
+                job.setCreatedAt(LocalDateTime.now());
+                jobService.add(job);
+                System.out.println("Added job: " + job.getTitle());
+            } else {
+                jobService.update(job);
+                System.out.println("Updated job: " + job.getTitle());
+            }
+            return "redirect:/admin/jobs?page=1&size=" + size + "&keyword=" + (keyword != null ? keyword : "");
+        } catch (DataIntegrityViolationException e) {
+            System.err.println("Data integrity violation: " + e.getMessage());
+            model.addAttribute("error", "Failed to save job due to database constraint: " + e.getMessage());
+            model.addAttribute("employers", employerService.findAll());
+            model.addAttribute("pageSize", size);
+            model.addAttribute("keyword", keyword);
+            model.addAttribute("body", "/WEB-INF/views/admin/job/form.jsp");
+            return "admin/layout/main";
+        } catch (Exception e) {
+            System.err.println("Error saving job: " + e.getMessage());
+            e.printStackTrace();
+            model.addAttribute("error", "Failed to save job: " + e.getMessage());
+            model.addAttribute("employers", employerService.findAll());
+            model.addAttribute("pageSize", size);
+            model.addAttribute("keyword", keyword);
+            model.addAttribute("body", "/WEB-INF/views/admin/job/form.jsp");
+            return "admin/layout/main";
         }
-        return "redirect:/admin/jobs?page=1&size=" + size;
     }
 }

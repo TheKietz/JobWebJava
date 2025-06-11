@@ -4,74 +4,84 @@
  */
 package com.job.model;
 
-import java.time.LocalDate;
+import com.job.enums.CommonEnums.*;
 import jakarta.validation.constraints.*;
-import org.springframework.format.annotation.DateTimeFormat;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Job {
 
-    private Integer jobID;
+    private Integer id;
 
-    private int employerID;
+    @NotNull(message = "Employer ID cannot be null")
+    private Integer employerId; // Liên kết với Employer.id
 
-    @NotBlank(message = "Tiêu đề không được để trống")
-    @Size(min = 3, max = 100, message = "Tiêu đề phải từ 3 đến 100 ký tự")
+    @NotBlank(message = "Title cannot be blank")
+    @Size(max = 255, message = "Title must be less than or equal to 255 characters")
     private String title;
 
-    @NotBlank(message = "Mô tả công việc không được để trống")
-    @Size(min = 10, message = "Mô tả phải có ít nhất 10 ký tự")
+    @NotBlank(message = "Description cannot be blank")
     private String description;
 
-    @NotBlank(message = "Địa điểm không được để trống")
+    @NotBlank(message = "Location cannot be blank")
+    @Size(max = 100, message = "Location must be less than or equal to 100 characters")
     private String location;
 
-    @NotBlank(message = "Loại công việc không được để trống")
-    @Pattern(regexp = "Full-Time|Part-Time|Internship|Contract", message = "Loại công việc không hợp lệ")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Salary min must be positive")
+    private BigDecimal salaryMin;
+
+    @DecimalMin(value = "0.0", inclusive = false, message = "Salary max must be positive")
+    private BigDecimal salaryMax;
+
+    @Size(max = 50, message = "Job type must be less than or equal to 50 characters")
     private String jobType;
 
-    @NotBlank(message = "Mức lương không được để trống")
-    private String salaryRange;
+    private JobStatus status; // Default handled by DB
 
-    @PastOrPresent(message = "Ngày đăng không được ở tương lai")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate postedAt;
+    @NotBlank(message = "Category cannot be blank")
+    @Size(max = 100, message = "Category must be less than or equal to 100 characters")
+    private String category;
 
-    @Future(message = "Ngày hết hạn phải ở tương lai")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate expiryDate;
+    private LocalDateTime createdAt; // Default handled by DB
+    private LocalDateTime expiredAt;
 
+    // Constructors
     public Job() {
     }
 
-    public Job(Integer jobID, Integer employerID, String title, String description, String location,
-            String jobType, String salaryRange, LocalDate postedAt, LocalDate expiryDate) {
-        this.jobID = jobID;
-        this.employerID = employerID;
+    public Job(Integer id, Integer employerId, String title, String description, String location,
+            BigDecimal salaryMin, BigDecimal salaryMax, String jobType, JobStatus status, String category,
+            LocalDateTime createdAt, LocalDateTime expiredAt) {
+        this.id = id;
+        this.employerId = employerId;
         this.title = title;
         this.description = description;
         this.location = location;
+        this.salaryMin = salaryMin;
+        this.salaryMax = salaryMax;
         this.jobType = jobType;
-        this.salaryRange = salaryRange;
-        this.postedAt = postedAt;
-        this.expiryDate = expiryDate;
+        this.status = status;
+        this.category = category;
+        this.createdAt = createdAt;
+        this.expiredAt = expiredAt;
     }
+
     // Getters and Setters
-
-    public Integer getJobID() {
-        return jobID;
+    public Integer getId() {
+        return id;
     }
 
-    public void setJobID(Integer jobID) {
-        this.jobID = jobID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public int getEmployerID() {
-        return employerID;
+    public Integer getEmployerId() {
+        return employerId;
     }
 
-    public void setEmployerID(int employerID) {
-        this.employerID = employerID;
+    public void setEmployerId(Integer employerId) {
+        this.employerId = employerId;
     }
 
     public String getTitle() {
@@ -98,6 +108,22 @@ public class Job {
         this.location = location;
     }
 
+    public BigDecimal getSalaryMin() {
+        return salaryMin;
+    }
+
+    public void setSalaryMin(BigDecimal salaryMin) {
+        this.salaryMin = salaryMin;
+    }
+
+    public BigDecimal getSalaryMax() {
+        return salaryMax;
+    }
+
+    public void setSalaryMax(BigDecimal salaryMax) {
+        this.salaryMax = salaryMax;
+    }
+
     public String getJobType() {
         return jobType;
     }
@@ -106,48 +132,56 @@ public class Job {
         this.jobType = jobType;
     }
 
-    public String getSalaryRange() {
-        return salaryRange;
+    public JobStatus getStatus() {
+        return status;
     }
 
-    public void setSalaryRange(String salaryRange) {
-        this.salaryRange = salaryRange;
+    public void setStatus(JobStatus status) {
+        this.status = status;
     }
 
-    public LocalDate getPostedAt() {
-        return postedAt;
+    public String getCategory() {
+        return category;
     }
 
-    public void setPostedAt(LocalDate postedAt) {
-        this.postedAt = postedAt;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public LocalDate getExpiryDate() {
-        return expiryDate;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setExpiryDate(LocalDate expiryDate) {
-        this.expiryDate = expiryDate;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getExpiredAt() {
+        return expiredAt;
+    }
+
+    public void setExpiredAt(LocalDateTime expiredAt) {
+        this.expiredAt = expiredAt;
     }
 
     public String getPostedDateStr() {
-        if (this.postedAt == null) {
+        if (this.createdAt == null) {
             return "";
         }
-        return this.postedAt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return this.createdAt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public String getPostedAtFormatted() {
-        if (postedAt == null) {
+        if (createdAt == null) {
             return "";
         }
-        return postedAt.format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
+        return createdAt.format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
     }
 
     public String getExpiryDateFormatted() {
-        if (expiryDate == null) {
+        if (expiredAt == null) {
             return "";
         }
-        return expiryDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
+        return expiredAt.format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
     }
 }

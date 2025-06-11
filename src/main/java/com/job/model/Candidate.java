@@ -4,76 +4,60 @@
  */
 package com.job.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+@Entity
+@Table(name = "candidates")
 public class Candidate {
 
-    private Integer candidateID;
+    private Integer id;
 
-    private Integer userID;
+    @NotNull(message = "User ID cannot be null")
+    private Integer userId; 
 
-    @NotBlank(message = "URL CV không được để trống")
-    @Pattern(regexp = "^(https?://)?(www\\.)?.+\\.(pdf|doc|docx)$", message = "URL CV không hợp lệ")
+    @NotBlank(message = "Resume URL cannot be blank")
+    @Pattern(regexp = "^(http|https)://.*$", message = "Invalid resume URL format")
+    @Size(max = 255, message = "Resume URL must be less than or equal to 255 characters")
     private String resumeUrl;
 
-    @Size(max = 1000, message = "Tiểu sử không được quá 1000 ký tự")
-    private String bio;
-
-    @Size(max = 500, message = "Kỹ năng không được quá 500 ký tự")
+    @NotBlank(message = "Skills cannot be blank")
     private String skills;
 
-    public Candidate(){
-        
-    }
-    public Candidate(Integer candidateID, Integer userID, String resumeUrl, String bio, String skills){
-        this.userID = userID;
-        this.candidateID = candidateID;
+    @NotBlank(message = "Location cannot be blank")
+    @Size(max = 100, message = "Location must be less than or equal to 100 characters")
+    private String location;
+
+    @Size(max = 50, message = "Experience level must be less than or equal to 50 characters")
+    private String experienceLevel;
+
+    // Constructors
+    public Candidate() {}
+
+    public Candidate(Integer id, Integer userId, String resumeUrl, String skills, String location, String experienceLevel) {
+        this.id = id;
+        this.userId = userId;
         this.resumeUrl = resumeUrl;
-        this.bio = bio;
         this.skills = skills;
+        this.location = location;
+        this.experienceLevel = experienceLevel;
     }
+
     // Getters and Setters
-
-    public Integer getCandidateID() {
-        return candidateID;
-    }
-
-    public void setCandidateID(Integer candidateID) {
-        this.candidateID = candidateID;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
-    public String getResumeUrl() {
-        return resumeUrl;
-    }
-
-    public void setResumeUrl(String resumeUrl) {
-        this.resumeUrl = resumeUrl;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public String getSkills() {
-        return skills;
-    }
-
-    public void setSkills(String skills) {
-        this.skills = skills;
-    }
-    
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+    public Integer getUserId() { return userId; }
+    public void setUserId(Integer userId) { this.userId = userId; }
+    public String getResumeUrl() { return resumeUrl; }
+    public void setResumeUrl(String resumeUrl) { this.resumeUrl = resumeUrl; }
+    public String getSkills() { return skills; }
+    public void setSkills(String skills) { this.skills = skills; }
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
+    public String getExperienceLevel() { return experienceLevel; }
+    public void setExperienceLevel(String experienceLevel) { this.experienceLevel = experienceLevel; }
 }

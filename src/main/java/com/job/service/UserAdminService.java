@@ -1,102 +1,78 @@
 package com.job.service;
 
+import com.job.enums.CommonEnums.Role;
 import com.job.model.User;
-import java.util.ArrayList;
+import com.job.repository.UserRepository;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 @Service
 public class UserAdminService {
 
-    private final JdbcTemplate jdbcTemplate;
-
     @Autowired
-    public UserAdminService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private UserRepository userRepository;
+    @Autowired
+    private CandidateAdminService candidateService;
+    @Autowired
+    private EmployerAdminService employerAdminService;
 
     public List<User> getPage(List<User> list, int page, int size) {
-        if (list.isEmpty()) {
-            return new ArrayList<>();
-        }
-        int from = Math.max(0, (page - 1) * size);
-        int to = Math.min(from + size, list.size());
-        if (from >= list.size()) {
-            return new ArrayList<>();
-        }
-        return list.subList(from, to);
+        return userRepository.getPage(list, page, size);
     }
 
     public List<User> findAll() {
-        String sql = "SELECT * FROM Users";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
+        return userRepository.findAll();
     }
 
-    public User findByID(int id) {
-        String sql = "SELECT * FROM Users WHERE userid = ?";
-        try {
-            return jdbcTemplate.queryForObject(sql, new Object[]{id}, new BeanPropertyRowMapper<>(User.class));
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
+    public User findByID(Integer id) {
+        return userRepository.findById(id);
     }
 
     public void add(User user) {
-        String sql = "INSERT INTO Users (FullName, Email, Password, Role, CreatedAt) VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql,
-                user.getFullName(),
-                user.getEmail(),
-                user.getPasswordHash(),
-                user.getRole(),
-                java.sql.Date.valueOf(user.getCreatedAt()));
+        userRepository.add(user);
     }
 
     public void update(User user) {
-        String sql = "UPDATE Users SET FullName = ?, Email = ?, Password = ?, Role = ? WHERE userid = ?";
-        jdbcTemplate.update(sql,
-                user.getFullName(),
-                user.getEmail(),
-                user.getPasswordHash());
-                user.getRole();
-                user.getUserID();
+        userRepository.update(user);
     }
 
-    public void deleteByID(int id) {
-        String sql = "DELETE FROM Users WHERE userid = ?";
-        jdbcTemplate.update(sql, id);
+    public boolean deleteByID(Integer id) {
+        return userRepository.deleteById(id);
     }
 
     public List<User> search(String keyword) {
-        if (keyword == null || keyword.isBlank()) {
-            return findAll();
-        }
-        String sql = "SELECT * FROM Users WHERE LOWER(FullName) LIKE ? OR LOWER(Email) LIKE ?";
-        String likeKeyword = "%" + keyword.toLowerCase() + "%";
-        return jdbcTemplate.query(sql,
-                new Object[]{likeKeyword, likeKeyword},
-                new BeanPropertyRowMapper<>(User.class));
+        return userRepository.search(keyword);
     }
 
     public int countPages(List<User> list, int size) {
-        return (int) Math.ceil((double) list.size() / Math.max(1, size));
+        return userRepository.countPages(list, size);
     }
 
-    public User findByEmail(String Email) {
-        String sql = "SELECT * FROM Users WHERE Email = ?";
-        try {
-            return jdbcTemplate.queryForObject(sql, new Object[]{Email}, new BeanPropertyRowMapper<>(User.class));
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     public boolean verifyPassword(String rawPassword, String storedPassword) {
-        boolean matches = rawPassword != null && rawPassword.equals(storedPassword);
-        System.out.println("verifyPassword: rawPassword=" + rawPassword + ", storedPassword=" + storedPassword + ", matches=" + matches);
-        return matches;
+        return userRepository.verifyPassword(rawPassword, storedPassword);
+    }
+
+    public List<User> findAvailableEmployers() {
+        List<User> employers = userRepository.findAll().stream()
+                .filter(user -> user.getRole() == Role.EMPLOYER)
+                .collect(Collectors.toList());
+        return employers.stream()
+                .filter(user -> employerAdminService.findByUserID(user.getId()) == null)
+                .collect(Collectors.toList());
+    }
+
+    public List<User> findAvailableCandidates() {
+        List<User> candidates = userRepository.findAll().stream()
+                .filter(user -> user.getRole() == Role.CANDIDATE)
+                .collect(Collectors.toList());
+        return candidates.stream()
+                .filter(user -> candidateService.findByUserID(user.getId()) == null)
+                .collect(Collectors.toList());
     }
 }

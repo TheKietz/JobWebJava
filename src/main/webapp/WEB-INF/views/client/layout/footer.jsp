@@ -64,7 +64,7 @@
                                         <div class="form-icon">
                                             <button type="submit" name="submit" id="newsletter-submit"
                                                     class="email_icon newsletter-submit button-contactForm">
-                                                <img src="<c:url value='/template/assets/img/icon/form.png'/>" alt="">
+                                                <img src="<c:url value='/template/assets1/img/icon/form.png'/>" alt="">
                                             </button>
                                         </div>
                                         <div class="mt-10 info"></div>
@@ -79,7 +79,7 @@
             <div class="row footer-wejed justify-content-between">
                 <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                     <div class="footer-logo mb-20">
-                        <a href="index.html"><img src="<c:url value='/template/assets/img/logo/logo2_footer.png'/>" alt=""></a>
+                        <a href="index.html"><img src="<c:url value='/template/assets1/img/logo/logo2_footer.png'/>" alt=""></a>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
@@ -134,24 +134,24 @@
 </footer>
 
 <!-- JS here -->
-<script src="<c:url value='/template/assets/js/vendor/modernizr-3.5.0.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/vendor/jquery-1.12.4.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/popper.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/bootstrap.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/jquery.slicknav.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/owl.carousel.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/slick.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/price_rangs.js'/>"></script>
-<script src="<c:url value='/template/assets/js/wow.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/animated.headline.js'/>"></script>
-<script src="<c:url value='/template/assets/js/jquery.magnific-popup.js'/>"></script>
-<script src="<c:url value='/template/assets/js/jquery.scrollUp.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/jquery.nice-select.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/jquery.sticky.js'/>"></script>
-<script src="<c:url value='/template/assets/js/contact.js'/>"></script>
-<script src="<c:url value='/template/assets/js/jquery.form.js'/>"></script>
-<script src="<c:url value='/template/assets/js/jquery.validate.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/mail-script.js'/>"></script>
-<script src="<c:url value='/template/assets/js/jquery.ajaxchimp.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/plugins.js'/>"></script>
-<script src="<c:url value='/template/assets/js/main.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/vendor/modernizr-3.5.0.min.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/vendor/jquery-1.12.4.min.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/popper.min.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/bootstrap.min.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/jquery.slicknav.min.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/owl.carousel.min.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/slick.min.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/price_rangs.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/wow.min.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/animated.headline.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/jquery.magnific-popup.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/jquery.scrollUp.min.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/jquery.nice-select.min.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/jquery.sticky.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/contact.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/jquery.form.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/jquery.validate.min.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/mail-script.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/jquery.ajaxchimp.min.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/plugins.js'/>"></script>
+<script src="<c:url value='/template/assets1/js/main.js'/>"></script>

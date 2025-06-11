@@ -5,6 +5,7 @@ import com.job.service.ApplicationAdminService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -106,8 +107,8 @@ public class ApplicationAdminController {
             model.addAttribute("body", "/WEB-INF/views/admin/application/form.jsp");
             return "admin/layout/main";
         }
-        if (application.getApplicationID() == null) {
-            application.setAppliedAt(LocalDate.now());
+        if (application.getId() == null) {
+            application.setAppliedAt(LocalDateTime.now());
             applicationService.add(application);
         } else {
             applicationService.update(application);

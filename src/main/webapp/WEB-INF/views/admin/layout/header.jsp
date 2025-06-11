@@ -119,15 +119,14 @@
                                 <i class="icon-menu menu-icon"></i>
                             </a>
                         </li>
-                        <li class="nav-item">
-
+<!--                        <li class="nav-item">
                             <form class="search-bar" action="${pageContext.request.contextPath}/admin/users" method="get">
                                 <input type="hidden" name="page" value="1">
                                 <input type="hidden" name="size" value="${pageSize}">
                                 <input type="search" class="form-control" name="keyword" aria-label="Search" placeholder="Search by company name or email" value="${fn:escapeXml(keyword)}">
                                 <a href="javascript:void(0);" onclick="this.closest('form').submit();"><i class="icon-magnifier"></i></a>
                             </form>
-                        </li>
+                        </li>-->
 
                     </ul>
 
