@@ -1,17 +1,21 @@
 package com.job.repository;
 
+import com.job.model.User;
 import com.job.enums.CommonEnums.Role;
 import com.job.enums.CommonEnums.Status;
-import com.job.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
+
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
@@ -74,16 +78,16 @@ public class UserRepository {
     }
 
     public void add(User user) {
-          String sql = "INSERT INTO users (full_name, email, password, phone, role, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
-          jdbcTemplate.update(sql,
-                  user.getFullName(),
-                  user.getEmail(),
-                  user.getPassword(),
-                  user.getPhone(),
-                  user.getRole() != null ? user.getRole().name() : "ADMIN", // Ánh xạ enum sang chuỗi
-                  user.getStatus() != null ? user.getStatus().name() : "ACTIVE",
-                  user.getCreatedAt());
-      }
+        String sql = "INSERT INTO users (full_name, email, password, phone, role, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql,
+                user.getFullName(),
+                user.getEmail(),
+                user.getPassword(),
+                user.getPhone(),
+                user.getRole() != null ? user.getRole().name() : "ADMIN", // Ánh xạ enum sang chuỗi
+                user.getStatus() != null ? user.getStatus().name() : "ACTIVE",
+                user.getCreatedAt());
+    }
 
     public void update(User user) {
         String sql = "UPDATE users SET full_name = ?, email = ?, password = ?, phone = ?, role = ?, status = ?, created_at = ? WHERE id = ?";
@@ -99,15 +103,40 @@ public class UserRepository {
                 user.getId());
     }
 
+    public void save(User user) {
+        String sql = "INSERT INTO users (full_name, email, password, phone, role, status, created_at) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        System.out.println("Saving user: email=" + user.getEmail() + ", role=" + (user.getRole() != null ? user.getRole().name() : "CANDIDATE"));
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, user.getFullName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.setString(4, user.getPhone());
+            ps.setString(5, user.getRole() != null ? user.getRole().name() : "CANDIDATE");
+            ps.setString(6, user.getStatus() != null ? user.getStatus().name() : "ACTIVE");
+            ps.setTimestamp(7, java.sql.Timestamp.valueOf(user.getCreatedAt()));
+            return ps;
+        }, keyHolder);
+
+        Number key = keyHolder.getKey();
+        if (key != null) {
+            user.setId(key.intValue());
+            System.out.println("User saved: id=" + user.getId() + ", email=" + user.getEmail());
+        }
+    }
+
     @Transactional
     public boolean deleteById(Integer id) {
         System.out.println("deleteById: Starting deletion for UserID=" + id);
         try {
             // Get candidate_id for the user (if exists)
             Integer candidateId = jdbcTemplate.queryForObject(
-                "SELECT id FROM candidates WHERE user_id = ?", 
-                new Object[]{id}, 
-                Integer.class
+                    "SELECT id FROM candidates WHERE user_id = ?",
+                    new Object[]{id},
+                    Integer.class
             );
 
             // Delete from job_recommendations
@@ -250,28 +279,4 @@ public class UserRepository {
         System.out.println("verifyPassword: rawPassword=****, storedPassword=****, matches=" + matches);
         return matches;
     }
-//    public List<User> findAvailableEmployers() {
-//        List<User> employers = userRepository.findAll().stream()
-//                .filter(user -> user.getRole() == Role.EMPLOYER)
-//                .collect(Collectors.toList());
-//        return employers.stream()
-//                .filter(user -> employerService.findByUserID(user.getId()) == null)
-//                .collect(Collectors.toList());
-//    }
-//
-//    public List<User> findAvailableCandidates() {
-//        List<User> candidates = userRepository.findAll().stream()
-//                .filter(user -> user.getRole() == Role.CANDIDATE)
-//                .collect(Collectors.toList());
-//        return candidates.stream()
-//                .filter(user -> candidateService.findByUserID(user.getId()) == null)
-//                .collect(Collectors.toList());
-//    }
-  }
-
-
-
-
-
-
-
+}

@@ -5,7 +5,7 @@ import static com.job.enums.CommonEnums.Role.CANDIDATE;
 import static com.job.enums.CommonEnums.Role.EMPLOYER;
 import com.job.model.LoginForm;
 import com.job.model.User;
-import com.job.service.UserAdminService;
+import com.job.service.client.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class LoginController {
 
     @Autowired
-    private UserAdminService userService;
+    private UserService userService;
 
     @GetMapping("/login")
     public String showLoginForm(Model model) {
@@ -30,9 +30,9 @@ public class LoginController {
 
     @PostMapping("/login")
     public String processLogin(@Valid @ModelAttribute("loginForm") LoginForm loginForm,
-                              BindingResult result,
-                              Model model,
-                              HttpSession session) {
+            BindingResult result,
+            Model model,
+            HttpSession session) {
         if (result.hasErrors()) {
             return "client/login";
         }
@@ -46,31 +46,31 @@ public class LoginController {
         // Store user info in session
         session.setAttribute("loggedInUser", user);
         session.setAttribute("userRole", user.getRole());
-        System.out.println("User logged in: userID=" + user.getId()+ ", email=" + user.getEmail() + ", role=" + user.getRole());
+        System.out.println("User logged in: userID=" + user.getId() + ", email=" + user.getEmail() + ", role=" + user.getRole());
 
         // Redirect based on role
         switch (user.getRole()) { // user.getRole() trả về Role enum
-    case CANDIDATE -> { 
-        return "redirect:/home";
-    }
-    case EMPLOYER -> { 
-        return "redirect:/home";
-    }
-    case ADMIN -> { 
-        return "redirect:/admin/login";
-    }
-    default -> {
-        model.addAttribute("error", "Unknown role");
-        session.invalidate();
-        return "client/login";
-    }
-}
+            case CANDIDATE -> {
+                return "redirect:/home";
+            }
+            case EMPLOYER -> {
+                return "redirect:/home";
+            }
+            case ADMIN -> {
+                return "redirect:/admin/login";
+            }
+            default -> {
+                model.addAttribute("error", "Unknown role");
+                session.invalidate();
+                return "client/login";
+            }
+        }
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         System.out.println("User logged out.");
-        return "redirect:/client/login";
+        return "redirect:/login";
     }
 }

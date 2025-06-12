@@ -2,15 +2,24 @@ package com.job.service.client;
 
 import com.job.model.User;
 import com.job.repository.UserRepository;
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     public List<User> getPage(List<User> list, int page, int size) {
         return userRepository.getPage(list, page, size);
@@ -48,9 +57,18 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public boolean verifyPassword(String rawPassword, String storedPassword) {
-        boolean matches = rawPassword != null && rawPassword.equals(storedPassword);
-        System.out.println("verifyPassword: rawPassword=" + rawPassword + ", storedPassword=" + storedPassword + ", matches=" + matches);
-        return matches;
+    public boolean verifyPassword(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
+
+    public String encodePassword(String rawPassword) {
+        return passwordEncoder.encode(rawPassword);
+    }
+
+    @Transactional
+    public void save(User user) {
+        logger.debug("Saving user: email={}", user.getEmail());
+        userRepository.save(user);
+        logger.info("User saved: id={}, email={}", user.getId(), user.getEmail());
     }
 }

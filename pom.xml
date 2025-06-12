@@ -13,6 +13,17 @@
     </properties>
 
     <dependencies>
+        <!-- SLF4J and Logback -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.5.8</version>
+        </dependency>
         <!-- Connnect MySQL -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -141,17 +152,17 @@
         <plugins>
             <!-- Maven Compiler Plugin -->
             <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.13.0</version>
-            <configuration>
-                <source>21</source>
-                <target>21</target>
-                <compilerArgs>
-                    <arg>-parameters</arg>
-                </compilerArgs>
-            </configuration>
-        </plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
 
             <!-- Maven WAR Plugin -->
             <plugin>

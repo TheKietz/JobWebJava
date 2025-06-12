@@ -23,6 +23,7 @@ public class User {
     private String email;
 
     @Size(max = 255, message = "Password must be less than or equal to 255 characters")
+    @Size(min = 6, max = 255, message = "Mật khẩu phải từ 6 đến 255 ký tự")
     private String password;
 
     @Size(max = 20, message = "Phone must be less than or equal to 20 characters")

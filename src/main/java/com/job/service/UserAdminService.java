@@ -2,21 +2,28 @@ package com.job.service;
 
 import com.job.enums.CommonEnums.Role;
 import com.job.model.User;
-import com.job.repository.UserRepository;
-import java.util.List;
 import java.util.stream.Collectors;
+import com.job.repository.UserRepository;
+import com.job.service.client.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.List;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserAdminService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private CandidateAdminService candidateService;
     @Autowired
     private EmployerAdminService employerAdminService;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     public List<User> getPage(List<User> list, int page, int size) {
         return userRepository.getPage(list, page, size);
@@ -54,8 +61,19 @@ public class UserAdminService {
         return userRepository.findByEmail(email);
     }
 
-    public boolean verifyPassword(String rawPassword, String storedPassword) {
-        return userRepository.verifyPassword(rawPassword, storedPassword);
+     public boolean verifyPassword(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
+
+    public String encodePassword(String rawPassword) {
+        return passwordEncoder.encode(rawPassword);
+    }
+
+    @Transactional
+    public void save(User user) {
+        logger.debug("Saving user: email={}", user.getEmail());
+        userRepository.save(user);
+        logger.info("User saved: id={}, email={}", user.getId(), user.getEmail());
     }
 
     public List<User> findAvailableEmployers() {

