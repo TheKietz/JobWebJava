@@ -1,103 +1,216 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TopCV Main Content</title>
+        <link rel="stylesheet" href="<c:url value='/template/assets1/css/bootstrap.min.css'/>">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    </head>
+    <body>
+        <main>
+            <!-- Banner -->
+            <section class="banner">
+                <div class="d-flex justify-content-center my-4">
+                    <!-- Search -->
+                    <form class="custom-search-form d-flex align-items-center" action="${pageContext.request.contextPath}/search" method="get">
+                        <!-- Ô từ khóa -->
+                        <input type="text" class="form-control search-input" name="keyword" placeholder="Vị trí tuyển dụng, tên công ty" value="${fn:escapeXml(keyword)}">
 
-<main>
-<!--    Slider Area Start-->
-    <div class="slider-area">
-        <div class="slider-active">
-            <div class="single-slider slider-height d-flex align-items-center" data-background="<c:url value='/template/assets1/img/hero/h1_hero.jpg'/>">
+                        <!-- Địa điểm -->
+                        <div class="location-box d-flex align-items-center">
+                            <i class="bi bi-geo-alt me-1"></i>
+                            <span>Địa điểm</span>
+                            <i class="bi bi-chevron-down ms-1"></i>
+                        </div>
+
+                        <!-- Nút tìm kiếm -->
+                        <button type="submit" class="btn search-button">
+                            <i class="bi bi-search me-1"></i> Tìm Kiếm
+                        </button>
+                    </form>
+
+                </div>
                 <div class="container">
+                    <h1 style="color: #02ba5a">JobFinder- Tiếp lợi thế, nối thành công</h1>
+                    <p>Với Hệ sinh thái HR Tech, JobFinder luôn đồng hành để bạn thành công trong sự nghiệp</p>
+                    <a href="#" class="btn-login">Tìm hiểu thêm</a>
+                </div>
+            </section>
+
+            <!-- Job Listings -->
+            <section class="job-list py-5">
+                <div class="container">
+                    <h2>Việc làm tốt nhất</h2>
                     <div class="row">
-                        <div class="col-xl-6 col-lg-9 col-md-10">
-                            <div class="hero__caption">
-                                <h1>Find the most exciting startup jobs</h1>
+                        <c:forEach var="job" items="${jobs}">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${fn:escapeXml(job.title)}</h5>
+                                        <p class="card-text">${fn:escapeXml(job.company.name)}</p>
+                                        <p class="card-text">${job.salary}</p>
+                                        <p class="card-text">${job.short_cities}</p>
+                                        <a href="#" class="btn btn-outline-primary">Ứng tuyển</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </c:forEach>
                     </div>
-<!--                    Search Box -->
+                    <a href="#" class="btn btn-link">Xem tất cả</a>
+                </div>
+            </section>
+
+            <!-- Top Categories -->
+            <section class="category-list py-5 bg-light">
+                <div class="container">
+                    <h2>Top ngành nghề nổi bật</h2>
+                    <div class="list-group">
+                        <c:forEach var="category" items="${categories}">
+                            <a href="#" class="list-group-item list-group-item-action">${category.name} (${category.job_category_count} việc làm)</a>
+                        </c:forEach>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Blog Posts -->
+            <section class="blog-posts py-5">
+                <div class="container">
+                    <h2>Bài viết nổi bật</h2>
                     <div class="row">
-                        <div class="col-xl-8">
-                            <form action="#" class="search-box">
-                                <div class="input-form">
-                                    <input type="text" placeholder="Job Title or keyword">
-                                </div>
-                                <div class="select-form">
-                                    <select name="select" id="select1">
-                                        <option value="">Location</option>
-                                        <option value="">Location US</option>
-                                        <option value="">Location UK</option>
-                                    </select>
-                                </div>
-                                <div class="search-form">
-                                    <a href="#">Find job</a>
-                                </div>
-                            </form>
+                        <div class="col-md-6 blog-post">
+                            <h3>TopCV Pro – Không gian tuyển dụng chuyên biệt</h3>
+                            <p>Mỗi chúng ta đều mang trong mình một khát vọng chạm tới đỉnh cao trong sự nghiệp...</p>
+                            <a href="#" class="btn btn-link">Xem thêm</a>
+                        </div>
+                        <div class="col-md-6 blog-post">
+                            <h3>Các loại bảo hiểm khi đi làm phải đóng</h3>
+                            <p>Khi ký hợp đồng lao động, người lao động và người sử dụng lao động sẽ có những thỏa thuận...</p>
+                            <a href="#" class="btn btn-link">Xem thêm</a>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-link">Xem thêm bài viết nổi bật</a>
+                </div>
+            </section>
+
+            <!-- Tools -->
+            <section class="tools py-5 bg-light">
+                <div class="container">
+                    <h2>Công cụ hỗ trợ</h2>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="#" class="btn btn-outline-secondary w-100 mb-3">Tính lương Gross - Net</a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#" class="btn btn-outline-secondary w-100 mb-3">Trắc nghiệm MBTI</a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#" class="btn btn-outline-secondary w-100 mb-3">Tạo CV miễn phí</a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#" class="btn btn-outline-secondary w-100 mb-3">Tính bảo hiểm thất nghiệp</a>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-<!--    Slider Area End-->
+            </section>
+        </main>
+    </body>
+</html>
 
-<!--    Featured Jobs Section Start -->
-    <div class="featured-job-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-tittle text-center">
-                        <h2>Featured Jobs</h2>
-                    </div>
-                </div>
-            </div>
+<style>
+    .banner {
+        background: url('${pageContext.request.contextPath}/template/images/desktop_bg.png') no-repeat center;
+        background-size: cover;
+        padding: 100px 0;
+        color: whitesmoke;
+        text-align: center;
+    }
+    .banner h1 {
+        font-size: 36px;
+    }
+    .job-list .card {
+        margin-bottom: 20px;
+    }
+    .job-list .card-title {
+        font-size: 18px;
+    }
+    .category-list .list-group-item {
+        cursor: pointer;
+    }
+    .blog-post {
+        margin-bottom: 30px;
+    }
+    .btn-login {
+        background-color: #28a745;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 6px;
+        text-decoration: none !important;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: 1px solid #28a745;
+    }
+    .btn-login:hover,
+    .btn-login:focus,
+    .btn-login:active {
+        background-color: #218838;
+        border-color: #218838;
+        color: white;
+        text-decoration: none;
+    }
+    .custom-search-form {
+        background-color: #fff;
+        border-radius: 999px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        width: 100%;
+        max-width: 900px;
+    }
 
-<!--            Job Listings -->
-            <div class="row justify-content-center">
-                <div class="col-xl-10">
-                    <div class="single-job-items mb-30">
-                        <div class="job-items">
-                            <div class="company-img">
-                                <a href="<c:url value='/job_details.html' />">
-                                    <img src="<c:url value='/template/assets1/img/icon/job-list1.png' />" alt="">
-                                </a>
+    .search-input {
+        border: none;
+        padding: 12px 20px;
+        flex: 1;
+        border-right: 1px solid #ddd;
+        outline: none;
+        box-shadow: none;
+        font-size: 15px;
+    }
 
-                            </div>
-                            <div class="job-tittle">
-                                <a href="job_details.html"><h4>Digital Marketer</h4></a>
-                                <ul>
-                                    <li>Creative Agency</li>
-                                    <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                    <li>$3500 - $4000</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="items-link f-right">
-                            <a href="job_details.html">Full Time</a>
-                            <span>7 hours ago</span>
-                        </div>
-                    </div>
-<!--                    More jobs here -->
-                </div>
-            </div>
-        </div>
-    </div>
-<!--    Featured Jobs Section End -->
+    .location-box {
+        padding: 0 15px;
+        font-size: 14px;
+        color: #343a40;
+        border-right: 1px solid #ddd;
+        white-space: nowrap;
+    }
 
-<!--    Online CV Section Start -->
-    <div class="online-cv cv-bg section-overly pt-90 pb-120"
-         data-background="<c:url value='/template/assets1/img/gallery/cv_bg.jpg' />">
+    .search-button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 22px;
+        font-weight: 500;
+        border: none;
+        border-top-right-radius: 999px;
+        border-bottom-right-radius: 999px;
+        border-left: 1px solid #28a745;
+        display: flex;
+        align-items: center;
+        transition: background-color 0.3s;
+    }
 
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-10">
-                    <div class="cv-caption text-center">
-                        <p>Make a Difference with Your Online Resume!</p>
-                        <a href="#" class="border-btn2 border-btn4">Upload your cv</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<!--    Online CV Section End-->
-</main>
+    .search-button:hover {
+        background-color: #218838;
+        color: white;
+    }
+
+    .custom-search-form input:focus,
+    .custom-search-form button:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+</style>

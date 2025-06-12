@@ -2,3 +2,4 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <c:redirect url="/client/home.jsp"/>
+
