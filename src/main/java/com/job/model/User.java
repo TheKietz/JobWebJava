@@ -1,94 +1,75 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.job.model;
 
+import com.job.enums.CommonEnums.Role;
+import com.job.enums.CommonEnums.Status;
 import jakarta.persistence.Entity;
-import java.time.LocalDate;
-import org.springframework.format.annotation.DateTimeFormat;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.*;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@Table(name = "users")
 public class User {
+    private Integer id;
 
-    private Integer userID;
-
-    @NotBlank(message = "Họ tên không được để trống")
-    @Size(min = 2, max = 50, message = "Họ tên phải từ 2 đến 50 ký tự")
+    @NotBlank(message = "Full name cannot be blank")
+    @Size(max = 100, message = "Full name must be less than or equal to 100 characters")
     private String fullName;
 
-    @NotBlank(message = "Email không được để trống")
-    @Email(message = "Email không hợp lệ")
+    @NotBlank(message = "Email cannot be blank")
+    @Email(message = "Invalid email format")
+    @Size(max = 100, message = "Email must be less than or equal to 100 characters")
     private String email;
 
-    private String passwordHash;
+    @Size(max = 255, message = "Password must be less than or equal to 255 characters")
+    @Size(min = 6, max = 255, message = "Mật khẩu phải từ 6 đến 255 ký tự")
+    private String password;
 
-    @NotBlank(message = "Vai trò không được để trống")
-    @Pattern(regexp = "(?i)CANDIDATE|EMPLOYER|ADMIN", message = "Vai trò chỉ có thể là CANDIDATE,EMPLOYER hoặc ADMIN")
-    private String role;
+    @Size(max = 20, message = "Phone must be less than or equal to 20 characters")
+    private String phone;
 
-    @DateTimeFormat(pattern = "MM-dd-yyyy")
-    private LocalDate createdAt;
+    @NotNull(message = "Role cannot be null")
+    private Role role;
+
+    private Status status;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdAt;
+
+    public User() {}
+
+    public User(Integer id, String fullName, String email, String password, String phone, Role role) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.role = role;
+        this.status = Status.ACTIVE;
+        this.createdAt = LocalDateTime.now();
+    }
 
     // Getters and Setters
-    public Integer getUserID() {
-        return userID;
-    }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+    public Role getRole() { return role; }
+    public void setRole(Role role) { this.role = role; }
+    public Status getStatus() { return status; }
+    public void setStatus(Status status) { this.status = status; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = (role != null) ? role.toUpperCase() : null;
-    }
-
-    public LocalDate getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public User() {
-    }
-
-    public User(Integer userID, String fullName, String email, String passwordHash, String role, LocalDate createdAt) {
-        this.userID = userID;
-        this.fullName = fullName;
-        this.email = email;
-        this.passwordHash = passwordHash;
-        this.role = role;
-        this.createdAt = createdAt;
+    @Override
+    public String toString() {
+        return "User{id=" + id + ", fullName='" + fullName + "', email='" + email + "', role=" + role + "}";
     }
 }

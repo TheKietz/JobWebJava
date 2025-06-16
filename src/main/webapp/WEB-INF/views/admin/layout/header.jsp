@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -9,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <meta name="description" content=""/>
         <meta name="author" content=""/>
-        <title>Admin - Kiet Job Portal</title>
+        <title>JobFinder Admin</title>
         <!-- loader-->
         <link href="<c:url value='/template/assets/css/pace.min.css'/>" rel="stylesheet"/>
         <script src="<c:url value='/template/assets/js/pace.min.js'/>"></script>
@@ -41,7 +42,7 @@
             });
         </script>
     </head>
-    <body class="bg-theme bg-dark">
+    <body class="bg-theme bg-theme11">
 
         <!-- Start wrapper-->
         <div id="wrapper">
@@ -49,50 +50,101 @@
             <!--Start sidebar-wrapper-->
             <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
                 <div class="brand-logo">
-                    <a href="index.html">
-                        <img src="${pageContext.request.contextPath}/template/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-                        <h5 class="logo-text">Dashtreme Admin</h5>
+                    <a href="${pageContext.request.contextPath}/admin/dashboard">
+                        <img src="<c:url value='/template/assets1/img/logo/logo2_footer.png'/>" alt="Logo" style="height: 40px;">                        
                     </a>
                 </div>
-                <ul class="sidebar-menu do-nicescrol">
-                    <li class="sidebar-header">MAIN NAVIGATION</li>
+                <ul class="sidebar-menu do-nicescrol">                    
                     <li>
-                        <a href="${pageContext.request.contextPath}/dashboard">
-                            <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
+                        <a href="${pageContext.request.contextPath}/admin/dashboard">
+                            <i class="zmdi zmdi-view-dashboard"></i> <span>Trang chủ</span>
                         </a>
                     </li>     
                     <li>
                         <a href="javascript:void(0);" class="sidebar-toggle">
                             <i class="zmdi zmdi-account"></i>
-                            <span>User Management</span>
+                            <span>Quản lý người dùng</span>
                             <i class='fas fa-angle-down fa-3x'></i>
                         </a>
                         <ul class="sidebar-submenu">
                             <li >
                                 <a href="${pageContext.request.contextPath}/admin/users">
-                                    <i class="zmdi zmdi-dot-circle-alt"></i> Users
+                                    <i class="zmdi zmdi-dot-circle-alt"></i> Tài khoản
                                 </a>
                             </li>
                             <li>
                                 <a href="${pageContext.request.contextPath}/admin/employers">
-                                    <i class="zmdi zmdi-dot-circle-alt"></i> Employers
+                                    <i class="zmdi zmdi-dot-circle-alt"></i> Nhà tuyển dụng
                                 </a>
                             </li>
                             <li>
                                 <a href="${pageContext.request.contextPath}/admin/candidates">
-                                    <i class="zmdi zmdi-dot-circle-alt"></i> Candidates
+                                    <i class="zmdi zmdi-dot-circle-alt"></i> Ứng viên
                                 </a>
                             </li>
                         </ul>
-                    </li>
-
-
+                    </li>                    
+                    <!--  job-->
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/login" target="_blank">
-                            <i class="zmdi zmdi-lock"></i> <span>Login</span>
+                        <a href="${pageContext.request.contextPath}/admin/jobs">
+                            <i class="zmdi zmdi-case-check"></i> <span>Quản lý tuyển dụng</span>
                         </a>
-                    </li>       
-
+                    </li>
+                    <!--  application-->
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/applications">
+                            <i class="zmdi zmdi-assignment-account"></i> <span>Đơn ứng tuyển</span>
+                        </a>
+                    </li>
+                    <%--subscriptions - service_packages--%>
+                    <li>
+                        <a href="javascript:void(0);" class="sidebar-toggle">
+                            <i class="zmdi zmdi-account"></i>
+                            <span>Gói dịch vụ/Doanh thu</span>
+                            <i class='fas fa-angle-down fa-3x'></i>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="${pageContext.request.contextPath}/admin/service_packages/details">
+                                    <i class="zmdi zmdi-dot-circle-alt"></i> Quản lý gói
+                                </a>
+                            </li>
+                            <li >
+                                <a href="${pageContext.request.contextPath}/admin/subscriptions/details">
+                                    <i class="zmdi zmdi-dot-circle-alt"></i> Các gọi đã mua
+                                </a>
+                            </li>
+                            <li >
+                                <a href="${pageContext.request.contextPath}/admin/subscriptions/#">
+                                    <i class="zmdi zmdi-dot-circle-alt"></i> Các gọi đã mua
+                                </a>
+                            </li>
+                                                        
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="#">
+                            <i class="zmdi zmdi-assignment-account"></i> <span>Báo cáo thống kê</span>
+                        </a>
+                    </li>                    
+                    <%--banner--%>
+                    <li>
+                        <a href="#">
+                            <i class="zmdi zmdi-assignment-account"></i> <span>Banner</span>
+                        </a>
+                    </li>
+                    <%--system_settings--%>
+                    <li>
+                        <a href="#">
+                            <i class="zmdi zmdi-assignment-account"></i> <span>Cài đặt hệ thống</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/logout" target="_blank">
+                            <i class="zmdi zmdi-lock"></i> <span>Logout</span>
+                        </a>
+                    </li> 
                     <li class="sidebar-header">LABELS</li>
                     <li><a href="javaScript:void();"><i class="zmdi zmdi-coffee text-danger"></i> <span>Important</span></a></li>
                     <li><a href="javaScript:void();"><i class="zmdi zmdi-chart-donut text-success"></i> <span>Warning</span></a></li>
@@ -113,7 +165,6 @@
                             </a>
                         </li>
                         <li class="nav-item">
-
                             <form class="search-bar" action="${pageContext.request.contextPath}/admin/users" method="get">
                                 <input type="hidden" name="page" value="1">
                                 <input type="hidden" name="size" value="${pageSize}">
@@ -144,13 +195,15 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
-                                <span class="user-profile"><img src="https://via.placeholder.com/110x110" class="img-circle" alt="user avatar"></span>
+                                <span class="user-profile">
+                                    <img src="${pageContext.request.contextPath}/template/assets1/img/avata.png" class="img-circle" alt="user avatar">
+                                </span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li class="dropdown-item user-details">
                                     <a href="javaScript:void();">
                                         <div class="media">
-                                            <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
+
                                             <div class="media-body">
                                                 <h6 class="mt-2 user-title">Sarajhon Mccoy</h6>
                                                 <p class="user-subtitle">mccoy@example.com</p>
@@ -165,7 +218,14 @@
                                 <li class="dropdown-divider"></li>
                                 <li class="dropdown-item"><i class="icon-settings mr-2"></i> Setting</li>
                                 <li class="dropdown-divider"></li>
-                                <li class="dropdown-item"><i class="icon-power mr-2"></i> Logout</li>
+
+                                <li>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/logout">
+                                        <i class="icon-power mr-2"></i> Logout
+                                    </a>
+                                </li>
+
+
                             </ul>
                         </li>
                     </ul>

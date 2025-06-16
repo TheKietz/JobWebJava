@@ -5,91 +5,58 @@
 package com.job.model;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import java.util.Date;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.job.enums.CommonEnums.*;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class Application {
-    private int applicationID;
+   private Integer id;
+    private Integer candidateId; // Liên kết với Candidate.id
+    private Integer jobId; // Liên kết với Job.id
 
-    private int candidateID;
-
-    private int jobID;
-
-    @NotBlank(message = "Thư xin việc không được để trống")
-    @Size(min = 10, max = 2000, message = "Thư xin việc phải từ 10 đến 2000 ký tự")
-    private String coverLetter;
-
-    @NotBlank(message = "URL CV không được để trống")
-    @Pattern(regexp = "^(https?://)?(www\\.)?.+\\.(pdf|doc|docx)$", message = "URL CV không hợp lệ")
+    @NotBlank(message = "Resume URL cannot be blank")
+    @Pattern(regexp = "^(http|https)://.*$", message = "Invalid resume URL format")
+    @Size(max = 255, message = "Resume URL must be less than or equal to 255 characters")
     private String resumeUrl;
 
-    @PastOrPresent(message = "Ngày nộp không được ở tương lai")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date appliedAt;
+    private ApplicationStatus status; // Default handled by DB, but here for completeness
 
-    @NotBlank(message = "Trạng thái không được để trống")
-    @Pattern(regexp = "Pending|Reviewed|Accepted|Rejected", message = "Trạng thái không hợp lệ")
-    private String status;
+    @DecimalMin(value = "0.0", message = "Score cannot be negative")
+    @DecimalMax(value = "100.0", message = "Score cannot exceed 100")
+    private BigDecimal score;
+    private LocalDateTime appliedAt; // Default handled by DB, but here for completeness
 
-    // Getters and Setters
+    // Constructors (optional)
+    public Application() {}
 
-    public int getApplicationID() {
-        return applicationID;
-    }
-
-    public void setApplicationID(int applicationID) {
-        this.applicationID = applicationID;
-    }
-
-    public int getCandidateID() {
-        return candidateID;
-    }
-
-    public void setCandidateID(int candidateID) {
-        this.candidateID = candidateID;
-    }
-
-    public int getJobID() {
-        return jobID;
-    }
-
-    public void setJobID(int jobID) {
-        this.jobID = jobID;
-    }
-
-    public String getCoverLetter() {
-        return coverLetter;
-    }
-
-    public void setCoverLetter(String coverLetter) {
-        this.coverLetter = coverLetter;
-    }
-
-    public String getResumeUrl() {
-        return resumeUrl;
-    }
-
-    public void setResumeUrl(String resumeUrl) {
+    public Application(Integer id, Integer candidateId, Integer jobId, String resumeUrl, ApplicationStatus status, BigDecimal score, LocalDateTime appliedAt) {
+        this.id = id;
+        this.candidateId = candidateId;
+        this.jobId = jobId;
         this.resumeUrl = resumeUrl;
-    }
-
-    public Date getAppliedAt() {
-        return appliedAt;
-    }
-
-    public void setAppliedAt(Date appliedAt) {
+        this.status = status;
+        this.score = score;
         this.appliedAt = appliedAt;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    // Getters and Setters
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+    public Integer getCandidateId() { return candidateId; }
+    public void setCandidateId(Integer candidateId) { this.candidateId = candidateId; }
+    public Integer getJobId() { return jobId; }
+    public void setJobId(Integer jobId) { this.jobId = jobId; }
+    public String getResumeUrl() { return resumeUrl; }
+    public void setResumeUrl(String resumeUrl) { this.resumeUrl = resumeUrl; }
+    public ApplicationStatus getStatus() { return status; }
+    public void setStatus(ApplicationStatus status) { this.status = status; }
+    public BigDecimal getScore() { return score; }
+    public void setScore(BigDecimal score) { this.score = score; }
+    public LocalDateTime getAppliedAt() { return appliedAt; }
+    public void setAppliedAt(LocalDateTime appliedAt) { this.appliedAt = appliedAt; }
 }
 

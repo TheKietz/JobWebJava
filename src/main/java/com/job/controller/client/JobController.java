@@ -1,3 +1,4 @@
+
 package com.job.controller.client;
 
 import com.job.model.Job;
@@ -36,3 +37,4 @@ public class JobController {
         return mav;
     }
 }
+

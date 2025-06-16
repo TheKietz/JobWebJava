@@ -6,3 +6,4 @@
 <c:import url="${body}" />
 
 <jsp:include page="/WEB-INF/views/admin/layout/footer.jsp"/>
+
