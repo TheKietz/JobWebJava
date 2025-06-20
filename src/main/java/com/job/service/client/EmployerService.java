@@ -20,4 +20,7 @@ public class EmployerService {
     public Employer findByUserID(Integer userID) {
         return employerRepository.findByUserID(userID);
     }
+    public void add(Employer employer){
+        employerRepository.add(employer);
+    }
 }

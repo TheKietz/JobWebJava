@@ -141,7 +141,7 @@
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Việc làm</a>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Tìm việc làm</a></li>
+                                            <li><a class="dropdown-item" href="#"><img src="${pageContext.request.contextPath}/template/assets1/img/icon/search-job.png"  width="18" height="18">Tìm việc làm</a></li>
                                             <li><a class="dropdown-item" href="#">Việc làm đã lưu</a></li>
                                             <li><a class="dropdown-item" href="#">Việc làm đã ứng tuyển</a></li>
                                             <li><a class="dropdown-item" href="#">Việc làm phù hợp</a></li>
@@ -172,7 +172,7 @@
                                     <li class="nav-item"><a class="nav-link" href="#">Cẩm nang nghề</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#">JobFinder Pro</a></li>
                                     <!-- Đăng nhập Employer -->
-                                    <li class="nav-item"><a class="nav-link" href="#">Đăng tin tuyển dụng</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/employers/login">Đăng tin tuyển dụng</a></li>
                                 </ul>
                             </div>
                         </nav>
