@@ -67,6 +67,6 @@ public class LoginController {
     public String logout(HttpSession session) {
         logger.debug("Logging out user: {}", session.getAttribute("loggedInUser"));
         session.invalidate();
-        return "redirect:/candidate/login";
+        return "redirect:/login";
     }
 }
