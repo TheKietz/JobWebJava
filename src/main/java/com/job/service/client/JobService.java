@@ -1,4 +1,3 @@
-
 package com.job.service.client;
 
 import com.job.model.Job;
@@ -20,7 +19,7 @@ public class JobService {
         return jobRepository.getPage(list, page, size);
     }
 
-    public List<Job> findAll() {       
+    public List<Job> findAll() {
         return jobRepository.findAll();
     }
 
@@ -43,6 +42,8 @@ public class JobService {
     public int countPages(List<Job> list, int size) {
         return jobRepository.countPages(list, size);
     }
+
+    public List<Job> searchByFilters(List<String> categories, List<String> jobTypes, List<String> salaryRanges) {
+        return jobRepository.searchByFilters(categories, jobTypes, salaryRanges);
+    }
 }
-
-

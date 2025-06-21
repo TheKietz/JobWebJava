@@ -8,7 +8,9 @@ import com.job.enums.CommonEnums.*;
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class Job {
 
@@ -183,5 +185,13 @@ public class Job {
             return "";
         }
         return expiredAt.format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
+    }
+    
+    public Date getCreatedAtAsDate() {
+        return this.createdAt != null ? Date.from(this.createdAt.atZone(ZoneId.systemDefault()).toInstant()) : null;
+    }
+    
+    public Date getExpiredAtAsDate() {
+        return this.expiredAt != null ? Date.from(this.expiredAt.atZone(ZoneId.systemDefault()).toInstant()) : null;
     }
 }

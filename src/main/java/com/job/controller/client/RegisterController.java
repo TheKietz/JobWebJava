@@ -30,7 +30,7 @@ public class RegisterController {
     @GetMapping("/signup")
     public String showRegisterForm(Model model) {
         model.addAttribute("registerForm", new RegisterForm());
-        return "client/signup";
+        return "client/auth/signup";
     }
 
     @PostMapping("/signup")
@@ -41,13 +41,13 @@ public class RegisterController {
         logger.debug("Processing registration: email={}", registerForm.getEmail());
         if (result.hasErrors()) {
             logger.warn("Validation errors: {}", result.getAllErrors());
-            return "client/signup";
+            return "client/auth/signup";
         }
 
         if (!registerForm.getPassword().equals(registerForm.getPasswordConfirm())) {
             logger.warn("Password mismatch: email={}", registerForm.getEmail());
             model.addAttribute("error", "Mật khẩu và xác nhận mật khẩu không khớp");
-            return "client/signup";
+            return "client/auth/signup";
         }
 
         if (userService.findByEmail(registerForm.getEmail()) != null) {
@@ -72,7 +72,7 @@ public class RegisterController {
         } catch (Exception e) {
             logger.error("Error registering user: email={}, error={}", registerForm.getEmail(), e.getMessage(), e);
             model.addAttribute("error", "Đã xảy ra lỗi khi đăng ký: " + e.getMessage());
-            return "client/signup";
+            return "client/auth/signup";
         }
     }
 }

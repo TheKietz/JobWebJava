@@ -122,6 +122,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="header-area header-transparrent">
@@ -142,41 +143,32 @@
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Việc làm</a>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Tìm việc làm</a></li>
-                                            <li><a class="dropdown-item" href="#">Việc làm đã lưu</a></li>
+                                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/jobs">Danh sách việc làm</a></li>
+                                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/favorites">Việc làm đã lưu</a></li>
                                             <li><a class="dropdown-item" href="#">Việc làm đã ứng tuyển</a></li>
-                                            <li><a class="dropdown-item" href="#">Việc làm phù hợp</a></li>
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="#">Danh sách công ty</a></li>
-                                            <li><a class="dropdown-item" href="#">Top công ty</a></li>
-                                        </ul>
-                                    </li>
-                                    <!-- Tạo CV -->
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Tạo CV</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Mẫu CV Đơn giản</a></li>
-                                            <li><a class="dropdown-item" href="#">Mẫu CV Ấn tượng</a></li>
-                                            <li><a class="dropdown-item" href="#">Mẫu CV Chuyên nghiệp</a></li>
-                                        </ul>
-                                    </li>
-                                    <!-- Công cụ -->
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Công cụ</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Tính lương Gross - Net</a></li>
-                                            <li><a class="dropdown-item" href="#">Tính thuế TNCN</a></li>
-                                            <li><a class="dropdown-item" href="#">Tính lãi suất kép</a></li>
                                         </ul>
                                     </li>
                                     
-                                    <li class="nav-item"><a class="nav-link" href="#">Cẩm nang nghề</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#">JobFinder Pro</a></li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                            Công ty
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/employers">Danh sách công ty</a></li>
+                                            <li><a class="dropdown-item" href="#">Công ty đã lưu</a></li>
+                                        </ul>
+                                    </li>
+                                    
+                                    <!-- Tạo CV -->
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#" data-bs-toggle="dropdown">Tạo CV</a>
+                                    </li>
                                     <!-- Đăng nhập Employer -->
-                                    <li class="nav-item"><a class="nav-link" href="#">Đăng tin tuyển dụng</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/login">Đăng tin tuyển dụng</a></li>
                                 </ul>
                             </div>
                         </nav>
+                        
                         <!-- Search + Auth -->
                         <div class="d-flex align-items-center gap-3">
                             <c:choose>
@@ -208,7 +200,7 @@
                                                 <small>${fn:escapeXml(sessionScope.loggedInUser.email)}</small>
                                             </li>
                                             <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="/saved-jobs">Việc làm đã lưu</a></li>
+                                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/favorites">Việc làm đã lưu</a></li>
                                             <li><a class="dropdown-item" href="/applied-jobs">Đã ứng tuyển</a></li>
                                             <li><a class="dropdown-item" href="/cv-management">CV của tôi</a></li>
                                             <li><hr class="dropdown-divider"></li>

@@ -1,8 +1,8 @@
-
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <html lang="vi">
     <head>
         <meta charset="UTF-8">
@@ -15,30 +15,9 @@
         <main>
             <!-- Banner -->
             <section class="banner">
-                <div class="d-flex justify-content-center my-4">
-                    <!-- Search -->
-                    <form class="custom-search-form d-flex align-items-center" action="${pageContext.request.contextPath}/search" method="get">
-                        <!-- Ô từ khóa -->
-                        <input type="text" class="form-control search-input" name="keyword" placeholder="Vị trí tuyển dụng, tên công ty" value="${fn:escapeXml(keyword)}">
-
-                        <!-- Địa điểm -->
-                        <div class="location-box d-flex align-items-center">
-                            <i class="bi bi-geo-alt me-1"></i>
-                            <span>Địa điểm</span>
-                            <i class="bi bi-chevron-down ms-1"></i>
-                        </div>
-
-                        <!-- Nút tìm kiếm -->
-                        <button type="submit" class="btn search-button">
-                            <i class="bi bi-search me-1"></i> Tìm Kiếm
-                        </button>
-                    </form>
-
-                </div>
                 <div class="container">
                     <h1 style="color: #02ba5a">JobFinder- Tiếp lợi thế, nối thành công</h1>
                     <p>Với Hệ sinh thái HR Tech, JobFinder luôn đồng hành để bạn thành công trong sự nghiệp</p>
-                    <a href="#" class="btn-login">Tìm hiểu thêm</a>
                 </div>
             </section>
 
@@ -46,22 +25,33 @@
             <section class="job-list py-5">
                 <div class="container">
                     <h2>Việc làm tốt nhất</h2>
+                    <c:if test="${empty jobs}">
+                        <div class="alert alert-warning">Không có job nào để hiển thị</div>
+                    </c:if>
+
                     <div class="row">
                         <c:forEach var="job" items="${jobs}">
-                            <div class="col-md-4">
-                                <div class="card">
+                            <div class="col-md-4 mb-4">
+                                <div class="card shadow-sm h-100">
                                     <div class="card-body">
-                                        <h5 class="card-title">${fn:escapeXml(job.title)}</h5>
-                                        <p class="card-text">${fn:escapeXml(job.company.name)}</p>
-                                        <p class="card-text">${job.salary}</p>
-                                        <p class="card-text">${job.short_cities}</p>
-                                        <a href="#" class="btn btn-outline-primary">Ứng tuyển</a>
+                                        <h5 class="card-title">${job.title}</h5>
+                                        <p class="card-text">
+                                            <strong>Vị trí:</strong> ${job.location} <br/>
+                                            <strong>Mức lương:</strong>
+                                            <c:choose>
+                                                <c:when test="${job.salaryMin != null && job.salaryMax != null}">
+                                                    ${job.salaryMin} - ${job.salaryMax}
+                                                </c:when>
+                                                <c:otherwise>Thỏa thuận</c:otherwise>
+                                            </c:choose><br/>
+                                            <strong>Loại công việc:</strong> ${job.jobType}
+                                        </p>
+                                        <a href="${pageContext.request.contextPath}/jobs/detail/${job.id}" class="btn btn-primary btn-sm">Xem chi tiết</a>
                                     </div>
                                 </div>
                             </div>
                         </c:forEach>
                     </div>
-                    <a href="#" class="btn btn-link">Xem tất cả</a>
                 </div>
             </section>
 
@@ -73,47 +63,6 @@
                         <c:forEach var="category" items="${categories}">
                             <a href="#" class="list-group-item list-group-item-action">${category.name} (${category.job_category_count} việc làm)</a>
                         </c:forEach>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Blog Posts -->
-            <section class="blog-posts py-5">
-                <div class="container">
-                    <h2>Bài viết nổi bật</h2>
-                    <div class="row">
-                        <div class="col-md-6 blog-post">
-                            <h3>TopCV Pro – Không gian tuyển dụng chuyên biệt</h3>
-                            <p>Mỗi chúng ta đều mang trong mình một khát vọng chạm tới đỉnh cao trong sự nghiệp...</p>
-                            <a href="#" class="btn btn-link">Xem thêm</a>
-                        </div>
-                        <div class="col-md-6 blog-post">
-                            <h3>Các loại bảo hiểm khi đi làm phải đóng</h3>
-                            <p>Khi ký hợp đồng lao động, người lao động và người sử dụng lao động sẽ có những thỏa thuận...</p>
-                            <a href="#" class="btn btn-link">Xem thêm</a>
-                        </div>
-                    </div>
-                    <a href="#" class="btn btn-link">Xem thêm bài viết nổi bật</a>
-                </div>
-            </section>
-
-            <!-- Tools -->
-            <section class="tools py-5 bg-light">
-                <div class="container">
-                    <h2>Công cụ hỗ trợ</h2>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <a href="#" class="btn btn-outline-secondary w-100 mb-3">Tính lương Gross - Net</a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="#" class="btn btn-outline-secondary w-100 mb-3">Trắc nghiệm MBTI</a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="#" class="btn btn-outline-secondary w-100 mb-3">Tạo CV miễn phí</a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="#" class="btn btn-outline-secondary w-100 mb-3">Tính bảo hiểm thất nghiệp</a>
-                        </div>
                     </div>
                 </div>
             </section>

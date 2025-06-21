@@ -9,15 +9,32 @@ import com.job.repository.EmployerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author 11090
- */
+import java.util.List;
+
 @Service
 public class EmployerService {
     @Autowired
     private EmployerRepository employerRepository;
-    public Employer findByUserID(Integer userID) {
-        return employerRepository.findByUserID(userID);
+
+    public List<Employer> findAll() {
+        return employerRepository.findAll();
+    }
+
+    public Employer findByID(Integer id) {
+        return employerRepository.findByID(id);
+    }
+
+    public List<Employer> search(String keyword) {
+        return employerRepository.search(keyword);
+    }
+
+    public List<Employer> getPage(List<Employer> list, int page, int size) {
+        return employerRepository.getPage(list, page, size);
+    }
+
+    public int countPages(List<Employer> list, int size) {
+        return employerRepository.countPages(list, size);
     }
 }
+
+

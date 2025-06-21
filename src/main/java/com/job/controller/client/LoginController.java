@@ -25,7 +25,7 @@ public class LoginController {
     @GetMapping("/login")
     public String showLoginForm(Model model) {
         model.addAttribute("loginForm", new LoginForm());
-        return "client/login";
+        return "client/auth/login";
     }
 
     @PostMapping("/login")
@@ -34,13 +34,13 @@ public class LoginController {
             Model model,
             HttpSession session) {
         if (result.hasErrors()) {
-            return "client/login";
+            return "client/auth/login";
         }
 
         User user = userService.findByEmail(loginForm.getEmail());
         if (user == null || !userService.verifyPassword(loginForm.getPasswordHash(), user.getPassword())) {
             model.addAttribute("error", "Invalid email or password");
-            return "client/login";
+            return "client/auth/login";
         }
 
         // Store user info in session
@@ -62,7 +62,7 @@ public class LoginController {
             default -> {
                 model.addAttribute("error", "Unknown role");
                 session.invalidate();
-                return "client/login";
+                return "client/auth/login";
             }
         }
     }
