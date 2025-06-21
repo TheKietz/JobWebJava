@@ -113,11 +113,11 @@
                                         <a class="dropdown-item" href="#">Something else here</a> 
                                 </li>
 
-                                <li class="nav-item dropdown show">
-                                <a class="nav-link dropdown-toggle" href="https://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <li class="nav-item dropdown ">
+                                <a class="nav-link dropdown-toggle" href="https://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="true">
                                     <i class="nc-icon nc-bullet-list-67"></i>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right show" aria-labelledby="navbarDropdownMenuLink">
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="#">
                                         <i class="nc-icon nc-email-85"></i> Thông báo hệ thống
                                     </a>
