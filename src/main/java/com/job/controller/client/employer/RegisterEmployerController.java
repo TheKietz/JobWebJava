@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -40,18 +41,22 @@ public class RegisterEmployerController {
 
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
-        logger.debug("Showing employer register form");
-        model.addAttribute("registerDTO", new EmployerRegisterDTO());
+        logger.info("Handling GET /employers/register");
+        if (!model.containsAttribute("registerDTO")) {
+            logger.debug("Adding new EmployerRegisterDTO to model");
+            model.addAttribute("registerDTO", new EmployerRegisterDTO());
+        }
         return "client/employer/register";
     }
 
     @PostMapping("/register")
+    @Transactional
     public String processRegister(
             @Valid @ModelAttribute("registerDTO") EmployerRegisterDTO registerDTO,
             BindingResult result,
             Model model,
             RedirectAttributes redirectAttributes) {
-        logger.debug("Processing employer registration: email={}", registerDTO.getUser().getEmail());
+        logger.info("Processing POST /employers/register: email={}", registerDTO.getUser().getEmail());
 
         // Validate User
         User user = registerDTO.getUser();
@@ -98,8 +103,15 @@ public class RegisterEmployerController {
             userService.add(user);
             logger.info("Added new user: id={}, email={}", user.getId(), user.getEmail());
 
+            // Kiểm tra userId
+            if (user.getId() == null) {
+                logger.error("User ID is null after saving user: email={}", user.getEmail());
+                throw new RuntimeException("Không thể lưu user: ID null");
+            }
+
             // Lưu Employer
             employer.setUserId(user.getId());
+            logger.debug("Setting employer userId={}", user.getId());
             employerService.add(employer);
             logger.info("Added new employer: companyName={}, userId={}", employer.getCompanyName(), employer.getUserId());
 

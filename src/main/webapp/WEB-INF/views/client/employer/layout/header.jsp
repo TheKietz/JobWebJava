@@ -128,7 +128,7 @@
                                         <i class="nc-icon nc-settings"></i> Cài đặt tài khoản
                                     </a>
                                     <div class="divider"></div>
-                                    <a href="#" class="dropdown-item text-danger">
+                                    <a href="${pageContext.request.contextPath}/employers/logout" class="dropdown-item text-danger">
                                         <i class="nc-icon nc-button-power"></i> Đăng xuất
                                     </a>
                                 </div>

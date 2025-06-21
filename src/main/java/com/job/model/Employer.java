@@ -12,7 +12,7 @@ import jakarta.validation.constraints.Size;
 public class Employer {
 
     private Integer id;
-    private Integer userId; // Liên kết với User.id
+    private Integer userId; 
 
     @NotBlank(message = "Company name cannot be blank")
     @Size(max = 255, message = "Company name must be less than or equal to 255 characters")
