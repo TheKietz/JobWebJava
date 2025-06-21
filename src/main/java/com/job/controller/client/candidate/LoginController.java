@@ -32,7 +32,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String processLogin(@RequestParam("email") String email,
-                              @RequestParam("password") String password,
+                              @RequestParam("passwordHash") String password,
                               HttpSession session,
                               Model model,
                               RedirectAttributes redirectAttributes) {
