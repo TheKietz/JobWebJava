@@ -3,7 +3,7 @@
 <!-- Header -->
 <jsp:include page="/WEB-INF/views/client/layout/header.jsp" />
 
-<c:import url="${body}" />
+<jsp:include page="${body}" />
 
 <jsp:include page="/WEB-INF/views/client/layout/footer.jsp" />
 
