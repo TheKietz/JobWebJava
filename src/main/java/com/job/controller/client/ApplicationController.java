@@ -6,16 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
-
 
 @Controller
+@RequestMapping("/client/application")
 public class ApplicationController {
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public ModelAndView getHomePage() {
-        ModelAndView mav = new ModelAndView("client/layout/main");
-        mav.addObject("body", "/WEB-INF/views/client/home.jsp");
-        return mav;
+    String path = "/WEB-INF/views/client/";
+    @Autowired private ApplicationService applicationService;
+    
+    public String getHomePage(Model model) {
+        model.addAttribute("body", "/WEB-INF/views/client/home.jsp");
+        return "client/layout/main.jsp";
     }
 }

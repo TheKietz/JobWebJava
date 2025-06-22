@@ -25,7 +25,7 @@ public class RegisterController {
     private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
 
     @Autowired
-    private UserService userService; // Sửa thành UserService
+    private UserService userService; 
 
     @GetMapping("/signup")
     public String showRegisterForm(Model model) {

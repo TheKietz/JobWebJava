@@ -11,22 +11,39 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class UserRepository {
 
-    private final JdbcTemplate jdbcTemplate;
+    private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
 
     @Autowired
-    public UserRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private JdbcTemplate jdbcTemplate;
+
+    private final RowMapper<User> userRowMapper = (rs, rowNum) -> {
+        User user = new User();
+        user.setId(rs.getObject("id", Integer.class));
+        user.setFullName(rs.getString("full_name"));
+        user.setEmail(rs.getString("email"));
+        user.setPassword(rs.getString("password"));
+        user.setPhone(rs.getString("phone"));
+        String role = rs.getString("role");
+        user.setRole(role != null ? Role.valueOf(role) : Role.EMPLOYER);
+        String status = rs.getString("status");
+        user.setStatus(status != null ? Status.valueOf(status) : Status.ACTIVE);
+        user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+        return user;
+    };
 
     public List<User> getPage(List<User> list, int page, int size) {
         if (list == null || list.isEmpty()) {
@@ -77,16 +94,42 @@ public class UserRepository {
         }
     }
 
+//    public void add(User user) {
+//        String sql = "INSERT INTO users (full_name, email, password, phone, role, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
+//        jdbcTemplate.update(sql,
+//                user.getFullName(),
+//                user.getEmail(),
+//                user.getPassword(),
+//                user.getPhone(),
+//                user.getRole() != null ? user.getRole().name() : "ADMIN", 
+//                user.getStatus() != null ? user.getStatus().name() : "ACTIVE",
+//                user.getCreatedAt());
+//    }
     public void add(User user) {
         String sql = "INSERT INTO users (full_name, email, password, phone, role, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql,
-                user.getFullName(),
-                user.getEmail(),
-                user.getPassword(),
-                user.getPhone(),
-                user.getRole() != null ? user.getRole().name() : "ADMIN", // Ánh xạ enum sang chuỗi
-                user.getStatus() != null ? user.getStatus().name() : "ACTIVE",
-                user.getCreatedAt());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        logger.info("Inserting user: email={}", user.getEmail());
+
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, user.getFullName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.setString(4, user.getPhone());
+            ps.setString(5, user.getRole() != null ? user.getRole().name() : "ADMIN");
+            ps.setString(6, user.getStatus() != null ? user.getStatus().name() : "ACTIVE");
+            ps.setTimestamp(7, user.getCreatedAt() != null ? Timestamp.valueOf(user.getCreatedAt()) : new Timestamp(System.currentTimeMillis()));
+            return ps;
+        }, keyHolder);
+
+        Integer generatedId = keyHolder.getKey() != null ? keyHolder.getKey().intValue() : null;
+        if (generatedId == null) {
+            logger.error("Failed to retrieve generated ID for user: email={}", user.getEmail());
+            throw new RuntimeException("Cannot retrieve generated ID");
+        }
+
+        user.setId(generatedId);
+        logger.info("Inserted user: id={}, email={}", generatedId, user.getEmail());
     }
 
     public void update(User user) {

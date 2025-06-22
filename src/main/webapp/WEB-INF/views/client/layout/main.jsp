@@ -1,11 +1,10 @@
 
-<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<!-- Header -->
 <jsp:include page="/WEB-INF/views/client/layout/header.jsp" />
 
-<c:import url="${body}" />
+<jsp:include page="${body}" />
 
 <jsp:include page="/WEB-INF/views/client/layout/footer.jsp" />
 

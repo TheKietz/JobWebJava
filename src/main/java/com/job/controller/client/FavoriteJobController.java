@@ -1,5 +1,4 @@
 package com.job.controller.client;
-
 import com.job.model.Job;
 import com.job.service.client.FavoriteJobService;
 import jakarta.servlet.http.HttpSession;

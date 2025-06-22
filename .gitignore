@@ -3,7 +3,7 @@ target/
 *.class
 *.war
 *.jar
-
+/target/
 # IDEs
 nbproject/private/
 *.iml

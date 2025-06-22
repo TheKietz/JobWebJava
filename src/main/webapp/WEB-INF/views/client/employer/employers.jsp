@@ -42,7 +42,7 @@
                                 <div class="col-md-6 col-lg-4">
                                     <div class="rounded position-relative fruite-item">
                                         <div class="fruite-img">
-                                            <img src="${employer.logoUrl != null ? employer.logoUrl : pageContext.request.contextPath + '/template/images/company-placeholder.png'}"
+                                            <img src="${employer.logo_url != null ? employer.logo_url : pageContext.request.contextPath + '/template/images/company-placeholder.png'}"
                                                  class="img-fluid w-100 rounded-top" alt="" style="height: 235px; object-fit: cover;">
                                         </div>
                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
@@ -60,7 +60,7 @@
                                                 Website: <a href="${employer.website}" target="_blank">${employer.website}</a>
                                             </p>
                                             <div class="d-flex justify-content-center">
-                                                <a href="<c:url value='/employers/detail/${employer.id}'/>"
+                                                <a href="${pageContext.request.contextPath}/employers/detail/${employer.id}"
                                                    class="btn btn-sm border border-secondary rounded-pill px-3 text-primary">
                                                     <i class="fa fa-eye me-2 text-primary"></i> Xem chi tiết
                                                 </a>
@@ -73,18 +73,20 @@
                             <!-- Pagination -->
                             <c:choose>
                                 <c:when test="${not empty employers}">
-                                    <div class="pagination d-flex justify-content-center mt-5">
-                                        <li class="page-item ${page == 1 ? 'disabled' : ''}">
-                                            <a class="page-link" href="?page=${page - 1}">&laquo;</a>
-                                        </li>
-                                        <c:forEach var="i" begin="1" end="${totalPages}">
-                                            <li class="page-item ${page == i ? 'active' : ''}">
-                                                <a class="page-link" href="?page=${i}">${i}</a>
+                                    <div class="d-flex justify-content-center mt-5">
+                                        <ul class="pagination">
+                                            <li class="page-item ${page == 1 ? 'disabled' : ''}">
+                                                <a class="page-link" href="?page=${page - 1}">&laquo;</a>
                                             </li>
-                                        </c:forEach>
-                                        <li class="page-item ${page == totalPages ? 'disabled' : ''}">
-                                            <a class="page-link" href="?page=${page + 1}">&raquo;</a>
-                                        </li>
+                                            <c:forEach var="i" begin="1" end="${totalPages}">
+                                                <li class="page-item ${page == i ? 'active' : ''}">
+                                                    <a class="page-link" href="?page=${i}">${i}</a>
+                                                </li>
+                                            </c:forEach>
+                                            <li class="page-item ${page == totalPages ? 'disabled' : ''}">
+                                                <a class="page-link" href="?page=${page + 1}">&raquo;</a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </c:when>
                                 <c:otherwise>

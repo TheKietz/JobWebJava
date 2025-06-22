@@ -1,4 +1,3 @@
-
 package com.job.repository;
 
 import com.job.model.FavoriteJob;
@@ -50,4 +49,3 @@ public class FavoriteJobRepository {
         return count != null && count > 0;
     }
 }
-

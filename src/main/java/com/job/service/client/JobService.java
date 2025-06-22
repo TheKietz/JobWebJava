@@ -46,4 +46,4 @@ public class JobService {
     public List<Job> searchByFilters(List<String> categories, List<String> jobTypes, List<String> salaryRanges) {
         return jobRepository.searchByFilters(categories, jobTypes, salaryRanges);
     }
-}
+} 

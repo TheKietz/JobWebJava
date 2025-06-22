@@ -1,4 +1,3 @@
-
 package com.job.service.client;
 
 import com.job.model.Job;

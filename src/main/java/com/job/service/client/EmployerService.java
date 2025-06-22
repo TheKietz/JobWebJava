@@ -1,22 +1,43 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.job.service.client;
 
 import com.job.model.Employer;
 import com.job.repository.EmployerRepository;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class EmployerService {
+    private static final Logger logger = LoggerFactory.getLogger(EmployerService.class);
+
     @Autowired
     private EmployerRepository employerRepository;
 
-    public List<Employer> findAll() {
+    public Employer findByUserID(Integer userID) {
+        logger.debug("Finding employer by userID={}", userID);
+        return employerRepository.findByUserID(userID);
+    }
+
+    public void add(Employer employer) {
+        if (employer.getUserId() == null) {
+            logger.error("Cannot add employer: userId is null");
+            throw new IllegalArgumentException("userId cannot be null");
+        }
+        if (employer.getCompanyName() == null || employer.getCompanyName().isBlank()) {
+            logger.error("Cannot add employer: companyName is null or empty");
+            throw new IllegalArgumentException("companyName cannot be null or empty");
+        }
+        if (employer.getAddress() == null || employer.getAddress().isBlank()) {
+            logger.error("Cannot add employer: address is null or empty");
+            throw new IllegalArgumentException("address cannot be null or empty");
+        }
+        logger.debug("Adding employer: companyName={}, userId={}", employer.getCompanyName(), employer.getUserId());
+        employerRepository.add(employer);
+        logger.info("Added employer: companyName={}, userId={}", employer.getCompanyName(), employer.getUserId());
+    }
+     public List<Employer> findAll() {
         return employerRepository.findAll();
     }
 

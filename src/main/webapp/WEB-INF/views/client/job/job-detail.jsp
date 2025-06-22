@@ -1,7 +1,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
-
 <main>
     <!-- Khu vực tiêu đề -->
     <div class="slider-area">
@@ -65,7 +64,7 @@
                         <ul>
                             <li>Ngày đăng:
                                 <span>
-                                    <fmt:formatDate value="${job.createdAtAsDate}" pattern="dd/MM/yyyy" />
+                                    <<span>${job.postedAtFormatted}</span>
                                 </span>
                             </li>
                             <li>Địa điểm: <span>${job.location}</span></li>
@@ -78,7 +77,7 @@
                             </li>
                             <li>Hạn nộp hồ sơ:
                                 <span>
-                                    <fmt:formatDate value="${job.expiredAtAsDate}" pattern="dd/MM/yyyy" />
+                                    <span>${job.expiryDateFormatted}</span>
                                 </span>
                             </li>
                         </ul>
