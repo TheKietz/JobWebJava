@@ -1,4 +1,4 @@
-package com.job.controller.client.employer;
+package com.job.controller.app;
 
 import com.job.dto.EmployerRegisterDTO;
 import com.job.enums.CommonEnums.Role;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/employers")
+@RequestMapping("/app")
 public class RegisterEmployerController {
 
     private static final Logger logger = LoggerFactory.getLogger(RegisterEmployerController.class);
@@ -41,12 +41,12 @@ public class RegisterEmployerController {
 
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
-        logger.info("Handling GET /employers/register");
+        logger.info("Handling GET /app/register");
         if (!model.containsAttribute("registerDTO")) {
             logger.debug("Adding new EmployerRegisterDTO to model");
             model.addAttribute("registerDTO", new EmployerRegisterDTO());
         }
-        return "client/employer/register";
+        return "app/auth/register";
     }
 
     @PostMapping("/register")
@@ -56,7 +56,7 @@ public class RegisterEmployerController {
             BindingResult result,
             Model model,
             RedirectAttributes redirectAttributes) {
-        logger.info("Processing POST /employers/register: email={}", registerDTO.getUser().getEmail());
+        logger.info("Processing POST /app/register: email={}", registerDTO.getUser().getEmail());
 
         // Validate User
         User user = registerDTO.getUser();
@@ -91,7 +91,7 @@ public class RegisterEmployerController {
 
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> logger.warn("Validation error: {}", error));
-            return "client/employer/register";
+            return "app/auth/register";
         }
 
         try {
@@ -116,11 +116,11 @@ public class RegisterEmployerController {
             logger.info("Added new employer: companyName={}, userId={}", employer.getCompanyName(), employer.getUserId());
 
             redirectAttributes.addFlashAttribute("success", "Đăng ký nhà tuyển dụng thành công. Vui lòng đăng nhập.");
-            return "redirect:/employers/login";
+            return "redirect:/app/login";
         } catch (Exception e) {
             logger.error("Error registering employer: email={}, error={}", user.getEmail(), e.getMessage(), e);
             model.addAttribute("error", "Lỗi khi đăng ký: " + e.getMessage());
-            return "client/employer/register";
+            return "app/auth/register";
         }
     }
 }

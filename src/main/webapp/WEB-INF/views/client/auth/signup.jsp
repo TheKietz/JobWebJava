@@ -73,7 +73,7 @@
 
                             <div class="mt-4">
                                 <p class="mb-0">Đã có tài khoản? 
-                                    <a href="${pageContext.request.contextPath}/candidateAccount/login" class="text-primary fw-bold">Đăng nhập</a>
+                                    <a href="${pageContext.request.contextPath}/login" class="text-primary fw-bold">Đăng nhập</a>
                                 </p>
                             </div>
                        </div>

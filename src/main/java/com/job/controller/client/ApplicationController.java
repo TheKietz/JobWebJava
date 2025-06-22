@@ -1,4 +1,4 @@
-package com.job.controller.client.employer;
+package com.job.controller.client;
 
 import com.job.service.client.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class ApplicationController {
     @Autowired private ApplicationService applicationService;
     
     public String getHomePage(Model model) {
-        model.addAttribute("body", "/WEB-INF/views/client/client/home.jsp");
+        model.addAttribute("body", "/WEB-INF/views/client/home.jsp");
         return "client/layout/main.jsp";
     }
 }

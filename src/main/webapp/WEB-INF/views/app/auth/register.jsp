@@ -59,7 +59,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </c:if>
-                <form:form method="post" modelAttribute="registerDTO" action="${pageContext.request.contextPath}/employers/register" id="registerForm">
+                <form:form method="post" modelAttribute="registerDTO" action="${pageContext.request.contextPath}/app/register" id="registerForm">
                     <h5 class="mb-3">Thông tin tài khoản</h5>
                     <div class="mb-3">
                         <label for="user.fullName" class="form-label">Họ và tên <span class="text-danger">*</span></label>
@@ -113,7 +113,7 @@
                     </div>
                     <div class="text-center">
                         <p class="mb-0">Đã có tài khoản? 
-                            <a href="${pageContext.request.contextPath}/employers/login" class="text-primary fw-bold">Đăng nhập</a>
+                            <a href="${pageContext.request.contextPath}/app/login" class="text-primary fw-bold">Đăng nhập</a>
                         </p>
                     </div>
                 </form:form>

@@ -36,28 +36,31 @@
                                     </a>
 
                                     <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                                    <p class="text-white-50 mb-5">Nhập email và mật khẩu để đăng nhập!</p>
+                                    <p class="text-white-50 mb-5">Please enter your email and password!</p>
 
                                     <c:if test="${not empty error}">
                                         <div class="error mb-4">${fn:escapeXml(error)}</div>
                                     </c:if>
 
-                                    <form action="${pageContext.request.contextPath}/employers/login" method="post">
+                                    <form:form method="post" action="${pageContext.request.contextPath}/login" modelAttribute="loginForm">
                                         <div class="form-outline form-white mb-4">
-                                            <input type="text" name="email" placeholder="Email" />
+                                            <form:input path="email" type="email" id="typeEmailX" cssClass="form-control form-control-lg" placeholder="Email" required="true"/>
+
+                                            <form:errors path="email" cssClass="error"/>
                                         </div>
 
                                         <div class="form-outline form-white mb-4">
-                                            <input type="password" name="passwordHash" placeholder="Password" />
+                                            <form:input path="passwordHash" type="password" placeholder="Password" id="typePasswordX" cssClass="form-control form-control-lg" required="true"/>
+
+                                            <form:errors path="passwordHash" cssClass="error"/>
                                         </div>
 
                                         <p class="small mb-5 pb-lg-2">
-                                            <a class="text-white-50" href="#!">Quên mật khẩu?</a>
+                                            <a class="text-white-50" href="#!">Forgot password?</a>
                                         </p>
 
-                                        <button type="submit" class="btn btn-outline-light btn-lg px-5">Login</button>
-                                    </form>
-
+                                        <button type="submit" class="btn btn-primary btn-lg px-5">Đăng nhập</button>
+                                    </form:form>
 
                                     <div class="d-flex justify-content-center text-center mt-4 pt-1">
                                         <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
@@ -66,9 +69,9 @@
                                     </div>
                                 </div>
 
-                                <div>
-                                    <p class="mb-0">Chưa có tài khoản? 
-                                        <a href="${pageContext.request.contextPath}/employers/register" class="text-white-50 fw-bold">Đăng ký</a>
+                                <div class="mt-4">
+                                    <p class="mb-0">Đã có tài khoản? 
+                                        <a href="${pageContext.request.contextPath}/signup" class="text-primary fw-bold">Đăng ký</a>
                                     </p>
                                 </div>
                             </div>

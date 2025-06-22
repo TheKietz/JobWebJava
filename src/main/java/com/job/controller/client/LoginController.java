@@ -1,4 +1,4 @@
-package com.job.controller.client.candidate;
+package com.job.controller.client;
 
 import com.job.enums.CommonEnums.Role;
 import com.job.model.LoginForm;
@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,7 +29,7 @@ public class LoginController {
     public String showLoginForm(Model model) {
         logger.debug("Showing login form");
         model.addAttribute("loginForm", new LoginForm());
-        return "client/candidate/login";
+        return "client/auth/login";
     }
 
     @PostMapping("/login")
@@ -41,7 +43,7 @@ public class LoginController {
         if (user == null || !userService.verifyPassword(password, user.getPassword())) {
             logger.warn("Login failed: email={}", email);
             model.addAttribute("error", "Email hoặc mật khẩu không đúng");
-            return "client/candidate/login";
+            return "client/auth/login";
         }
 
         if (user.getRole() == Role.CANDIDATE) {
@@ -55,15 +57,15 @@ public class LoginController {
         } else if (user.getRole() == Role.EMPLOYER) {
             logger.info("Employer login attempt: email={}, redirecting to /employer/login", email);
             redirectAttributes.addFlashAttribute("error", "Vui lòng đăng nhập tại trang nhà tuyển dụng");
-            return "redirect:/employer/login";
+            return "redirect:/app/login";
         } else {
             logger.warn("Invalid role for login: email={}, role={}", email, user.getRole());
             model.addAttribute("error", "Vai trò không hợp lệ để đăng nhập");
-            return "client/candidate/login";
+            return "client/auth/login";
         }
     }
 
-    @GetMapping("/logout")
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public String logout(HttpSession session) {
         logger.debug("Logging out user: {}", session.getAttribute("loggedInUser"));
         session.invalidate();

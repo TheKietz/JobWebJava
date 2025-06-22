@@ -3,9 +3,12 @@ package com.job.repository;
 
 import com.job.model.Job;
 import com.job.enums.CommonEnums.JobStatus;
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -161,5 +164,47 @@ public class JobRepository {
         int pages = (int) Math.ceil((double) list.size() / Math.max(1, size));
         System.out.println("countPages: List size=" + list.size() + ", Size=" + size + ", Pages=" + pages);
         return pages;
+    }
+
+    public List<Job> searchByFilters(List<String> categories, List<String> jobTypes, List<String> salaryRanges) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM jobs WHERE 1=1 ");
+        List<Object> params = new ArrayList<>();
+
+        if (categories != null && !categories.isEmpty()) {
+            sql.append("AND category IN (")
+                    .append(String.join(",", Collections.nCopies(categories.size(), "?")))
+                    .append(") ");
+            params.addAll(categories);
+        }
+
+        if (jobTypes != null && !jobTypes.isEmpty()) {
+            sql.append("AND job_type IN (")
+                    .append(String.join(",", Collections.nCopies(jobTypes.size(), "?")))
+                    .append(") ");
+            params.addAll(jobTypes);
+        }
+
+        if (salaryRanges != null && !salaryRanges.isEmpty()) {
+            for (String range : salaryRanges) {
+                String[] parts = range.split("-");
+                if (parts.length == 2) {
+                    try {
+                        BigDecimal min = new BigDecimal(parts[0]);
+                        BigDecimal max = new BigDecimal(parts[1]);
+                        sql.append("AND salary_min >= ? AND salary_max <= ? ");
+                        params.add(min);
+                        params.add(max);
+                    } catch (NumberFormatException ignored) {
+                    }
+                }
+            }
+        }
+
+        System.out.println("Final SQL: " + sql.toString());
+        return jdbcTemplate.query(sql.toString(), params.toArray(), jobRowMapper);
+    }
+    
+    public RowMapper<Job> getRowMapper() {
+        return jobRowMapper;
     }
 }

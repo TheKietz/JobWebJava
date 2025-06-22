@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.job.controller.client.employer;
+package com.job.controller.app;
 
 import com.job.dto.EmployerLoginDTO;
 import com.job.dto.EmployerRegisterDTO;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/employers")
+@RequestMapping("/app")
 public class LoginEmployerController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginEmployerController.class);
@@ -38,7 +38,7 @@ public class LoginEmployerController {
             logger.debug("Adding new LoginDTO to model");
             model.addAttribute("loginForm", new EmployerLoginDTO());
         }
-        return "client/employer/login";
+        return "app/auth/login";
     }
 
     @PostMapping("/login")
@@ -52,14 +52,14 @@ public class LoginEmployerController {
         if (user == null || !userService.verifyPassword(password, user.getPassword())) {
             logger.warn("Employer login failed: email={}", email);
             model.addAttribute("error", "Email hoặc mật khẩu không đúng");
-            return "client/employer/login";
+            return "app/auth/login";
         }
 
         // Kiểm tra role
         if (user.getRole() == Role.EMPLOYER) {
             session.setAttribute("loggedInUser", user);
             logger.info("Employer logged in: id={}, email={}", user.getId(), user.getEmail());
-            return "redirect:/employers/dashboard";
+            return "redirect:/app/dashboard";
         } else if (user.getRole() == Role.CANDIDATE) {
             logger.info("Candidate login attempt on employer page: email={}, redirecting to /login", email);
             redirectAttributes.addFlashAttribute("error", "Vui lòng đăng nhập tại trang ứng viên");
@@ -71,7 +71,7 @@ public class LoginEmployerController {
         } else {
             logger.warn("Invalid role for employer login: email={}, role={}", email, user.getRole());
             model.addAttribute("error", "Vai trò không hợp lệ để đăng nhập");
-            return "client/employer/login";
+            return "app/auth/login";
         }
     }
 
@@ -79,6 +79,6 @@ public class LoginEmployerController {
     public String logout(HttpSession session) {
         logger.debug("Logging out employer: {}", session.getAttribute("loggedInUser"));
         session.invalidate();
-        return "redirect:/employers/login";
+        return "redirect:/app/login";
     }
 }

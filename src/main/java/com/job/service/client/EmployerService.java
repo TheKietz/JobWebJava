@@ -2,6 +2,7 @@ package com.job.service.client;
 
 import com.job.model.Employer;
 import com.job.repository.EmployerRepository;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,24 @@ public class EmployerService {
         logger.debug("Adding employer: companyName={}, userId={}", employer.getCompanyName(), employer.getUserId());
         employerRepository.add(employer);
         logger.info("Added employer: companyName={}, userId={}", employer.getCompanyName(), employer.getUserId());
+    }
+     public List<Employer> findAll() {
+        return employerRepository.findAll();
+    }
+
+    public Employer findByID(Integer id) {
+        return employerRepository.findByID(id);
+    }
+
+    public List<Employer> search(String keyword) {
+        return employerRepository.search(keyword);
+    }
+
+    public List<Employer> getPage(List<Employer> list, int page, int size) {
+        return employerRepository.getPage(list, page, size);
+    }
+
+    public int countPages(List<Employer> list, int size) {
+        return employerRepository.countPages(list, size);
     }
 }

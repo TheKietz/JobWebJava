@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Header -->
 
-<jsp:include page="/WEB-INF/views/client/employer/layout/header.jsp" />
+<jsp:include page="/WEB-INF/views/app/layout/header.jsp" />
       <!-- End Navbar -->
       <div class="content">
         <div class="row">
@@ -11,4 +11,4 @@
           </div>
         </div>
       </div>
-<jsp:include page="/WEB-INF/views/client/employer/layout/footer.jsp" />
+<jsp:include page="/WEB-INF/views/app/layout/footer.jsp" />
