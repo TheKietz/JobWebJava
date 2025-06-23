@@ -42,9 +42,9 @@
                     </div>
                     <div class="col-md-3 text-right">
                         <div >                    
-                            <form action="${pageContext.request.contextPath}/admin/applications" method="get" class="form-inline d-inline">
+                            <form action="${pageContext.request.contextPath}/admin/jobs" method="get" class="form-inline d-inline">
                                 <div class="form-group mr-2 mb-0 d-flex align-items-center">
-                                    <label class="mr-2">Applications per page:</label>
+                                    <label class="mr-2">Jobs per page:</label>
                                     <select name="size" class="form-control form-control-sm" onchange="this.form.submit()">
                                         <option value="5" ${pageSize == 5 ? 'selected' : ''}>5</option>
                                         <option value="10" ${pageSize == 10 ? 'selected' : ''}>10</option>
