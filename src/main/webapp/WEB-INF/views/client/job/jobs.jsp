@@ -6,7 +6,7 @@
 <main>
     <div class="container-fluid">
         <div class="container">
-            <div class="row g-4 mb-5">
+            <div class="row g-4 mb-5 mt-1">
                 <div>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -55,7 +55,7 @@
                                 </div>
 
                                 <!-- Nút lọc -->
-                                <div class="col-12">
+                                <div class="col-12 mt-3">
                                     <button id="btnFilter"
                                             class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4">
                                         Lọc Việc Làm

@@ -3,24 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <main>
-    <!-- Khu vực tiêu đề -->
-    <div class="slider-area">
-        <div class="single-slider section-overly slider-height2 d-flex align-items-center"
-             data-background="${pageContext.request.contextPath}/template/assets/img/hero/about.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="hero-cap text-center">
-                            <h2>${employer.companyName}</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Thông tin chi tiết công ty -->
-    <div class="job-post-company pt-120 pb-120">
+    <div class="job-post-company pt-50 pb-120">
         <div class="container">
             <div class="row justify-content-between">
                 <!-- Nội dung bên trái -->
@@ -28,8 +12,15 @@
                     <div class="single-job-items mb-50">
                         <div class="job-items">
                             <div class="company-img company-img-details">
-                                <img src="${employer.logoUrl != null ? employer.logoUrl : pageContext.request.contextPath + '/template/images/company-placeholder.png'}"
-                                     alt="Logo công ty" class="img-fluid" style="max-height: 120px;">
+                                <c:choose>
+                                    <c:when test="${not empty employer.logoUrl}">
+                                        <img src="${employer.logoUrl}" class="img-fluid" style="max-height: 120px;" alt="Logo công ty">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="${pageContext.request.contextPath}/template/images/company-placeholder.png" class="img-fluid" style="max-height: 120px;" alt="Logo mặc định">
+                                    </c:otherwise>
+                                </c:choose>
+
                             </div>
                             <div class="job-tittle mt-3">
                                 <h4>${employer.companyName}</h4>

@@ -2,24 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <main>
-    <!-- Khu vực tiêu đề -->
-    <div class="slider-area">
-        <div class="single-slider section-overly slider-height2 d-flex align-items-center"
-             data-background="${pageContext.request.contextPath}/template/assets/img/hero/about.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="hero-cap text-center">
-                            <h2>${job.title}</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Thông tin chi tiết công việc -->
-    <div class="job-post-company pt-120 pb-120">
+    <div class="job-post-company pt-50 pb-120">
         <div class="container">
             <div class="row justify-content-between">
 
@@ -30,7 +14,7 @@
                             <div class="company-img company-img-details">
                                 <img src="${pageContext.request.contextPath}/template/assets/img/icon/job-list1.png" alt="Logo công ty">
                             </div>
-                            <div class="job-tittle">
+                            <div class="job-tittle mt-20">
                                 <h4>${job.title}</h4>
                                 <ul>
                                     <li><strong>Mã nhà tuyển dụng:</strong> ${job.employerId}</li>
@@ -64,7 +48,7 @@
                         <ul>
                             <li>Ngày đăng:
                                 <span>
-                                    <<span>${job.postedAtFormatted}</span>
+                                    <span>${job.postedAtFormatted}</span>
                                 </span>
                             </li>
                             <li>Địa điểm: <span>${job.location}</span></li>
@@ -82,7 +66,9 @@
                             </li>
                         </ul>
                         <div class="apply-btn2">
-                            <a href="#" class="btn">Ứng tuyển ngay</a>
+                            <button>
+                                <a href="#" class="btn">Ứng tuyển ngay</a>
+                            </button>
                         </div>
 
                         <div class="mt-3">
@@ -100,7 +86,7 @@
                                             <i class="fa fa-bookmark"></i> 
                                             <a href="${pageContext.request.contextPath}/jobs/detail/${job.id}">
                                                 Lưu công việc
-                                            <a/> 
+                                                <a/> 
                                         </button>
                                     </form>
                                 </c:otherwise>
@@ -112,13 +98,15 @@
                         <div class="small-section-tittle">
                             <h4>Thông tin công ty</h4>
                         </div>
-                        <span>Công ty #${job.employerId}</span>
-                        <p>(Thông tin công ty sẽ được cập nhật sau)</p>
+                        <span>Công ty #${employer.id}</span>
+                        <p>${employer.description}</p>
                         <ul>
-                            <li>Tên công ty: <span>Employer ${job.employerId}</span></li>
-                            <li>Website: <span>example.com</span></li>
-                            <li>Email: <span>contact@example.com</span></li>
+                            <li>Tên công ty: <span>${employer.companyName}</span></li>
+                            <li>Website: <a href="${employer.website}" target="_blank">${employer.website}</a></li>
+                            <li>Địa chỉ: <span>${employer.address}</span></li>
+                            <li>Email: <span>${employerEmail}</span></li><!-- nếu có -->
                         </ul>
+
                     </div>
                 </div>
 

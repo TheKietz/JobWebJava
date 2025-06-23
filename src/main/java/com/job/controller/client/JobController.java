@@ -1,8 +1,12 @@
 package com.job.controller.client;
 
+import com.job.model.Employer;
 import com.job.model.Job;
+import com.job.model.User;
+import com.job.service.client.EmployerService;
 import com.job.service.client.FavoriteJobService;
 import com.job.service.client.JobService;
+import com.job.service.client.UserService;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +23,11 @@ public class JobController {
     @Autowired
     private JobService jobService;
     @Autowired
+    private EmployerService employerService;
+    @Autowired
     private FavoriteJobService favoriteJobService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/jobs", method = RequestMethod.GET)
     public ModelAndView jobPage(
@@ -52,10 +60,15 @@ public class JobController {
             isFavorite = favoriteJobService.isFavorited(candidateId, id);
         }
 
+        Employer employer = employerService.findByID(job.getEmployerId());
+        User user = userService.findByID(employer.getUserId()); // ✅ sửa chỗ này
+
         ModelAndView mav = new ModelAndView("client/layout/main");
         mav.addObject("body", "/WEB-INF/views/client/job/job-detail.jsp");
         mav.addObject("job", job);
         mav.addObject("isFavorite", isFavorite);
+        mav.addObject("employer", employer);
+        mav.addObject("employerEmail", user != null ? user.getEmail() : "");
         return mav;
     }
 
