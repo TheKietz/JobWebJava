@@ -4,12 +4,18 @@ import com.job.enums.CommonEnums.Role;
 import com.job.model.Application;
 import com.job.model.Job;
 import com.job.model.User;
+import com.job.repository.JobRepository;
 import com.job.service.ApplicationAdminService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +35,15 @@ public class ApplicationAdminController {
 
     @Autowired
     private ApplicationAdminService applicationService;
+    @Autowired
+    private JobRepository jobRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(ApplicationAdminController.class);
     private static final String ROLE_ADMIN = "ADMIN";
 
     @GetMapping
-    public String list(Model model, HttpSession session,
+    public String list(Model model, 
+                       HttpSession session,
                        @RequestParam(value = "keyword", required = false) String keyword,
                        @RequestParam(value = "page", defaultValue = "1") int page,
                        @RequestParam(value = "size", defaultValue = "5") int size) {
@@ -50,9 +59,23 @@ public class ApplicationAdminController {
 
         int totalPages = applicationService.countPages(applications, size);
         page = Math.max(1, Math.min(page, totalPages == 0 ? 1 : totalPages));
+        
         List<Application> pagedApplications = applicationService.getPage(applications, page, size);
+        //lấy category từ job
+        Set<Integer> jobIds = pagedApplications.stream()
+                .map(Application::getJobId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
 
+        Map<Integer, String> category = new HashMap<>();
+        for (Integer id : jobIds) {
+            Job job = jobRepository.findByID(id);
+            if (job != null) {
+                category.put(id, job.getCategory());
+            }
+        }
         model.addAttribute("applications", pagedApplications);
+        model.addAttribute("category", category);
         model.addAttribute("keyword", keyword);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);

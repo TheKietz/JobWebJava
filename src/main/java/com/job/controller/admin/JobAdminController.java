@@ -62,6 +62,7 @@ public class JobAdminController {
 
         int totalPages = jobService.countPages(jobs, size);
         page = Math.max(1, Math.min(page, totalPages == 0 ? 1 : totalPages));
+        
         List<Job> pagedJobs = jobService.getPage(jobs, page, size);
         
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -17,7 +18,7 @@ public class LoginAdminController {
     @Autowired
     private UserAdminService userService;
 
-    @GetMapping("/admin/login")
+    @RequestMapping(value = {"/admin","/admin/login"})
     public String showLoginForm(Model model) {
         return "admin/login"; // Assumes admin/login.jsp exists
     }

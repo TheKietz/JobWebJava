@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -53,13 +54,18 @@
                         <div class="d-flex justify-content-end">
                             <a href="#" class="btn btn-outline-primary">Tìm hiểu thêm</a>
                         </div>
-                        <br><!-- comment -->
+                        <br>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Avatar</label><br>
-                                    <div class="avatar mb-2" style="width: 80px; height: 80px; background-image: url('<c:url value='${user.avatarUrl}'/>'); background-size: cover; background-position: center; border-radius: 50%;"></div>
-                                    <input type="file" name="avatarFile" accept="image/*" class="form-control"/>
+                                    <div class="avatar mb-2" style="width: 80px; height: 80px; 
+                                         background-image: url('${pageContext.request.contextPath}/uploads/${user.avatarUrl}');
+                                         background-size: cover; 
+                                         background-position: center; 
+                                         border-radius: 50%;">
+                                    </div>
+                                    <input type="file" name="avatarFile" accept="image/png,image/jpeg,image/jpg" class="form-control"/>
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -76,8 +82,9 @@
                                     <h5 class="title">Cập nhật thông tin cá nhân</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form:form modelAttribute="user" action="${pageContext.request.contextPath}/app/settings" method="POST" enctype="multipart/form-data">
-                                        <input type="hidden" name="csrfToken" value="${csrfToken}"/>
+                                    <form:form modelAttribute="user" action="${pageContext.request.contextPath}/app/settings/settings" method="POST" enctype="multipart/form-data">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <form:input type="hidden" path="id"/>
 
                                         <div class="mb-3">
                                             <label class="form-label">Họ và tên</label>
@@ -115,4 +122,3 @@
         </div>
     </div>
 </div>
-

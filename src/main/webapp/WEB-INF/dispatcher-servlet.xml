@@ -11,10 +11,11 @@
          http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
     <context:component-scan base-package="com.job"/>
-    <context:property-placeholder location="classpath:application.properties"/>
     <mvc:annotation-driven validator="validator"/>
     <task:annotation-driven/>
 
+    <mvc:resources mapping="/uploads/**" location="file:D:\Web_Java\jobwebjava\target\JobWebJava\upload\"/>
+    
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>

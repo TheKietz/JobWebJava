@@ -104,18 +104,18 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li>
-                                <a href="${pageContext.request.contextPath}/admin/service_packages/details">
+                                <a href="${pageContext.request.contextPath}/admin/packages">
                                     <i class="zmdi zmdi-dot-circle-alt"></i> Quản lý gói
                                 </a>
                             </li>
                             <li >
-                                <a href="${pageContext.request.contextPath}/admin/subscriptions/details">
-                                    <i class="zmdi zmdi-dot-circle-alt"></i> Các gọi đã mua
+                                <a href="${pageContext.request.contextPath}/admin/transactions">
+                                    <i class="zmdi zmdi-dot-circle-alt"></i> Lịch sử giao dịch
                                 </a>
                             </li>
                             <li >
                                 <a href="${pageContext.request.contextPath}/admin/subscriptions/#">
-                                    <i class="zmdi zmdi-dot-circle-alt"></i> Các gọi đã mua
+                                    <i class="zmdi zmdi-dot-circle-alt"></i> Tổng doanh thu
                                 </a>
                             </li>
                                                         
@@ -123,9 +123,28 @@
                     </li>
                     
                     <li>
-                        <a href="#">
-                            <i class="zmdi zmdi-assignment-account"></i> <span>Báo cáo thống kê</span>
+                        <a href="javascript:void(0);" class="sidebar-toggle">
+                            <i class="zmdi zmdi-assignment-account"></i> 
+                            <span>Báo cáo thống kê</span>
+                            <i class='fas fa-angle-down fa-3x'></i>
                         </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="${pageContext.request.contextPath}/admin/packages">
+                                    <i class="zmdi zmdi-dot-circle-alt"></i> Số lượng đăng ký
+                                </a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/admin/packages">
+                                    <i class="zmdi zmdi-dot-circle-alt"></i> Thống kê job
+                                </a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/admin/packages">
+                                    <i class="zmdi zmdi-dot-circle-alt"></i> Hiệu xuất job
+                                </a>
+                            </li>
+                        </ul>
                     </li>                    
                     <%--banner--%>
                     <li>

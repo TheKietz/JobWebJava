@@ -44,9 +44,8 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Candidate ID</th>
-                            <th scope="col">Job ID</th>
+                            <th scope="col">#</th>                            
+                            <th scope="col">Job Category</th>
                             <th scope="col">Status</th>
                             <th scope="col">Resume URL</th>
                             <th scope="col">Score</th>
@@ -64,9 +63,8 @@
                             <c:otherwise>
                                 <c:forEach var="c" items="${applications}" varStatus="status">
                                     <tr>
-                                        <th scope="row">${(currentPage - 1) * pageSize + status.index + 1}</th>
-                                        <td>${fn:escapeXml(c.candidateId)}</td>
-                                        <td>${fn:escapeXml(c.jobId)}</td>
+                                        <th scope="row">${(currentPage - 1) * pageSize + status.index + 1}</th>                                        
+                                        <td>${fn:escapeXml(category[c.jobId])}</td>
                                         <td>${fn:escapeXml(c.status)}</td>
                                         <td>${fn:escapeXml(c.resumeUrl)}</td>
                                         <td>${fn:escapeXml(c.score)}</td>

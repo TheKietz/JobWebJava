@@ -58,8 +58,8 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
+                    <table class="table table-bordered bg-info-light2">
+                        <thead class="table-light">
                             <tr>
                                 <th class="col-1">ID</th>
                                 <th class="col-1">Công ty</th>
