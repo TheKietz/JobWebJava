@@ -122,7 +122,10 @@ public class UserAdminController {
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, Model model, HttpSession session, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "keyword", required = false) String keyword) {
+    public String edit(@PathVariable("id") Integer id, Model model, 
+                        HttpSession session, 
+                        @RequestParam(value = "size",defaultValue = "5") int size, 
+                        @RequestParam(value = "keyword", required = false) String keyword) {
         try {
             User loggedInUser = (User) session.getAttribute("loggedInUser");
             if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {

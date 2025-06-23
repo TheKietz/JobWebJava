@@ -1,14 +1,21 @@
 package com.job.controller.admin;
 
 import com.job.enums.CommonEnums.Role;
+import com.job.model.Employer;
 import com.job.model.Job;
 import com.job.model.User;
+import com.job.repository.EmployerRepository;
 import com.job.service.EmployerAdminService;
 import com.job.service.JobAdminService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -31,6 +38,8 @@ public class JobAdminController {
 
     @Autowired
     private EmployerAdminService employerService;
+    @Autowired
+    private EmployerRepository employerRepository;
 
     @GetMapping
     public String list(Model model,
@@ -54,9 +63,22 @@ public class JobAdminController {
         int totalPages = jobService.countPages(jobs, size);
         page = Math.max(1, Math.min(page, totalPages == 0 ? 1 : totalPages));
         List<Job> pagedJobs = jobService.getPage(jobs, page, size);
-        System.out.println("Page: " + page + ", Size: " + size + ", Paged Jobs=" + pagedJobs.size());
+        
 
+        Set<Integer> employerIds = pagedJobs.stream()
+                .map(Job::getEmployerId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        Map<Integer, String> companyNames = new HashMap<>();
+        for (Integer id : employerIds) {
+            Employer employer = employerRepository.findByID(id);
+            if (employer != null) {
+                companyNames.put(id, employer.getCompanyName());
+            }
+        }
         model.addAttribute("jobs", pagedJobs);
+        model.addAttribute("companyName", companyNames);
         model.addAttribute("keyword", trimmedKeyword);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
@@ -120,7 +142,6 @@ public class JobAdminController {
             System.out.println("Unauthorized access to /admin/jobs/delete/" + id + ", redirecting to login");
             return "redirect:/admin/login";
         }
-
         try {
             if (jobService.deleteByID(id)) {
                 redirectAttributes.addFlashAttribute("success", "Job deleted successfully.");
@@ -151,7 +172,6 @@ public class JobAdminController {
         if (employerService.findByID(job.getEmployerId()) == null) {
             result.rejectValue("employerId", "error.employerId", "Invalid Employer ID: must exist.");
         }
-
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> System.out.println("Validation error: " + error));
             model.addAttribute("employers", employerService.findAll());
@@ -160,7 +180,6 @@ public class JobAdminController {
             model.addAttribute("body", "/WEB-INF/views/admin/job/form.jsp");
             return "admin/layout/main";
         }
-
         try {
             if (job.getId() == null) {
                 job.setCreatedAt(LocalDateTime.now());

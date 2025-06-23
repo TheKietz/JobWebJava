@@ -37,13 +37,13 @@
                 <div class="sidebar-wrapper">
                     <ul class="nav">
                         <li class="active ">
-                            <a href="javascript:;">
+                            <a  href="${pageContext.request.contextPath}/app/dashboard">
                                 <i class="nc-icon nc-bank"></i>
                                 <p>Trang chủ</p>
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;">
+                            <a href="${pageContext.request.contextPath}/app/job-post">
                                 <i class="nc-icon nc-briefcase-24"></i>
                                 <p>Tin tuyển dụng</p>
                             </a>
@@ -61,7 +61,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;">
+                            <a href="${pageContext.request.contextPath}/app/settings">
                                 <i class="nc-icon nc-settings-gear-65"></i>
                                 <p>Cài đặt tài khoản</p>
                             </a>

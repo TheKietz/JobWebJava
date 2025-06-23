@@ -1,5 +1,6 @@
 package com.job.model;
 
+import com.job.enums.CommonEnums.Gender;
 import com.job.enums.CommonEnums.Role;
 import com.job.enums.CommonEnums.Status;
 import jakarta.persistence.Entity;
@@ -34,21 +35,26 @@ public class User {
 
     private Status status;
 
+    private Gender gender;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
-
+    private String avatarUrl;
     public User() {}
 
-    public User(Integer id, String fullName, String email, String password, String phone, Role role) {
+    public User(Integer id, String fullName, String email, String password, String phone, Role role, Status status, Gender gender, String avatarUrl, LocalDateTime createdAt) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.phone = phone;
         this.role = role;
-        this.status = Status.ACTIVE;
-        this.createdAt = LocalDateTime.now();
+        this.status = status;
+        this.gender = gender;
+        this.avatarUrl = avatarUrl;
+        this.createdAt = createdAt;
     }
+
+    
 
     // Getters and Setters
     public Integer getId() { return id; }
@@ -67,6 +73,10 @@ public class User {
     public void setStatus(Status status) { this.status = status; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public Gender getGender() {return gender;}
+    public void setGender(Gender gender) {this.gender = gender;}
+    public String getAvatarUrl() {return avatarUrl;}
+    public void setAvatarUrl(String avatarUrl) {this.avatarUrl = avatarUrl;}
 
     @Override
     public String toString() {

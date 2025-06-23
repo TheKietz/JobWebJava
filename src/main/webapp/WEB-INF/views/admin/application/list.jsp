@@ -1,72 +1,88 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <div class="content-wrapper">
-    <div class="container-fluid">
-        <div class="card-body">
-            <div class="row mb-3">
-                <div class="col-sm-3">
-                    <h5 class="card-title">Application List</h5>
+    <div class="container-fluid"><h2>Quản lý CV</h2>
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <form action="${pageContext.request.contextPath}/admin/applications" method="get">
+                            <div class="input-group">
+                                <input type="text" name="keyword" class="form-control" placeholder="Search by title or category" value="${fn:escapeXml(keyword)}"/>
+                                <input type="hidden" name="size" value="${pageSize}"/>
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-3 text-end">
+                        <a href="${pageContext.request.contextPath}/admin/applications/add?size=${pageSize}&keyword=${fn:escapeXml(keyword)}" class="btn btn-success">Thêm CV</a>
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <div >                    
+                            <form action="${pageContext.request.contextPath}/admin/applications" method="get" class="form-inline d-inline">
+                                <div class="form-group mr-2 mb-0 d-flex align-items-center">
+                                    <label class="mr-2">Applications per page:</label>
+                                    <select name="size" class="form-control form-control-sm" onchange="this.form.submit()">
+                                        <option value="5" ${pageSize == 5 ? 'selected' : ''}>5</option>
+                                        <option value="10" ${pageSize == 10 ? 'selected' : ''}>10</option>
+                                        <option value="20" ${pageSize == 20 ? 'selected' : ''}>20</option>
+                                    </select>
+                                </div>
+                                <input type="hidden" name="page" value="1">
+                                <input type="hidden" name="keyword" value="${fn:escapeXml(keyword)}">
+                            </form>
+                        </div> 
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    
-                </div>
-                <div class="col-md-5 text-right">                    
-                    <form action="${pageContext.request.contextPath}/admin/applications" method="get" class="form-inline d-inline">
-                        <div class="form-group mr-2 mb-0 d-flex align-items-center">
-                            <label class="mr-2">Applications per page:</label>
-                            <select name="size" class="form-control form-control-sm" onchange="this.form.submit()">
-                                <option value="5" ${pageSize == 5 ? 'selected' : ''}>5</option>
-                                <option value="10" ${pageSize == 10 ? 'selected' : ''}>10</option>
-                                <option value="20" ${pageSize == 20 ? 'selected' : ''}>20</option>
-                            </select>
-                        </div>
-                        <input type="hidden" name="page" value="1">
-                        <input type="hidden" name="keyword" value="${fn:escapeXml(keyword)}">
-                    </form>
-                </div>                
+
             </div>
 
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Candidate ID</th>
                             <th scope="col">Job ID</th>
-                            <th scope="col">Cover Letter</th>
-                            <th scope="col">Resume URL</th>
-                            <th scope="col">Applied At</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Resume URL</th>
+                            <th scope="col">Score</th>
+                            <th scope="col">Applied At</th>                            
                             <th scope="col">Function</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="c" items="${applications}" varStatus="status">
-                            <tr>
-                                <th scope="row">${(currentPage - 1) * pageSize + status.index + 1}</th>
-                                <td>${fn:escapeXml(c.candidateID)}</td>
-                                <td>${fn:escapeXml(c.jobID)}</td>
-                                <td>${fn:escapeXml(c.coverLetter)}</td>
-                                <td>${fn:escapeXml(c.resumeUrl)}</td>
-                                <td>${c.appliedAt}</td>
-                                <td>${fn:escapeXml(c.status)}</td>
-                                <td>
-                                    <a href="${pageContext.request.contextPath}/admin/applications/edit/${c.applicationID}" class="btn btn-primary btn-sm">Sửa</a>
-                                    <a href="${pageContext.request.contextPath}/admin/applications/delete/${c.applicationID}" 
-                                       class="btn btn-danger btn-sm"
-                                       onclick="return confirm('Bạn có chắc muốn xóa ứng tuyển với trạng thái \'' + '${fn:replace(fn:escapeXml(c.status), '\'', '\\\'')}' + '\'?')">
-                                        Xóa
-                                    </a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        <c:if test="${empty applications}">
-                            <tr>
-                                <td colspan="8" class="text-center">No Applications Found.</td>
-                            </tr>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${empty applications}">
+                                <tr>
+                                    <td colspan="12" class="text-center">No jobs found.</td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="c" items="${applications}" varStatus="status">
+                                    <tr>
+                                        <th scope="row">${(currentPage - 1) * pageSize + status.index + 1}</th>
+                                        <td>${fn:escapeXml(c.candidateId)}</td>
+                                        <td>${fn:escapeXml(c.jobId)}</td>
+                                        <td>${fn:escapeXml(c.status)}</td>
+                                        <td>${fn:escapeXml(c.resumeUrl)}</td>
+                                        <td>${fn:escapeXml(c.score)}</td>
+                                        <td>${c.appliedAt}</td>                                
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/admin/applications/edit/${c.id}" class="btn btn-primary btn-sm">Sửa</a>
+                                            <a href="${pageContext.request.contextPath}/admin/applications/delete/${c.id}" 
+                                               class="btn btn-danger btn-sm"
+                                               onclick="return confirm('Bạn có chắc muốn xóa ứng tuyển với trạng thái \'' + '${fn:replace(fn:escapeXml(c.status), '\'', '\\\'')}' + '\'?')">
+                                                Xóa
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>                        
                     </tbody>
                 </table>
             </div>

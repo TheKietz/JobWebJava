@@ -41,7 +41,7 @@ public class LoginEmployerController {
         return "app/auth/login";
     }
 
-    @PostMapping("/login")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String processLogin(@RequestParam("email") String email,
             @RequestParam("passwordHash") String password,
             HttpSession session,

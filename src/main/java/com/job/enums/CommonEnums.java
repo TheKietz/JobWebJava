@@ -14,6 +14,10 @@ public class CommonEnums {
         ACTIVE, INACTIVE
     }
 
+    public enum Gender{
+        Male, Female, Other
+    }
+    
     public enum Role {
         ADMIN, EMPLOYER, CANDIDATE
     }

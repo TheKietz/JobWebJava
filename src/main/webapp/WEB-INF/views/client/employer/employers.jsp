@@ -42,7 +42,7 @@
                                 <div class="col-md-6 col-lg-4">
                                     <div class="rounded position-relative fruite-item">
                                         <div class="fruite-img">
-                                            <img src="${employer.logo_url != null ? employer.logo_url : pageContext.request.contextPath + '/template/images/company-placeholder.png'}"
+                                            <img src="${employer.logoUrl != null ? employer.logoUrl : pageContext.request.contextPath + '/template/images/company-placeholder.png'}"
                                                  class="img-fluid w-100 rounded-top" alt="" style="height: 235px; object-fit: cover;">
                                         </div>
                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"

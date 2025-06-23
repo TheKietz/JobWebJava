@@ -1,4 +1,3 @@
-
 package com.job.repository;
 
 import com.job.model.Job;
@@ -10,7 +9,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -20,55 +22,44 @@ public class JobRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
-    private final RowMapper<Job> jobRowMapper = new RowMapper<Job>() {
-        @Override
-        public Job mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Job job = new Job();
-            job.setId(rs.getInt("id"));
-            job.setEmployerId(rs.getInt("employer_id"));
-            job.setTitle(rs.getString("title"));
-            job.setDescription(rs.getString("description"));
-            job.setLocation(rs.getString("location"));
-            job.setSalaryMin(rs.getBigDecimal("salary_min"));
-            job.setSalaryMax(rs.getBigDecimal("salary_max"));
-            job.setJobType(rs.getString("job_type"));
-            String status = rs.getString("status");
-            job.setStatus(status != null ? JobStatus.valueOf(status) : JobStatus.APPROVED);
-            job.setCategory(rs.getString("category"));
-            Timestamp createdAt = rs.getTimestamp("created_at");
-            job.setCreatedAt(createdAt != null ? createdAt.toLocalDateTime() : null);
-            Timestamp expiredAt = rs.getTimestamp("expired_at");
-            job.setExpiredAt(expiredAt != null ? expiredAt.toLocalDateTime() : null);
-            return job;
-        }
+     private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
+    private final RowMapper<Job> jobRowMapper = (rs, rowNum) -> {
+        Job job = new Job();
+        job.setId(rs.getInt("id"));
+        job.setEmployerId(rs.getInt("employer_id"));
+        job.setTitle(rs.getString("title"));
+        job.setDescription(rs.getString("description"));
+        job.setLocation(rs.getString("location"));
+        job.setSalaryMin(rs.getBigDecimal("salary_min"));
+        job.setSalaryMax(rs.getBigDecimal("salary_max"));
+        job.setJobType(rs.getString("job_type"));
+        String status = rs.getString("status");
+        job.setStatus(status != null ? JobStatus.valueOf(status) : JobStatus.APPROVED);
+        job.setCategory(rs.getString("category"));
+        Timestamp createdAt = rs.getTimestamp("created_at");
+        job.setCreatedAt(createdAt != null ? createdAt.toLocalDateTime() : null);
+        Timestamp expiredAt = rs.getTimestamp("expired_at");
+        job.setExpiredAt(expiredAt != null ? expiredAt.toLocalDateTime() : null);
+        return job;
     };
 
     public List<Job> findAll() {
         String sql = "SELECT * FROM jobs";
-        try {
-            List<Job> jobs = jdbcTemplate.query(sql, jobRowMapper);
-            System.out.println("findAll: Retrieved " + jobs.size() + " jobs");
-            return jobs;
-        } catch (Exception e) {
-            System.err.println("Error fetching all jobs: " + e.getMessage());
-            e.printStackTrace();
-            return List.of();
-        }
+        List<Job> jobs = jdbcTemplate.query(sql, jobRowMapper);
+
+        return jobs;
     }
 
-    public Job findByID(int jobID) {
+    public Job findByID(int id) {
         String sql = "SELECT * FROM jobs WHERE id = ?";
         try {
-            Job job = jdbcTemplate.queryForObject(sql, jobRowMapper, jobID);
-            System.out.println("findByID: JobID=" + jobID + ", Found=" + (job != null ? job.getTitle() : "null"));
-            return job;
+            return jdbcTemplate.queryForObject(sql, jobRowMapper,id);
         } catch (Exception e) {
-            System.err.println("Error finding job by ID: " + jobID + ", " + e.getMessage());
-            e.printStackTrace();
+            logger.error("Error finding job by ID: {}, {}", id, e.getMessage());
             return null;
         }
     }
+   
 
     public void add(Job job) {
         String sql = "INSERT INTO jobs (employer_id, title, description, location, salary_min, salary_max, job_type, status, category, created_at, expired_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -133,8 +124,8 @@ public class JobRepository {
                 return findAll();
             }
             String sql = "SELECT * FROM jobs WHERE LOWER(title) LIKE ? OR LOWER(category) LIKE ?";
-            String like = "%" + keyword.trim().toLowerCase() + "%";
-            List<Job> jobs = jdbcTemplate.query(sql, jobRowMapper, like, like);
+            String likeKeyword = "%" + keyword.trim().toLowerCase() + "%";
+            List<Job> jobs = jdbcTemplate.query(sql, new Object[]{likeKeyword, likeKeyword}, new BeanPropertyRowMapper<>(Job.class));
             System.out.println("search: Keyword='" + keyword + "', Found " + jobs.size() + " jobs");
             return jobs;
         } catch (Exception e) {
@@ -203,7 +194,7 @@ public class JobRepository {
         System.out.println("Final SQL: " + sql.toString());
         return jdbcTemplate.query(sql.toString(), params.toArray(), jobRowMapper);
     }
-    
+
     public RowMapper<Job> getRowMapper() {
         return jobRowMapper;
     }
