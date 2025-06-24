@@ -6,9 +6,10 @@ package com.job.controller.app;
 
 import com.job.enums.CommonEnums;
 import com.job.model.Employer;
+import com.job.model.Job;
 import com.job.model.User;
-import com.job.repository.EmployerRepository;
 import com.job.service.client.EmployerService;
+import com.job.service.client.JobService;
 import com.job.service.client.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class ProfileController {
     private UserService userService;
     @Autowired
     private EmployerService employerService;
+    @Autowired
+    private JobService jobService;
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView profilePage(HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -39,9 +42,12 @@ public class ProfileController {
         User user = userService.findByID(loggedInUser.getId());
         
         Employer employer = employerService.findByUserID(loggedInUser.getId());
-        ModelAndView mav = new ModelAndView("app/user/profile"); 
+        int countJob = jobService.countJobByEmpID(employer.getId());
+        ModelAndView mav = new ModelAndView("app/layout/main"); 
         mav.addObject("user", user);
         mav.addObject("employer", employer);
+        mav.addObject("countJob", countJob);
+        mav.addObject("body","/WEB-INF/views/app/user/profile.jsp");
         return mav;
     }
 }
