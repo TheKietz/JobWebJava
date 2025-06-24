@@ -9,10 +9,10 @@
         <title>Tin tuyển dụng</title>
     </head>
     <body>
-        <h5>Danh sách tin đã đăng</h5>
+        
         <div class="table-responsive">
             <table class="table table-bordered bg-contrast">
-                <thead class="table-light">
+                <thead class="table-light thead-success">
                     <tr>
                         <th class="col-2">Tiêu đề</th>  
                         <th class="col-1">Trạng thái</th>
@@ -31,11 +31,18 @@
                             <c:forEach var="job" items="${jobs}">
                                 <tr>
                                     <td>${fn:escapeXml(job.title)}</td> 
-                                    <td>${job.status}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${job.status=='APPROVED'}"><span class="badge bg-success">Đã duyệt</span > </c:when>
+                                            <c:when test="${job.status=='PENDING'}"><span class="badge bg-secondary">Chờ duyệt</span > </c:when>
+                                            <c:when test="${job.status=='REJECTED'}"><span class="badge bg-danger">Bị từ chối</span > </c:when>
+                                            <c:when test="${job.status=='EXPIRED'}"><span class="badge bg-warning text-dark">Hết hạn</span > </c:when>
+                                        </c:choose>
+                                    </td>
                                     <td>${job.jobType}</td>                                         
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/app/job-post/edit/${job.id}?size=${pageSize}&keyword=${fn:escapeXml(keyword)}" class="btn btn-sm btn-primary">Edit</a>
-                                        <a href="${pageContext.request.contextPath}/app/job-post/delete/${job.id}?size=${pageSize}&keyword=${fn:escapeXml(keyword)}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this job?')">Delete</a>
+                                        <a href="${pageContext.request.contextPath}/app/job-post/details/${job.id}" class="btn btn-sm btn-primary">Chi tiết</a>
+                                        <a href="${pageContext.request.contextPath}/app/job-post/delete/${job.id}" class="btn btn-sm btn-danger" onclick="return confirm('Bạn muốn xóa bài đăng này?')">Xóa</a>
                                     </td>
                                 </tr>
                             </c:forEach>
