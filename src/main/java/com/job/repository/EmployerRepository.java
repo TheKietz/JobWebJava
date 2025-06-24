@@ -58,6 +58,11 @@ public class EmployerRepository {
         }
     }
 
+    public Integer findEmployerIdByUserId(int userId) {
+        String sql = "SELECT id FROM employers WHERE user_id = ?";
+        return jdbcTemplate.queryForObject(sql, Integer.class, userId);
+    }
+
     public void add(Employer employer) {
         if (employer.getUserId() == null) {
             logger.error("Cannot insert employer: user_id is null");

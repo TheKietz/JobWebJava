@@ -5,13 +5,12 @@
 package com.job.controller.app;
 
 import com.job.enums.CommonEnums;
-import com.job.model.Job;
+import com.job.model.Employer;
 import com.job.model.User;
-import com.job.repository.JobRepository;
+import com.job.repository.EmployerRepository;
 import com.job.service.client.EmployerService;
-import com.job.service.client.JobService;
+import com.job.service.client.UserService;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,25 +22,26 @@ import org.springframework.web.servlet.ModelAndView;
  * @author 11090
  */
 @Controller
-@RequestMapping("/app/job-post")
-public class JobPostController {
-    @Autowired 
-    private JobService jobService;
+@RequestMapping("/app/profile")
+public class ProfileController {
+
+    @Autowired
+    private UserService userService;
     @Autowired
     private EmployerService employerService;
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView jobPostPage(HttpSession session) {
-        // Kiểm tra xem đã đăng nhập và đúng role chưa
+    public ModelAndView profilePage(HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
+
         if (loggedInUser == null || loggedInUser.getRole() != CommonEnums.Role.EMPLOYER) {
-            System.out.println("Unauthorized access to /admin/dashboard, redirecting to login");
             return new ModelAndView("redirect:/app/login");
         }
-        int employerId = employerService.findEmployerIdByUserId(loggedInUser.getId());
-        List<Job> jobs = jobService.findByEmployerID(employerId);
-        ModelAndView mav = new ModelAndView("app/layout/main");
-        mav.addObject("jobs",jobs);
-        mav.addObject("body", "/WEB-INF/views/app/job/post-job.jsp");
+        User user = userService.findByID(loggedInUser.getId());
+        
+        Employer employer = employerService.findByUserID(loggedInUser.getId());
+        ModelAndView mav = new ModelAndView("app/user/profile"); 
+        mav.addObject("user", user);
+        mav.addObject("employer", employer);
         return mav;
     }
 }

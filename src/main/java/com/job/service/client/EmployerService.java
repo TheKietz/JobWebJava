@@ -45,6 +45,10 @@ public class EmployerService {
         return employerRepository.findByID(id);
     }
 
+    public Integer findEmployerIdByUserId(int id){
+        return employerRepository.findEmployerIdByUserId(id);
+    }
+    
     public List<Employer> search(String keyword) {
         return employerRepository.search(keyword);
     }

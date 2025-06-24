@@ -27,6 +27,10 @@ public class JobService {
         return jobRepository.findByID(jobID);
     }
 
+    public List<Job> findByEmployerID(Integer id){
+        return jobRepository.findByEmployerID(id);
+    }
+    
     public void add(Job job) {
         jobRepository.add(job);
     }

@@ -60,6 +60,18 @@ public class JobRepository {
         }
     }
 
+    public List<Job> findByEmployerID(int userId) {
+        String sql = "SELECT title, job_type, status FROM jobs WHERE employer_id = ?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Job job = new Job();
+            job.setTitle(rs.getString("title"));
+            job.setJobType(rs.getString("job_type"));
+            job.setStatus(JobStatus.valueOf(rs.getString("status")));
+            return job;
+        }, userId);
+
+    }
+
     public void add(Job job) {
         String sql = "INSERT INTO jobs (employer_id, title, description, location, salary_min, salary_max, job_type, status, category, created_at, expired_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -127,12 +139,12 @@ public class JobRepository {
                    LIMIT 10;
                    """;
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
-        Job job = new Job();
-        job.setTitle(rs.getString("title"));
-        job.setCategory(rs.getString("category"));
-        job.setTotalApplications(rs.getInt("total_applications")); // Bạn cần có field này trong Job
-        return job;
-    });
+            Job job = new Job();
+            job.setTitle(rs.getString("title"));
+            job.setCategory(rs.getString("category"));
+            job.setTotalApplications(rs.getInt("total_applications")); // Bạn cần có field này trong Job
+            return job;
+        });
     }
 
     public List<Job> search(String keyword) {

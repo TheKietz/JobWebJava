@@ -11,7 +11,7 @@
         <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/template/assets3/img/favicon.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>
-            Paper Dashboard 2 by Creative Tim
+            Employer Dashboard
         </title>
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
         <!--     Fonts and icons     -->
@@ -58,6 +58,12 @@
                             <a href="javascript:;">
                                 <i class="nc-icon nc-cart-simple"></i>
                                 <p>Gói dịch vụ</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/app/profile">
+                                <i class="nc-icon nc-single-02"></i>
+                                <p>Trang cá nhân</p>
                             </a>
                         </li>
                         <li>

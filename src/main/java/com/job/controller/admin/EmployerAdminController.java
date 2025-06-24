@@ -4,10 +4,14 @@ import com.job.enums.CommonEnums.Role;
 import com.job.model.Employer;
 import com.job.model.User;
 import com.job.service.EmployerAdminService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +20,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -28,10 +34,10 @@ public class EmployerAdminController {
 
     @GetMapping
     public String list(Model model,
-                       HttpSession session,
-                       @RequestParam(value = "keyword", required = false) String keyword,
-                       @RequestParam(value = "page", defaultValue = "1") int page,
-                       @RequestParam(value = "size", defaultValue = "5") int size) {
+            HttpSession session,
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/employers, redirecting to login");
@@ -62,10 +68,10 @@ public class EmployerAdminController {
         return "admin/layout/main";
     }
 
-    @GetMapping("/add")
-    public String add(Model model, HttpSession session,
-                      @RequestParam(value = "size", defaultValue = "5") int size,
-                      @RequestParam(value = "keyword", required = false) String keyword) {
+    @PostMapping("/add")
+    public String add(Model model, HttpSession session, 
+            @RequestParam(value = "size", defaultValue = "5") int size,
+            @RequestParam(value = "keyword", required = false) String keyword) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/employers/add, redirecting to login");
@@ -76,13 +82,15 @@ public class EmployerAdminController {
         model.addAttribute("pageSize", size);
         model.addAttribute("keyword", keyword);
         model.addAttribute("body", "/WEB-INF/views/admin/employer/form.jsp");
+
+        
         return "admin/layout/main";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model, HttpSession session,
-                       @RequestParam(value = "size", defaultValue = "5") int size,
-                       @RequestParam(value = "keyword", required = false) String keyword) {
+            @RequestParam(value = "size", defaultValue = "5") int size,
+            @RequestParam(value = "keyword", required = false) String keyword) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/employers/edit/" + id + ", redirecting to login");
@@ -98,15 +106,15 @@ public class EmployerAdminController {
         model.addAttribute("employer", employer);
         model.addAttribute("pageSize", size);
         model.addAttribute("keyword", keyword);
-        model.addAttribute("body", "/WEB-INF/views/admin/employer/list.jsp");
+        model.addAttribute("body", "/WEB-INF/views/admin/employer/form.jsp");
         return "admin/layout/main";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id, HttpSession session,
-                         @RequestParam(value = "size", defaultValue = "5") int size,
-                         @RequestParam(value = "keyword", required = false) String keyword,
-                         RedirectAttributes redirectAttributes) {
+            @RequestParam(value = "size", defaultValue = "5") int size,
+            @RequestParam(value = "keyword", required = false) String keyword,
+            RedirectAttributes redirectAttributes) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/employers/delete/" + id + ", redirecting to login");
@@ -126,13 +134,16 @@ public class EmployerAdminController {
         return "redirect:/admin/employers?page=1&size=" + size + "&keyword=" + (keyword != null ? keyword : "");
     }
 
-    @PostMapping("/save")
+    @RequestMapping(value = "/save", method = RequestMethod.POST,
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public String save(@Valid @ModelAttribute("employer") Employer employer,
-                       BindingResult result,
-                       Model model,
-                       HttpSession session,
-                       @RequestParam(value = "size", defaultValue = "5") int size,
-                       @RequestParam(value = "keyword", required = false) String keyword) {
+            BindingResult result,
+            Model model,
+            @RequestParam("imageFile") MultipartFile imageFile,
+            HttpServletRequest request,
+            HttpSession session,
+            @RequestParam(value = "size", defaultValue = "5") int size,
+            @RequestParam(value = "keyword", required = false) String keyword) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/employers/save, redirecting to login");
@@ -146,7 +157,21 @@ public class EmployerAdminController {
             model.addAttribute("body", "/WEB-INF/views/admin/employer/form.jsp");
             return "admin/layout/main";
         }
+        try {
+            if (!imageFile.isEmpty()) {
+                String uploadPath = request.getServletContext().getRealPath("/uploads/");
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdirs();
+                }
 
+                String filename = imageFile.getOriginalFilename();
+                imageFile.transferTo(new File(uploadDir, filename));
+                employer.setLogoUrl(filename); // lưu tên file
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try {
             if (employer.getId() == null) {
                 employerService.add(employer);
