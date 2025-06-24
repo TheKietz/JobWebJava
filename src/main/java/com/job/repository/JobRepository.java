@@ -147,6 +147,12 @@ public class JobRepository {
         });
     }
 
+    public int countJobByEmpID(Integer id) {
+        String sql = "SELECT count(*) FROM jobs WHERE employer_id = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, id);
+        return count != null ? count : 0;
+    }
+
     public List<Job> search(String keyword) {
         try {
             if (keyword == null || keyword.isBlank()) {
