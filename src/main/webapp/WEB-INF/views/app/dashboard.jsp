@@ -16,7 +16,7 @@
             .swiper-slide {
                 position: relative;
                 width: 100%;
-                height: 370px;
+                height: 250px;
                 overflow: hidden;
                 border-radius: 10px;
             }
@@ -88,14 +88,14 @@
                             <circle cx="24" cy="24" r="21.5" stroke-width="5" class="progress-background" />
                             <circle cx="24" cy="24" r="21.5" stroke-dasharray="135.0884841043611" stroke-dashoffset="135.0884841043611" stroke-width="5" class="progress-bar" />
                             </svg>
-                            <div class="progress-text">0%</div>
+<!--                            <div class="progress-text">0%</div>-->
                         </div>
                         <div>
                             <h5 class="mb-1">Xin chào, <span class="user-name" style="color: #02ba5a">${user.fullName}</span></h5>
-                            <p class="mb-0">Hãy thực hiện các bước sau để gia tăng tính bảo mật và nhận <span class="highlighted">+2 Top Points</span> để đổi quà khi đăng tin đầu tiên.</p>
+<!--                            <p class="mb-0">Hãy thực hiện các bước sau để gia tăng tính bảo mật và nhận <span class="highlighted">+2 Top Points</span> để đổi quà khi đăng tin đầu tiên.</p>-->
                         </div>
                     </div>
-                    <div class="mt-3">
+<!--                    <div class="mt-3">
                         <div class="verify-info">
                             <div class="status"><i class="fa-thin fa-circle"></i></div>
                             <div class="content">Xác thực số điện thoại</div>
@@ -116,7 +116,7 @@
                             <div class="content">Đăng tin tuyển dụng đầu tiên</div>
                             <div class="action-button"><i class="fa-duotone fa-arrow-up-right"></i></div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
 
@@ -132,7 +132,7 @@
                             <div class="card h-100">
                                 <div class="card-body text-center">
                                     <img src="${pageContext.request.contextPath}/template/images/dang-tin.svg" alt="Post Job" class="mb-2" />
-                                    <h6 class="card-title">Đăng tin tuyển dụng</h6>
+                                    <h5 class="card-title">Đăng tin tuyển dụng</h5>
                                     <button class="btn btn-primary btn-sm"
                                             onclick="window.location.href = '${pageContext.request.contextPath}/app/job-post'">
                                         Thử ngay
@@ -144,7 +144,7 @@
                             <div class="card h-100">
                                 <div class="card-body text-center">
                                     <img src="${pageContext.request.contextPath}/template/images/search.svg" alt="Search CV" class="mb-2" />
-                                    <h6 class="card-title">Tìm kiếm CV</h6>
+                                    <h5 class="card-title">Tìm kiếm CV</h5>
                                     <button class="btn btn-primary btn-sm">Thử ngay</button>
                                 </div>
                             </div>
@@ -153,7 +153,7 @@
                             <div class="card h-100">
                                 <div class="card-body text-center">
                                     <img src="${pageContext.request.contextPath}/template/images/services.svg" alt="Buy Services" class="mb-2" />
-                                    <h6 class="card-title">Mua dịch vụ</h6>
+                                    <h5 class="card-title">Mua dịch vụ</h5>
                                     <button class="btn btn-primary btn-sm">Thử ngay</button>
                                 </div>
                             </div>
