@@ -9,6 +9,40 @@
         <title>Tin tuyển dụng</title>
     </head>
     <body>
-        <h1>Đăng tin tuyển dụng</h1>
+        <h5>Danh sách tin đã đăng</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered bg-contrast">
+                <thead class="table-light">
+                    <tr>
+                        <th class="col-2">Tiêu đề</th>  
+                        <th class="col-1">Trạng thái</th>
+                        <th class="col-2">Loại công việc</th>
+                        <th class="col-2">Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody class="table table-bordered bg-white"> 
+                    <c:choose>
+                        <c:when test="${empty jobs}">
+                            <tr>
+                                <td colspan="12" class="text-center">No jobs found.</td>
+                            </tr>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach var="job" items="${jobs}">
+                                <tr>
+                                    <td>${fn:escapeXml(job.title)}</td> 
+                                    <td>${job.status}</td>
+                                    <td>${job.jobType}</td>                                         
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/app/job-post/edit/${job.id}?size=${pageSize}&keyword=${fn:escapeXml(keyword)}" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="${pageContext.request.contextPath}/app/job-post/delete/${job.id}?size=${pageSize}&keyword=${fn:escapeXml(keyword)}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this job?')">Delete</a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
