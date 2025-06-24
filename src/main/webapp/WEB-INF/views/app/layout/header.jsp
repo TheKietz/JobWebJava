@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
@@ -22,22 +21,66 @@
         <link href="${pageContext.request.contextPath}/template/assets3/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
         <!-- CSS Just for demo purpose, don't include it in your project -->
         <link href="${pageContext.request.contextPath}/template/assets3/demo/demo.css" rel="stylesheet" />
+
+        <style>
+            .sidebar {
+                width: 260px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                z-index: 1000;
+                transition: all 0.3s ease;
+            }
+            .sidebar.active {
+                margin-left: -260px;
+            }
+            .main-panel {
+                margin-left: 260px;
+                transition: margin-left 0.3s ease;
+                min-height: 100vh;
+            }
+            .sidebar.active + .main-panel {
+                margin-left: 0;
+            }
+            .navbar-toggle {
+                position: fixed;
+                left: 20px; /* Move button outside sidebar */
+                top: 20px;
+                z-index: 1050; /* Ensure it is above sidebar */
+            }
+            .navbar-toggler {
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 10px;
+            }
+            .navbar-toggler-bar {
+                display: block;
+                width: 22px;
+                height: 2px;
+                background-color: #333;
+                margin: 4px 0;
+                transition: all 0.3s ease;
+            }
+        </style>
+
     </head>
 
     <body class="">
-        <div class="wrapper ">
-            <div class="sidebar" data-color="white" data-active-color="danger">
-                <div class="logo">                    
-                    <a href="https://www.creative-tim.com" class="simple-text logo-normal">        
-                        <div class="logo-image-big">
-                            <img src="${pageContext.request.contextPath}/template/assets/img/logo/logo.png">
-                        </div> 
+        <div class="wrapper">
+            <div class="sidebar" id="sidebar" data-color="white" data-active-color="danger">
+                <div class="logo-mini">                    
+                    <a href="${pageContext.request.contextPath}/app/dashboard" class="simple-text logo-mini">        
+                        <div class="logo">
+                            <img src="${pageContext.request.contextPath}/template/assets/img/logo/logo.png" style="transform: scale(0.8); transform-origin: top left;">
+                        </div>                         
                     </a>
                 </div>
                 <div class="sidebar-wrapper">
                     <ul class="nav">
-                        <li class="active ">
-                            <a  href="${pageContext.request.contextPath}/app/dashboard">
+                        <li class="">
+                            <a href="${pageContext.request.contextPath}/app/dashboard">
                                 <i class="nc-icon nc-bank"></i>
                                 <p>Trang chủ</p>
                             </a>
@@ -75,21 +118,21 @@
                     </ul>
                 </div>
             </div>
-            <div class="main-panel" style="height: 100vh;">
+<!--                                 min-height: 100vh;-->
+            <div class="main-panel" style="overflow: auto">
                 <!-- Navbar -->
                 <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
                     <div class="container-fluid">
                         <div class="navbar-wrapper">
                             <div class="navbar-toggle">
-                                <button type="button" class="navbar-toggler">
+                                <button type="button" class="navbar-toggler" onclick="toggleSidebar()">
                                     <span class="navbar-toggler-bar bar1"></span>
                                     <span class="navbar-toggler-bar bar2"></span>
                                     <span class="navbar-toggler-bar bar3"></span>
                                 </button>
                             </div>
-                            <a class="navbar-brand" href="javascript:;">Title</a>
                         </div>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler" type="button" onclick="toggleSidebar()" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-bar navbar-kebab"></span>
                             <span class="navbar-toggler-bar navbar-kebab"></span>
                             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -118,8 +161,7 @@
                                         <a class="dropdown-item" href="#">Another action</a>
                                         <a class="dropdown-item" href="#">Something else here</a> 
                                 </li>
-
-                                <li class="nav-item dropdown ">
+                                <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="https://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="true">
                                         <i class="nc-icon nc-bullet-list-67"></i>
                                     </a>
@@ -136,12 +178,36 @@
                                         <div class="divider"></div>
                                         <form id="logoutForm" action="${pageContext.request.contextPath}/app/logout" method="post" style="display: none;">
                                         </form>
-
                                         <a href="#" class="dropdown-item text-danger" onclick="document.getElementById('logoutForm').submit(); return false;">
                                             <i class="nc-icon nc-button-power"></i> Đăng xuất
                                         </a>
                                     </div>
                                 </li>
+                            </ul>
                         </div>
                     </div>
                 </nav>
+                <script>
+                    function toggleSidebar() {
+                        const sidebar = document.getElementById("sidebar");
+                        sidebar.classList.toggle("active");
+                    }
+                </script>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const navLinks = document.querySelectorAll(".nav li a");
+                        const currentPath = window.location.pathname;
+
+                        navLinks.forEach(link => {
+                            const li = link.closest("li");
+                            const href = link.getAttribute("href");
+
+                            // Kiểm tra nếu currentPath bắt đầu với href (hữu ích khi URL có thêm /edit, /detail,...)
+                            if (href && currentPath.startsWith(href)) {
+                                li.classList.add("active");
+                            } else {
+                                li.classList.remove("active");
+                            }
+                        });
+                    });
+                </script>
