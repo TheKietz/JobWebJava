@@ -37,10 +37,12 @@ public class JobPostController {
             System.out.println("Unauthorized access to /admin/dashboard, redirecting to login");
             return new ModelAndView("redirect:/app/login");
         }
+        String title = "Danh sách tin đã đăng";
         int employerId = employerService.findEmployerIdByUserId(loggedInUser.getId());
         List<Job> jobs = jobService.findByEmployerID(employerId);
         ModelAndView mav = new ModelAndView("app/layout/main");
         mav.addObject("jobs",jobs);
+        mav.addObject("title",title);
         mav.addObject("body", "/WEB-INF/views/app/job/post-job.jsp");
         return mav;
     }
