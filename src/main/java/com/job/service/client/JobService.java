@@ -30,7 +30,9 @@ public class JobService {
     public List<Job> findByEmployerID(Integer id){
         return jobRepository.findByEmployerID(id);
     }
-    
+    public int countJobByEmpID(Integer id){
+        return jobRepository.countJobByEmpID(id);
+    }
     public void add(Job job) {
         jobRepository.add(job);
     }
