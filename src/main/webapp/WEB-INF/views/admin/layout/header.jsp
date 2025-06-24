@@ -14,7 +14,7 @@
         <link href="<c:url value='/template/assets/css/pace.min.css'/>" rel="stylesheet"/>
         <script src="<c:url value='/template/assets/js/pace.min.js'/>"></script>
         <!--favicon-->
-        <link rel="icon" href="<c:url value='assets/images/favicon.ico'/>" type="image/x-icon">
+        <link rel="shortcut icon" href="<c:url value='template/assets/images/favicon.ico'/>" type="image/x-icon">
         <!-- Vector CSS -->
         <link href="<c:url value='/template/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css'/>" rel="stylesheet"/>
         <!-- simplebar CSS-->
@@ -30,6 +30,7 @@
         <!-- Custom Style-->
         <link href="<c:url value='/template/assets/css/app-style.css'/>" rel="stylesheet"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
         <script>
             document.querySelectorAll('.sidebar-toggle').forEach(function (toggle) {
@@ -86,7 +87,7 @@
                     <!--  job-->
                     <li>
                         <a href="${pageContext.request.contextPath}/admin/jobs">
-                            <i class="zmdi zmdi-case-check"></i> <span>Quản lý tuyển dụng</span>
+                            <i class="bi bi-building"></i> <span>Quản lý tuyển dụng</span>
                         </a>
                     </li>
                     <!--  application-->
@@ -142,14 +143,14 @@
                     </li>                    
                     <%--banner--%>
                     <li>
-                        <a href="#">
-                            <i class="zmdi zmdi-assignment-account"></i> <span>Banner</span>
+                        <a href="${pageContext.request.contextPath}/admin/banners">
+                            <i class="fa-briefcase"></i> <span>Banner</span>
                         </a>
                     </li>
                     <%--system_settings--%>
                     <li>
                         <a href="#">
-                            <i class="zmdi zmdi-assignment-account"></i> <span>Cài đặt hệ thống</span>
+                            <i class="zmdi zmdi-settings"></i> <span>Cài đặt hệ thống</span>
                         </a>
                     </li>
                     <li>

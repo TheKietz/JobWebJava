@@ -5,11 +5,15 @@
 package com.job.controller.app;
 
 import com.job.enums.CommonEnums;
+import com.job.model.Banner;
 import com.job.model.User;
+import com.job.service.client.BannerService;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -18,16 +22,25 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class DashboardController {
-   @RequestMapping(value = "/app/dashboard", method = RequestMethod.GET)
+
+    @Autowired
+    private BannerService bannerService;
+
+    @RequestMapping("/app/dashboard")
     public ModelAndView dashboardPage(HttpSession session) {
-        // Kiểm tra xem đã đăng nhập và đúng role chưa
         User loggedInUser = (User) session.getAttribute("loggedInUser");
+
         if (loggedInUser == null || loggedInUser.getRole() != CommonEnums.Role.EMPLOYER) {
-            System.out.println("Unauthorized access to /admin/dashboard, redirecting to login");
             return new ModelAndView("redirect:/app/login");
         }
+
+        List<Banner> banners = bannerService.getActiveBannersByPosition(CommonEnums.BannerPosition.HOMEPAGE_TOP);
+
         ModelAndView mav = new ModelAndView("app/layout/main");
+        mav.addObject("banners", banners);
+        mav.addObject("user", loggedInUser);
         mav.addObject("body", "/WEB-INF/views/app/dashboard.jsp");
+
         return mav;
     }
 }

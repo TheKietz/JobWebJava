@@ -6,8 +6,11 @@ import com.job.enums.CommonEnums.Status;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.*;
+import java.beans.PropertyEditorSupport;
 import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 
 @Entity
 @Table(name = "users")
@@ -81,5 +84,16 @@ public class User {
     @Override
     public String toString() {
         return "User{id=" + id + ", fullName='" + fullName + "', email='" + email + "', role=" + role + "}";
+    }
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Gender.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) {
+                if (text != null) {
+                    setValue(Gender.valueOf(text.toUpperCase()));
+                }
+            }
+        });
     }
 }

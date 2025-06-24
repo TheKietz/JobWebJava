@@ -14,7 +14,7 @@
     <mvc:annotation-driven validator="validator"/>
     <task:annotation-driven/>
 
-    <mvc:resources mapping="/uploads/**" location="file:D:\Web_Java\jobwebjava\target\JobWebJava\upload\"/>
+    <mvc:resources mapping="/uploads/**" location="file:///D:\Web_Java\jobwebjava\target\JobWebJava\uploads\"/>
     
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 

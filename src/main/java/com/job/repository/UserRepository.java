@@ -45,7 +45,7 @@ public class UserRepository {
         String status = rs.getString("status");
         user.setStatus(status != null ? Status.valueOf(status) : Status.ACTIVE);
         String gender = rs.getString("gender");
-        user.setGender(gender != null ? Gender.valueOf(gender) : Gender.Other);
+        user.setGender(gender != null ? Gender.valueOf(gender.toUpperCase()) : Gender.Other);
         user.setAvatarUrl(rs.getString("avatar_Url"));
         user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
         return user;
