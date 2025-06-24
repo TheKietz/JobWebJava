@@ -21,8 +21,10 @@
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/controller/client/ApplicationController.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/service/EmployerAdminService.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/repository/FavoriteJobRepository.java
+/Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/service/client/FavoriteEmployerService.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/controller/admin/LoginAdminController.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/service/client/EmployerService.java
+/Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/controller/client/FavoriteEmployerController.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/model/Employer.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/controller/admin/ApplicationAdminController.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/model/Notification.java
@@ -33,6 +35,7 @@
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/service/UserAdminService.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/controller/app/RegisterEmployerController.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/model/Application.java
+/Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/model/FavoriteEmployer.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/model/CV.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/repository/JobRepository.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/model/User.java
@@ -52,6 +55,7 @@
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/controller/admin/JobAdminController.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/service/client/FavoriteJobService.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/controller/client/JobController.java
+/Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/repository/FavoriteEmployerRepository.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/enums/CommonEnums.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/model/SystemSetting.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/controller/admin/CandidateAdminController.java

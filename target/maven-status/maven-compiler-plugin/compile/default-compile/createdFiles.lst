@@ -24,6 +24,7 @@ com/job/controller/client/FavoriteJobController.class
 com/job/model/SystemSetting.class
 com/job/model/RegisterForm.class
 com/job/dto/EmployerRegisterDTO.class
+com/job/repository/FavoriteEmployerRepository.class
 com/job/repository/FavoriteJobRepository.class
 com/job/service/ApplicationAdminService.class
 com/job/controller/admin/UserAdminController.class
@@ -31,10 +32,13 @@ com/job/repository/JobRepository.class
 com/job/service/client/JobService.class
 com/job/service/client/UserService.class
 com/job/repository/EmployerRepository.class
+com/job/controller/client/FavoriteEmployerController.class
 com/job/model/SavedSearch.class
 com/job/enums/CommonEnums$Role.class
 com/job/enums/CommonEnums$Status.class
+com/job/model/FavoriteEmployer.class
 com/job/service/JobAdminService.class
+com/job/repository/FavoriteEmployerRepository$EmployerRowMapper.class
 com/job/enums/CommonEnums$MessageStatus.class
 com/job/enums/CommonEnums$JobStatus.class
 com/job/enums/CommonEnums$ApplicationStatus.class
@@ -59,6 +63,7 @@ com/job/service/client/ApplicationService.class
 com/job/config/SecurityConfig.class
 com/job/controller/client/HomeController.class
 com/job/controller/client/RegisterController.class
+com/job/service/client/FavoriteEmployerService.class
 com/job/repository/CVRepository$1.class
 com/job/model/LoginForm.class
 com/job/controller/admin/EmployerAdminController.class

@@ -48,7 +48,7 @@
                                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Việc làm</a>
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/jobs">Danh sách việc làm</a></li>
-                                                <li><a class="dropdown-item" href="${pageContext.request.contextPath}/favorites">Việc làm đã lưu</a></li>
+                                                <li><a class="dropdown-item" href="${pageContext.request.contextPath}/favorite-jobs">Việc làm đã lưu</a></li>
                                                 <li><a class="dropdown-item" href="#">Việc làm đã ứng tuyển</a></li>
                                             </ul>
                                         </li>

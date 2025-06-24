@@ -1,4 +1,5 @@
 package com.job.controller.client;
+
 import com.job.model.Job;
 import com.job.service.client.FavoriteJobService;
 import jakarta.servlet.http.HttpSession;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/favorites")
+@RequestMapping("/favorite-jobs")
 public class FavoriteJobController {
 
     @Autowired
@@ -27,26 +28,29 @@ public class FavoriteJobController {
         }
 
         List<Job> jobs = favoriteJobService.getFavorites(candidateId);
-        ModelAndView mav = new ModelAndView("client/favorite/favorites");
+        ModelAndView mav = new ModelAndView("client/favorite-job/favorite-jobs");
         mav.addObject("jobs", jobs);
         return mav;
     }
 
     @PostMapping("/add/{jobId}")
-    public String save(@PathVariable int jobId, HttpSession session) {
+    public String save(@PathVariable("jobId") int jobId, HttpSession session) {
         Integer candidateId = (Integer) session.getAttribute("currentCandidateId");
-        if (candidateId != null) {
-            favoriteJobService.save(candidateId, jobId);
+        if (candidateId == null) {
+            return "redirect:/login";
         }
+        favoriteJobService.save(candidateId, jobId);
         return "redirect:/jobs/detail/" + jobId;
     }
 
     @PostMapping("/remove/{jobId}")
-    public String remove(@PathVariable int jobId, @RequestParam(required = false) String redirect, HttpSession session) {
+    public String remove(@PathVariable("jobId") int jobId,
+            @RequestParam(required = false) String redirect, HttpSession session) {
         Integer candidateId = (Integer) session.getAttribute("currentCandidateId");
-        if (candidateId != null) {
-            favoriteJobService.remove(candidateId, jobId);
+        if (candidateId == null) {
+            return "redirect:/login";
         }
-        return "redirect:" + (redirect != null ? redirect : "/favorites");
+        favoriteJobService.remove(candidateId, jobId);
+        return "redirect:" + (redirect != null ? redirect : "/favorite-jobs");
     }
 }

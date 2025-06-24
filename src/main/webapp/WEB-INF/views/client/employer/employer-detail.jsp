@@ -65,6 +65,25 @@
                         <div class="apply-btn2 mt-4">
                             <a href="<c:url value='/jobs?employerId=${employer.id}'/>" class="btn">Xem việc làm của công ty</a>
                         </div>
+
+                        <div class="mt-3">
+                            <c:choose>
+                                <c:when test="${isFavorite}">
+                                    <form method="post" action="<c:url value='/favorite-employers/remove/${employer.id}'/>?redirect=/employers/detail/${employer.id}">
+                                        <button type="submit" class="btn btn-outline-danger w-100">
+                                            <i class="fa fa-times-circle"></i> Bỏ lưu công ty
+                                        </button>
+                                    </form>
+                                </c:when>
+                                <c:otherwise>
+                                    <form method="post" action="<c:url value='/favorite-employers/add/${employer.id}'/>">
+                                        <button type="submit" class="btn btn-outline-primary w-100">
+                                            <i class="fa fa-bookmark"></i> Lưu công ty
+                                        </button>
+                                    </form>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
                     </div>
                 </div>
             </div>

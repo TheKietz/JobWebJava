@@ -74,14 +74,14 @@
                         <div class="mt-3">
                             <c:choose>
                                 <c:when test="${isFavorite}">
-                                    <form method="post" action="<c:url value='/favorites/remove/${job.id}'/>?redirect=/jobs/detail/${job.id}">
+                                    <form method="post" action="<c:url value='/favorite-jobs/remove/${job.id}'/>?redirect=/jobs/detail/${job.id}">
                                         <button type="submit" class="btn btn-outline-danger w-100">
                                             <i class="fa fa-times-circle"></i> Bỏ lưu công việc
                                         </button>
                                     </form>
                                 </c:when>
                                 <c:otherwise>
-                                    <form method="post" action="<c:url value='/favorites/add/${job.id}'/>">
+                                    <form method="post" action="<c:url value='/favorite-jobs/add/${job.id}'/>">
                                         <button type="submit" class="btn btn-outline-primary w-100">
                                             <i class="fa fa-bookmark"></i> 
                                             <a href="${pageContext.request.contextPath}/jobs/detail/${job.id}">
