@@ -9,6 +9,8 @@ import com.job.service.ServicePackageService;
 import com.job.service.TransactionService;
 import com.job.service.client.UserService;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,25 +35,42 @@ public class TransactionAdminController {
 
     @GetMapping
     public String list(Model model,
-                       HttpSession session,
-                       @RequestParam(value = "keyword", required = false) String keyword,
-                       @RequestParam(value = "page", defaultValue = "1") int page,
-                       @RequestParam(value = "size", defaultValue = "5") int size) {
+            HttpSession session,
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "from", required = false) String fromStr,
+            @RequestParam(value = "to", required = false) String toStr,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || loggedInUser.getRole() != CommonEnums.Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/applications, redirecting to login");
             return "redirect:/admin/login";
         }
-        
+
+        // Xử lý ngày lọc
+        LocalDate fromDate = null, toDate = null;
+        if (fromStr != null && !fromStr.isBlank()) {
+            fromDate = LocalDate.parse(fromStr);
+        }
+        if (toStr != null && !toStr.isBlank()) {
+            toDate = LocalDate.parse(toStr);
+        }
+
+        BigDecimal totalRevenue = BigDecimal.ZERO;
+        if (fromDate != null && toDate != null) {
+            totalRevenue = transactionService.getTotalRevenueByDateRange(fromDate, toDate);
+        }
+
         final String trimmedKeyword = (keyword != null) ? keyword.trim() : null;
-        size = Math.max(1, size); 
+        size = Math.max(1, size);
         List<Transaction> trans = transactionService.search(trimmedKeyword);
-        
+
         int totalPages = transactionService.countPages(trans, size);
         page = Math.max(1, Math.min(page, totalPages == 0 ? 1 : totalPages));
         List<Transaction> pagedTransactions = transactionService.getPage(trans, page, size);
-        
+
         model.addAttribute("transactions", pagedTransactions);
+        model.addAttribute("totalRevenue", totalRevenue);
         model.addAttribute("keyword", keyword);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);

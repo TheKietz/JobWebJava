@@ -1,6 +1,5 @@
 package com.job.repository;
 
-import com.job.enums.CommonEnums;
 import com.job.enums.CommonEnums.Gender;
 import com.job.model.User;
 import com.job.enums.CommonEnums.Role;
@@ -15,7 +14,9 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -44,8 +45,8 @@ public class UserRepository {
         String status = rs.getString("status");
         user.setStatus(status != null ? Status.valueOf(status) : Status.ACTIVE);
         String gender = rs.getString("gender");
-        user.setGender(gender != null? Gender.valueOf(gender):Gender.Other);
-        user.setAvatarUrl(rs.getString("avatar_Url"));  
+        user.setGender(gender != null ? Gender.valueOf(gender) : Gender.Other);
+        user.setAvatarUrl(rs.getString("avatar_Url"));
         user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
         return user;
     };
@@ -91,7 +92,7 @@ public class UserRepository {
 //            return null;
 //        }
     }
-    
+
     public User findByEmail(String email) {
         String sql = "SELECT * FROM users WHERE email = ?";
         try {
@@ -103,6 +104,7 @@ public class UserRepository {
             return null;
         }
     }
+
     public void add(User user) {
         String sql = "INSERT INTO users (full_name, email, password, phone, role, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -149,7 +151,7 @@ public class UserRepository {
         jdbcTemplate.update(sql, user.getFullName(), user.getGender(), user.getPhone(),
                 user.getAvatarUrl(), user.getId());
     }
-    
+
     public void save(User user) {
         String sql = "INSERT INTO users (full_name, email, password, phone, role, status, created_at) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -285,6 +287,23 @@ public class UserRepository {
         }
     }
 
+    public Map<String, Long> getRegistrationStatsByRoleAndDate(int days) {
+        String sql = "SELECT DATE(created_at) as reg_date, role, COUNT(*) as count "
+                + "FROM users "
+                + "WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL ? DAY) "
+                + "GROUP BY DATE(created_at), role";
+
+        return jdbcTemplate.query(sql, new Object[]{days}, rs -> {
+            Map<String, Long> stats = new HashMap<>();
+            while (rs.next()) {
+                String date = rs.getDate("reg_date").toLocalDate().toString(); // yyyy-MM-dd
+                String key = rs.getString("role") + "_" + date;
+                stats.put(key, rs.getLong("count"));
+            }
+            return stats;
+        });
+    }
+
     public List<User> search(String keyword) {
         if (keyword == null || keyword.isBlank()) {
             return findAll();
@@ -310,20 +329,20 @@ public class UserRepository {
     }
 
     public List<User> getPage(List<User> list, int page, int size) {
-            if (list == null || list.isEmpty()) {
-                System.out.println("getPage: Empty user list");
-                return new ArrayList<>();
-            }
-            int from = Math.max(0, (page - 1) * size);
-            int to = Math.min(from + size, list.size());
-            if (from >= list.size()) {
-                System.out.println("getPage: Invalid page range, from=" + from + ", list size=" + list.size());
-                return new ArrayList<>();
-            }
-            List<User> pagedList = list.subList(from, to);
-            System.out.println("getPage: Page=" + page + ", Size=" + size + ", Returned " + pagedList.size() + " users");
-            return pagedList;
-        }    
+        if (list == null || list.isEmpty()) {
+            System.out.println("getPage: Empty user list");
+            return new ArrayList<>();
+        }
+        int from = Math.max(0, (page - 1) * size);
+        int to = Math.min(from + size, list.size());
+        if (from >= list.size()) {
+            System.out.println("getPage: Invalid page range, from=" + from + ", list size=" + list.size());
+            return new ArrayList<>();
+        }
+        List<User> pagedList = list.subList(from, to);
+        System.out.println("getPage: Page=" + page + ", Size=" + size + ", Returned " + pagedList.size() + " users");
+        return pagedList;
+    }
 
     public boolean verifyPassword(String rawPassword, String storedPassword) {
         boolean matches = rawPassword != null && rawPassword.equals(storedPassword);

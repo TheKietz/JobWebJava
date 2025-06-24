@@ -2,6 +2,8 @@ package com.job.service;
 
 import com.job.model.Employer;
 import com.job.repository.EmployerRepository;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +40,14 @@ public class EmployerAdminService {
         return employerRepository.deleteByID(id);
     }
 
+    public int countEmployer() {
+        return employerRepository.countEmployers();
+    }
+
+    public int countEmployerByDateRange(LocalDate from, LocalDate to) {
+        return employerRepository.countEmployersByDateRange(from, to);
+    }
+    
     public List<Employer> search(String keyword) {
         return employerRepository.search(keyword);
     }

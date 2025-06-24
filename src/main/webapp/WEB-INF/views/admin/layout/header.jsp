@@ -99,7 +99,7 @@
                     <li>
                         <a href="javascript:void(0);" class="sidebar-toggle">
                             <i class="zmdi zmdi-account"></i>
-                            <span>Gói dịch vụ/Doanh thu</span>
+                            <span>Gói dịch vụ</span>
                             <i class='fas fa-angle-down fa-3x'></i>
                         </a>
                         <ul class="sidebar-submenu">
@@ -112,13 +112,7 @@
                                 <a href="${pageContext.request.contextPath}/admin/transactions">
                                     <i class="zmdi zmdi-dot-circle-alt"></i> Lịch sử giao dịch
                                 </a>
-                            </li>
-                            <li >
-                                <a href="${pageContext.request.contextPath}/admin/subscriptions/#">
-                                    <i class="zmdi zmdi-dot-circle-alt"></i> Tổng doanh thu
-                                </a>
-                            </li>
-                                                        
+                            </li>                    
                         </ul>
                     </li>
                     
@@ -238,7 +232,7 @@
                                 <li class="dropdown-divider"></li>
 
                                 <li>
-                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/logout">
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/logout">
                                         <i class="icon-power mr-2"></i> Logout
                                     </a>
                                 </li>

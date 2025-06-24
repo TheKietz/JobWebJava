@@ -22,7 +22,7 @@ public class JobRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-     private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
     private final RowMapper<Job> jobRowMapper = (rs, rowNum) -> {
         Job job = new Job();
         job.setId(rs.getInt("id"));
@@ -53,13 +53,12 @@ public class JobRepository {
     public Job findByID(int id) {
         String sql = "SELECT * FROM jobs WHERE id = ?";
         try {
-            return jdbcTemplate.queryForObject(sql, jobRowMapper,id);
+            return jdbcTemplate.queryForObject(sql, jobRowMapper, id);
         } catch (Exception e) {
             logger.error("Error finding job by ID: {}, {}", id, e.getMessage());
             return null;
         }
     }
-   
 
     public void add(Job job) {
         String sql = "INSERT INTO jobs (employer_id, title, description, location, salary_min, salary_max, job_type, status, category, created_at, expired_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -116,6 +115,24 @@ public class JobRepository {
             System.err.println("Error deleting job by ID: " + id + ", " + e.getMessage());
             return false;
         }
+    }
+
+    public List<Job> topTenJob() {
+        String sql = """
+                   SELECT j.title, j.category, COUNT(a.id) AS total_applications
+                   FROM jobs j
+                   LEFT JOIN applications a ON j.id = a.job_id
+                   GROUP BY j.id, j.title, j.category
+                   ORDER BY total_applications DESC
+                   LIMIT 10;
+                   """;
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+        Job job = new Job();
+        job.setTitle(rs.getString("title"));
+        job.setCategory(rs.getString("category"));
+        job.setTotalApplications(rs.getInt("total_applications")); // Bạn cần có field này trong Job
+        return job;
+    });
     }
 
     public List<Job> search(String keyword) {

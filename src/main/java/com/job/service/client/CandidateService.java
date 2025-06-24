@@ -1,5 +1,5 @@
 
-package com.job.service;
+package com.job.service.client;
 
 import com.job.enums.CommonEnums.Role;
 import com.job.model.Candidate;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * Service for managing Candidate entities in the admin panel.
  */
 @Service
-public class CandidateAdminService {
+public class CandidateService {
 
     @Autowired
     private CandidateRepository candidateRepository;
@@ -42,14 +42,6 @@ public class CandidateAdminService {
 
     public boolean deleteByID(Integer id) {
         return candidateRepository.deleteByID(id);
-    }
-
-    public int countCandidate() {
-        return candidateRepository.countCandidates();
-    }
-
-    public int countCandidateByDateRange(LocalDate from, LocalDate to) {
-        return candidateRepository.countCandidatesByDateRange(from, to);
     }
     
     public List<Candidate> search(String keyword) {

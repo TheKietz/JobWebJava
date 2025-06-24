@@ -7,6 +7,29 @@
     <div class="container-fluid">
         <h2>Lịch sử giao dịch</h2>
         <hr>
+        <form method="get" action="${pageContext.request.contextPath}/admin/transactions">
+            <div class="row g-2 mb-3">
+                <div class="col-md-3">
+                    <label>Từ ngày:</label>
+                    <input type="date" name="from" class="form-control" value="${param.from}">
+                </div>
+                <div class="col-md-3">
+                    <label>Đến ngày:</label>
+                    <input type="date" name="to" class="form-control" value="${param.to}">
+                </div>
+                <div class="col-md-2">                    
+                    <button type="submit" class="btn btn-primary">Lọc</button>
+                </div>
+            </div>
+        </form>
+        <c:if test="${not empty totalRevenue}">
+            <h5 class="mt-3">
+                Tổng doanh thu: 
+                <strong><fmt:formatNumber value="${totalRevenue}" /></strong> VNĐ
+            </h5>
+        </c:if>
+
+        <hr>
         <c:if test="${not empty success}">
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 ${fn:escapeXml(success)}
@@ -30,8 +53,24 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-6 text-end">
+                    <div class="col-md-3 text-end">
                         <a href="${pageContext.request.contextPath}/admin/transactions/add" class="btn btn-success">Add Transaction</a>
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <div >                    
+                            <form action="${pageContext.request.contextPath}/admin/transactions" method="get" class="form-inline d-inline">
+                                <div class="form-group mr-2 mb-0 d-flex align-items-center">
+                                    <label class="mr-2">Jobs per page:</label>
+                                    <select name="size" class="form-control form-control-sm" onchange="this.form.submit()">
+                                        <option value="5" ${pageSize == 5 ? 'selected' : ''}>5</option>
+                                        <option value="10" ${pageSize == 10 ? 'selected' : ''}>10</option>
+                                        <option value="20" ${pageSize == 20 ? 'selected' : ''}>20</option>
+                                    </select>
+                                </div>
+                                <input type="hidden" name="page" value="1">
+                                <input type="hidden" name="keyword" value="${fn:escapeXml(keyword)}">
+                            </form>
+                        </div> 
                     </div>
                 </div>
 
@@ -62,7 +101,7 @@
                                             <td>${t.id}</td>
                                             <td>${fn:escapeXml(t.userName)}</td>
                                             <td>${fn:escapeXml(t.packageName)}</td>
-                                            <td><fmt:formatNumber value="${t.amount}" type="currency"/></td>
+                                            <td><fmt:formatNumber value="${t.amount}"/> VNĐ</td>
                                             <td>${fn:escapeXml(t.paymentMethod)}</td>
                                             <td>${t.status}</td>
                                             <td>${fn:escapeXml(t.createdAtStr)}</td>

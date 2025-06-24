@@ -45,7 +45,7 @@
                             <form:form method="post" action="${pageContext.request.contextPath}/signup" modelAttribute="registerForm">
                                 <div class="mb-4">
                                     <form:input path="fullName" type="text" id="fullName" cssClass="form-control form-control-lg" placeholder="Họ và tên" required="true"/>
-                                    <form:errors path="fullName" cssClass="error"/>
+                                    <form:errors path="fullName" cssClass="error" />
                                 </div>
 
                                 <div class="mb-4">
