@@ -46,6 +46,15 @@ public class Job {
     private LocalDateTime createdAt; // Default handled by DB
     private LocalDateTime expiredAt;
     private int totalApplications;
+    private int candidateNumber;
+
+    public int getCandidateNumber() {
+        return candidateNumber;
+    }
+
+    public void setCandidateNumber(int candidateNumber) {
+        this.candidateNumber = candidateNumber;
+    }
 
     public int getTotalApplications() {
         return totalApplications;
