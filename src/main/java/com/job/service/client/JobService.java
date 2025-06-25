@@ -43,8 +43,15 @@ public class JobService {
         return jobRepository.countPages(list, size);
     }
 
-    public List<Job> searchByFilters(List<String> categories, List<String> jobTypes, List<String> salaryRanges) {
-        return jobRepository.searchByFilters(categories, jobTypes, salaryRanges);
+    public List<Job> search(String keyword) {
+        return jobRepository.search(keyword);
     }
-} 
 
+    public List<Job> findByEmployerID(int employerId) {
+        return jobRepository.findByEmployerID(employerId);
+    }
+
+    public int countJobByEmpID(Integer empId) {
+        return jobRepository.countJobByEmpID(empId);
+    }
+}

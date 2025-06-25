@@ -31,21 +31,20 @@ public class JobController {
 
     @RequestMapping(value = "/jobs", method = RequestMethod.GET)
     public ModelAndView jobPage(
-            @RequestParam(value = "category", required = false) List<String> categories,
-            @RequestParam(value = "jobType", required = false) List<String> jobTypes,
-            @RequestParam(value = "salaryRange", required = false) List<String> salaryRanges,
+            @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "page", defaultValue = "1") int page
     ) {
-        List<Job> filteredJobs = jobService.searchByFilters(categories, jobTypes, salaryRanges);
+        List<Job> jobs = jobService.search(keyword); // tìm theo từ khoá
 
-        List<Job> pageJobs = jobService.getPage(filteredJobs, page, 6);
-        int totalPages = jobService.countPages(filteredJobs, 6);
+        List<Job> pageJobs = jobService.getPage(jobs, page, 6);
+        int totalPages = jobService.countPages(jobs, 6);
 
         ModelAndView mav = new ModelAndView("client/layout/main");
         mav.addObject("body", "/WEB-INF/views/client/job/jobs.jsp");
         mav.addObject("jobs", pageJobs);
         mav.addObject("page", page);
         mav.addObject("totalPages", totalPages);
+        mav.addObject("keyword", keyword); // giữ lại input từ khoá
         return mav;
     }
 
@@ -71,5 +70,4 @@ public class JobController {
         mav.addObject("employerEmail", user != null ? user.getEmail() : "");
         return mav;
     }
-
 }

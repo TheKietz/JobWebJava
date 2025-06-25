@@ -17,48 +17,18 @@
                 </div>
 
                 <div class="row g-4 fruite">
-                    <!-- Bộ lọc -->
+                     <!-- Bộ lọc đơn giản (nếu cần mở rộng) -->
                     <div class="col-12 col-md-4">
                         <div class="row g-4">
                             <form method="get" action="<c:url value='/jobs'/>">
-                                <!-- Ngành nghề -->
-                                <div class="col-12" id="categoryFilter">
-                                    <div class="mb-2"><b>Ngành nghề</b></div>
-                                    <c:forEach var="cat" items="${fn:split('IT,Marketing,Finance,Design,HR', ',')}">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" name="category" value="${cat}" id="cat-${cat}">
-                                            <label class="form-check-label" for="cat-${cat}">${cat}</label>
-                                        </div>
-                                    </c:forEach>
+                                <div class="col-12">
+                                    <label for="keyword" class="form-label"><b>Tìm kiếm</b></label>
+                                    <input type="text" id="keyword" name="keyword" class="form-control" value="${keyword}" placeholder="Nhập từ khoá việc làm mong muốn">
                                 </div>
 
-                                <!-- Cấp độ công việc -->
-                                <div class="col-12" id="levelFilter">
-                                    <div class="mb-2"><b>Cấp độ</b></div>
-                                    <c:forEach var="level" items="${fn:split('Intern,Junior,Senior,Manager', ',')}">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" name="jobType" value="${level}" id="level-${level}">
-                                            <label class="form-check-label" for="level-${level}">${level}</label>
-                                        </div>
-                                    </c:forEach>
-                                </div>
-
-                                <!-- Mức lương -->
-                                <div class="col-12" id="salaryFilter">
-                                    <div class="mb-2"><b>Mức lương</b></div>
-                                    <c:forEach var="range" items="${fn:split('0-5,5-10,10-20,20-100', ',')}">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" name="salaryRange" value="${range}" id="salary-${range}">
-                                            <label class="form-check-label" for="salary-${range}">${range} triệu</label>
-                                        </div>
-                                    </c:forEach>
-                                </div>
-
-                                <!-- Nút lọc -->
                                 <div class="col-12 mt-3">
-                                    <button id="btnFilter"
-                                            class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4">
-                                        Lọc Việc Làm
+                                    <button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4">
+                                        Tìm Việc Làm 
                                     </button>
                                 </div>
                             </form>

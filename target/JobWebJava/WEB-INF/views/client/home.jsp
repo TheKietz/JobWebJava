@@ -4,25 +4,18 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html lang="vi">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>TopCV Main Content</title>
-        <link rel="stylesheet" href="<c:url value='/template/assets1/css/bootstrap.min.css'/>">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    </head>
     <body>
         <main>
             <!-- Banner -->
             <section class="banner">
                 <div class="container">
                     <h1 style="color: #02ba5a">JobFinder- Tiếp lợi thế, nối thành công</h1>
-                    <p>Với Hệ sinh thái HR Tech, JobFinder luôn đồng hành để bạn thành công trong sự nghiệp</p>
+                    <p>Với hệ sinh thái HR Tech, JobFinder luôn đồng hành để bạn thành công trong sự nghiệp</p>
                 </div>
             </section>
 
             <!-- Job Listings -->
-            <section class="job-list py-5">
+            <section class="job-list py-4">
                 <div class="container">
                     <h2>Việc làm tốt nhất</h2>
                     <c:if test="${empty jobs}">

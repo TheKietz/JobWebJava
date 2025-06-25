@@ -6,7 +6,7 @@
 <main>
     <div class="container-fluid">
         <div class="container">
-            <div class="row g-4 mb-5">
+            <div class="row g-4 mb-5 mt-1">
                 <div>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -22,7 +22,7 @@
                         <div class="row g-4">
                             <form method="get" action="<c:url value='/employers'/>">
                                 <div class="col-12">
-                                    <label for="keyword" class="form-label"><b>Từ khóa</b></label>
+                                    <label for="keyword" class="form-label"><b>Tìm kiếm</b></label>
                                     <input type="text" id="keyword" name="keyword" class="form-control" value="${keyword}" placeholder="Tìm theo tên công ty hoặc website">
                                 </div>
 

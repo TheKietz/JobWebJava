@@ -69,7 +69,6 @@ public class JobRepository {
             job.setStatus(JobStatus.valueOf(rs.getString("status")));
             return job;
         }, userId);
-
     }
 
     public void add(Job job) {
@@ -160,12 +159,9 @@ public class JobRepository {
             }
             String sql = "SELECT * FROM jobs WHERE LOWER(title) LIKE ? OR LOWER(category) LIKE ?";
             String likeKeyword = "%" + keyword.trim().toLowerCase() + "%";
-            List<Job> jobs = jdbcTemplate.query(sql, new Object[]{likeKeyword, likeKeyword}, new BeanPropertyRowMapper<>(Job.class));
-            System.out.println("search: Keyword='" + keyword + "', Found " + jobs.size() + " jobs");
-            return jobs;
+            return jdbcTemplate.query(sql, new Object[]{likeKeyword, likeKeyword}, jobRowMapper);
         } catch (Exception e) {
-            System.err.println("Error searching jobs with keyword: " + keyword + ", " + e.getMessage());
-            e.printStackTrace();
+            logger.error("Error searching jobs with keyword: {}", keyword, e);
             return List.of();
         }
     }
@@ -192,43 +188,43 @@ public class JobRepository {
         return pages;
     }
 
-    public List<Job> searchByFilters(List<String> categories, List<String> jobTypes, List<String> salaryRanges) {
-        StringBuilder sql = new StringBuilder("SELECT * FROM jobs WHERE 1=1 ");
-        List<Object> params = new ArrayList<>();
-
-        if (categories != null && !categories.isEmpty()) {
-            sql.append("AND category IN (")
-                    .append(String.join(",", Collections.nCopies(categories.size(), "?")))
-                    .append(") ");
-            params.addAll(categories);
-        }
-
-        if (jobTypes != null && !jobTypes.isEmpty()) {
-            sql.append("AND job_type IN (")
-                    .append(String.join(",", Collections.nCopies(jobTypes.size(), "?")))
-                    .append(") ");
-            params.addAll(jobTypes);
-        }
-
-        if (salaryRanges != null && !salaryRanges.isEmpty()) {
-            for (String range : salaryRanges) {
-                String[] parts = range.split("-");
-                if (parts.length == 2) {
-                    try {
-                        BigDecimal min = new BigDecimal(parts[0]);
-                        BigDecimal max = new BigDecimal(parts[1]);
-                        sql.append("AND salary_min >= ? AND salary_max <= ? ");
-                        params.add(min);
-                        params.add(max);
-                    } catch (NumberFormatException ignored) {
-                    }
-                }
-            }
-        }
-
-        System.out.println("Final SQL: " + sql.toString());
-        return jdbcTemplate.query(sql.toString(), params.toArray(), jobRowMapper);
-    }
+//    public List<Job> searchByFilters(List<String> categories, List<String> jobTypes, List<String> salaryRanges) {
+//        StringBuilder sql = new StringBuilder("SELECT * FROM jobs WHERE 1=1 ");
+//        List<Object> params = new ArrayList<>();
+//
+//        if (categories != null && !categories.isEmpty()) {
+//            sql.append("AND category IN (")
+//                    .append(String.join(",", Collections.nCopies(categories.size(), "?")))
+//                    .append(") ");
+//            params.addAll(categories);
+//        }
+//
+//        if (jobTypes != null && !jobTypes.isEmpty()) {
+//            sql.append("AND job_type IN (")
+//                    .append(String.join(",", Collections.nCopies(jobTypes.size(), "?")))
+//                    .append(") ");
+//            params.addAll(jobTypes);
+//        }
+//
+//        if (salaryRanges != null && !salaryRanges.isEmpty()) {
+//            for (String range : salaryRanges) {
+//                String[] parts = range.split("-");
+//                if (parts.length == 2) {
+//                    try {
+//                        BigDecimal min = new BigDecimal(parts[0]);
+//                        BigDecimal max = new BigDecimal(parts[1]);
+//                        sql.append("AND salary_min >= ? AND salary_max <= ? ");
+//                        params.add(min);
+//                        params.add(max);
+//                    } catch (NumberFormatException ignored) {
+//                    }
+//                }
+//            }
+//        }
+//
+//        System.out.println("Final SQL: " + sql.toString());
+//        return jdbcTemplate.query(sql.toString(), params.toArray(), jobRowMapper);
+//    }
 
     public RowMapper<Job> getRowMapper() {
         return jobRowMapper;
