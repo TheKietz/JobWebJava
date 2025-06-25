@@ -60,6 +60,16 @@
                 background: #00b14f;
                 border-radius: 5px;
             }
+
+            .btn-light-green {
+                background-color: #6fcf97; /* màu xanh lá sáng hơn */
+                color: white;
+                border: none;
+            }
+            .btn-light-green:hover {
+                background-color: #5ec488;
+            }
+
         </style>
     </head>
     <body>
@@ -81,103 +91,141 @@
 
             <!-- Greeting and Verification -->
             <div class="card mt-4">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="progress-container me-3" style="width: 48px; height: 48px;">
-                            <svg class="progress-circle" height="48" width="48">
-                            <circle cx="24" cy="24" r="21.5" stroke-width="5" class="progress-background" />
-                            <circle cx="24" cy="24" r="21.5" stroke-dasharray="135.0884841043611" stroke-dashoffset="135.0884841043611" stroke-width="5" class="progress-bar" />
-                            </svg>
-<!--                            <div class="progress-text">0%</div>-->
-                        </div>
-                        <div>
-                            <h5 class="mb-1">Xin chào, <span class="user-name" style="color: #02ba5a">${user.fullName}</span></h5>
-<!--                            <p class="mb-0">Hãy thực hiện các bước sau để gia tăng tính bảo mật và nhận <span class="highlighted">+2 Top Points</span> để đổi quà khi đăng tin đầu tiên.</p>-->
-                        </div>
-                    </div>
-<!--                    <div class="mt-3">
-                        <div class="verify-info">
-                            <div class="status"><i class="fa-thin fa-circle"></i></div>
-                            <div class="content">Xác thực số điện thoại</div>
-                            <div class="action-button"><i class="fa-duotone fa-arrow-up-right"></i></div>
-                        </div>
-                        <div class="verify-info">
-                            <div class="status"><i class="fa-thin fa-circle"></i></div>
-                            <div class="content">Cập nhật thông tin công ty</div>
-                            <div class="action-button"><i class="fa-duotone fa-arrow-up-right"></i></div>
-                        </div>
-                        <div class="verify-info">
-                            <div class="status"><i class="fa-thin fa-circle"></i></div>
-                            <div class="content">Xác thực giấy phép kinh doanh</div>
-                            <div class="action-button"><i class="fa-duotone fa-arrow-up-right"></i></div>
-                        </div>
-                        <div class="verify-info">
-                            <div class="status"><i class="fa-thin fa-circle"></i></div>
-                            <div class="content">Đăng tin tuyển dụng đầu tiên</div>
-                            <div class="action-button"><i class="fa-duotone fa-arrow-up-right"></i></div>
-                        </div>
-                    </div>-->
-                </div>
-            </div>
-
-            <!-- Recruitment Explorer -->
-            <div class="card mt-4">
-                <div class="card-body">
+                <div class="card-body">                    
                     <div class="d-flex align-items-center mb-3">
-                        <i class="fa-solid fa-compass me-2"></i>
-                        <h5>Khám phá TopCV dành cho nhà tuyển dụng</h5>
+                        <h5 class="mb-1">Xin chào, <span class="user-name" style="color: #02ba5a">${user.fullName}</span></h5>
                     </div>
-                    <div class="row">
+                    <div class="row g-4">
+                        <!-- CV chưa xem -->
                         <div class="col-md-4 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body text-center">
-                                    <img src="${pageContext.request.contextPath}/template/images/dang-tin.svg" alt="Post Job" class="mb-2" />
-                                    <h5 class="card-title">Đăng tin tuyển dụng</h5>
-                                    <button class="btn btn-primary btn-sm"
-                                            onclick="window.location.href = '${pageContext.request.contextPath}/app/job-post'">
-                                        Thử ngay
-                                    </button>
-                                </div>
+                            <div class="card h-100 d-flex justify-content-center">
+                                <a href="${pageContext.request.contextPath}/app/job-post" class="text-decoration-none text-dark">
+                                    <div class="card-body d-flex align-items-center justify-content-center" style="height: 150px;">
+                                        <div class="d-flex align-items-center">
+                                            <!-- Hình ảnh bên trái -->
+                                            <div class="me-3">
+                                                <img src="${pageContext.request.contextPath}/template/assets3/images/cv-not-watch.95fc35d.svg"
+                                                     alt="Post Job" style="width: 48px; height: 48px;" />
+                                            </div>
+                                            <!-- Văn bản bên phải -->
+                                            <div>
+                                                <div class="fw-bold text-uppercase">CV chưa xem</div>
+                                                <div class="text-muted small">SL CV chưa xem</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
-                        </div>
+                        </div> 
+
+                        <!-- CV chưa đánh giá -->
                         <div class="col-md-4 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body text-center">
-                                    <img src="${pageContext.request.contextPath}/template/images/search.svg" alt="Search CV" class="mb-2" />
-                                    <h5 class="card-title">Tìm kiếm CV</h5>
-                                    <button class="btn btn-primary btn-sm">Thử ngay</button>
-                                </div>
+                            <div class="card h-100 d-flex justify-content-center">
+                                <a href="${pageContext.request.contextPath}/app/job-post" class="text-decoration-none text-dark">
+                                    <div class="card-body d-flex align-items-center justify-content-center" style="height: 150px;">
+                                        <div class="d-flex align-items-center">
+                                            <!-- Hình ảnh bên trái -->
+                                            <div class="me-3">
+                                                <img src="${pageContext.request.contextPath}/template/assets3/images/cv-not-rate.6effe05.svg"
+                                                     alt="Post Job" style="width: 48px; height: 48px;" />
+                                            </div>
+                                            <!-- Văn bản bên phải -->
+                                            <div>
+                                                <div class="fw-bold text-uppercase">CV chưa đánh giá</div>
+                                                <div class="text-muted small">SL tin chưa đánh giá</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
-                        </div>
+                        </div>                      
+
+
+                        <!-- Tin hết hạn -->
                         <div class="col-md-4 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body text-center">
-                                    <img src="${pageContext.request.contextPath}/template/images/services.svg" alt="Buy Services" class="mb-2" />
-                                    <h5 class="card-title">Mua dịch vụ</h5>
-                                    <button class="btn btn-primary btn-sm">Thử ngay</button>
-                                </div>
+                            <div class="card h-100 d-flex justify-content-center">
+                                <a href="${pageContext.request.contextPath}/app/job-post" class="text-decoration-none text-dark">
+                                    <div class="card-body d-flex align-items-center justify-content-center" style="height: 150px;">
+                                        <div class="d-flex align-items-center">
+                                            <!-- Hình ảnh bên trái -->
+                                            <div class="me-3">
+                                                <img src="${pageContext.request.contextPath}/template/assets3/images/expired-job.4949e52.svg"
+                                                     alt="Post Job" style="width: 48px; height: 48px;" />
+                                            </div>
+                                            <!-- Văn bản bên phải -->
+                                            <div>
+                                                <div class="fw-bold text-uppercase">Tin hết hạn</div>
+                                                <div class="text-muted small">Gia hạn hiển thị tin</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Swiper JS -->
-            <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-            <script>
-            const totalSlides = document.querySelectorAll(".swiper-slide").length;
-            const swiper = new Swiper(".mySwiper", {
-                slidesPerView: 2,
-                spaceBetween: 20,
-                loop: true,
-                loopedSlides: 3,
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
-                },
-                speed: 600,
-            });
-            </script>
         </div>
-    </body>
+
+
+        <!-- Recruitment Explorer -->
+        <div class="card mt-4">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fa-solid fa-compass me-2"></i>
+                    <h5>Khám phá <span class="user-name" style="color: #02ba5a">JobFInder</span> dành cho nhà tuyển dụng</h5>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <img src="${pageContext.request.contextPath}/template/images/dang-tin.svg" alt="Post Job" class="mb-2" />
+                                <h5 class="card-title">Đăng tin tuyển dụng</h5>
+                                <button class="btn btn-light-green btn-sm"
+                                        onclick="window.location.href = '${pageContext.request.contextPath}/app/job-post'">
+                                    Thử ngay
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <img src="${pageContext.request.contextPath}/template/images/search.svg" alt="Search CV" class="mb-2" />
+                                <h5 class="card-title">Tìm kiếm CV</h5>
+                                <button class="btn btn-light-green btn-sm">Thử ngay</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <img src="${pageContext.request.contextPath}/template/images/services.svg" alt="Buy Services" class="mb-2" />
+                                <h5 class="card-title">Mua dịch vụ</h5>
+                                <button class="btn btn-light-green btn-sm">Thử ngay</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Swiper JS -->
+        <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+        <script>
+                                            const totalSlides = document.querySelectorAll(".swiper-slide").length;
+                                            const swiper = new Swiper(".mySwiper", {
+                                                slidesPerView: 2,
+                                                spaceBetween: 20,
+                                                loop: true,
+                                                loopedSlides: 3,
+                                                navigation: {
+                                                    nextEl: ".swiper-button-next",
+                                                    prevEl: ".swiper-button-prev",
+                                                },
+                                                speed: 600,
+                                            });
+        </script>
+    
+</body>
 </html>
