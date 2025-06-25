@@ -61,7 +61,6 @@
                     <table class="table table-bordered bg-info-light2">
                         <thead class="table-light">
                             <tr>
-                                <th class="col-1">ID</th>
                                 <th class="col-1">Công ty</th>
                                 <th class="col-2">Tiêu đề</th>    
                                 <th class="col-1">Kiểu công việc</th>
@@ -82,11 +81,15 @@
                                 <c:otherwise>
                                     <c:forEach var="job" items="${jobs}">
                                         <tr>
-                                            <td>${job.id}</td>
                                             <td>${fn:escapeXml(companyName[job.employerId])}</td>
                                             <td>${fn:escapeXml(job.title)}</td> 
                                             <td>${job.jobType}</td>
-                                            <td>${job.status}</td>
+                                            <c:choose>
+                                                <c:when test="${job.status=='APPROVED'}"><td><span class="badge bg-success">Đã duyệt</span ></td> </c:when>
+                                                <c:when test="${job.status=='PENDING'}"><td><span class="badge bg-secondary">Chờ duyệt</span ></td> </c:when>
+                                                <c:when test="${job.status=='REJECTED'}"><td><span class="badge bg-danger">Bị từ chối</span ></td> </c:when>
+                                                <c:when test="${job.status=='EXPIRED'}"><td><span class="badge bg-warning text-dark">Hết hạn</span ></td> </c:when>
+                                            </c:choose>
                                             <td>${fn:escapeXml(job.category)}</td>
                                             <td>${job.getPostedAtFormatted()}</td>
                                             <td>${job.getExpiryDateFormatted()}</td>                                            
@@ -102,17 +105,17 @@
                     </table>
                 </div>
                 <c:if test="${totalPages > 1}">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
-                            <c:forEach begin="1" end="${totalPages}" var="page">
-                                <li class="page-item ${page == currentPage ? 'active' : ''}">
-                                    <a class="page-link" href="${pageContext.request.contextPath}/admin/jobs?page=${page}&size=${pageSize}&keyword=${fn:escapeXml(keyword)}">${page}</a>
-                                </li>
-                            </c:forEach>
-                        </ul>
-                    </nav>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <c:forEach begin="1" end="${totalPages}" var="page">
+                            <li class="page-item ${page == currentPage ? 'active' : ''}">
+                                <a class="page-link" href="${pageContext.request.contextPath}/admin/jobs?page=${page}&size=${pageSize}&keyword=${fn:escapeXml(keyword)}">${page}</a>
+                            </li>
+                        </c:forEach>
+                    </ul>                                
+                </nav>
                 </c:if>
             </div>
         </div>
     </div>
-</div>
+</div>        
