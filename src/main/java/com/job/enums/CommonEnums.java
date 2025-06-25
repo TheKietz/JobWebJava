@@ -17,6 +17,9 @@ public class CommonEnums {
         CANCELED     // Hủy bởi người dùng hoặc hệ thống
     }
 
+    public enum FeedbackStatus{
+        PENDING, RESOLVED, CLOSED
+    }
     public enum Status {
         ACTIVE, INACTIVE
     }
