@@ -3,7 +3,14 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <head>
     <style>
-        
+        .btn-light-green {
+                background-color: #6fcf97; /* màu xanh lá sáng hơn */
+                color: white;
+                border: none;
+            }
+            .btn-light-green:hover {
+                background-color: #5ec488;
+            }
     </style>
 </head>
             
@@ -109,7 +116,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="update ml-auto mr-auto">
-                                                <button type="submit" class="btn btn-primary btn-round">Cập nhật thông tin</button>
+                                                <button type="submit" class="btn btn-light-green btn-round">Cập nhật thông tin</button>
                                             </div>
                                         </div>
                                     </form>
