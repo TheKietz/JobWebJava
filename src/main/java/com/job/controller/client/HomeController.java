@@ -19,7 +19,6 @@ public class HomeController {
         if (jobs.size() > 6) {
             jobs = jobs.subList(0, 6); // lấy 6 job đầu
         }
-
         ModelAndView mav = new ModelAndView("client/layout/main");
         mav.addObject("body", "/WEB-INF/views/client/home.jsp");
         mav.addObject("jobs", jobs);
