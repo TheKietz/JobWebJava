@@ -44,7 +44,14 @@ public class JobService {
     public void deleteByID(int id) {
         jobRepository.deleteByID(id);
     }
+     public List<Job> search(String keyword) {
+        return jobRepository.search(keyword);
+    }
 
+     public List<Job> employerSearch(String keyword, int id) {
+        return jobRepository.employerSearch(keyword, id);
+    }
+     
     public int countPages(List<Job> list, int size) {
         return jobRepository.countPages(list, size);
     }
