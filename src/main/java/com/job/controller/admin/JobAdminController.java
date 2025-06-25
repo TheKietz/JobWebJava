@@ -9,7 +9,10 @@ import com.job.service.EmployerAdminService;
 import com.job.service.JobAdminService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import java.beans.PropertyEditorSupport;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +24,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,7 +51,7 @@ public class JobAdminController {
             HttpSession session,
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "5") int size) {
+            @RequestParam(value = "size", defaultValue = "10") int size) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/jobs, redirecting to login");
@@ -62,9 +67,8 @@ public class JobAdminController {
 
         int totalPages = jobService.countPages(jobs, size);
         page = Math.max(1, Math.min(page, totalPages == 0 ? 1 : totalPages));
-        
+
         List<Job> pagedJobs = jobService.getPage(jobs, page, size);
-        
 
         Set<Integer> employerIds = pagedJobs.stream()
                 .map(Job::getEmployerId)
@@ -92,9 +96,7 @@ public class JobAdminController {
     }
 
     @GetMapping("/add")
-    public String add(Model model, HttpSession session,
-            @RequestParam(value = "size", defaultValue = "5") int size,
-            @RequestParam(value = "keyword", required = false) String keyword) {
+    public String add(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/jobs/add, redirecting to login");
@@ -103,8 +105,6 @@ public class JobAdminController {
 
         model.addAttribute("job", new Job());
         model.addAttribute("employers", employerService.findAll());
-        model.addAttribute("pageSize", size);
-        model.addAttribute("keyword", keyword);
         model.addAttribute("body", "/WEB-INF/views/admin/job/form.jsp");
         return "admin/layout/main";
     }
@@ -209,5 +209,41 @@ public class JobAdminController {
             model.addAttribute("body", "/WEB-INF/views/admin/job/form.jsp");
             return "admin/layout/main";
         }
+
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(BigDecimal.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) throws IllegalArgumentException {
+                if (text != null && !text.isBlank()) {
+                    // Loại bỏ dấu chấm ngăn cách
+                    String cleaned = text.replaceAll("\\.", "");
+                    setValue(new BigDecimal(cleaned));
+                } else {
+                    setValue(null);
+                }
+            }
+        });
+
+        // Formatter cho LocalDateTime
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        binder.registerCustomEditor(LocalDateTime.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) throws IllegalArgumentException {
+                if (text != null && !text.isBlank()) {
+                    setValue(LocalDateTime.parse(text, formatter));
+                } else {
+                    setValue(null);
+                }
+            }
+
+            @Override
+            public String getAsText() {
+                LocalDateTime value = (LocalDateTime) getValue();
+                return value != null ? value.format(formatter) : "";
+            }
+        });
     }
 }
