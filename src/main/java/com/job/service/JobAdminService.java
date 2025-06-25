@@ -31,6 +31,10 @@ public class JobAdminService {
         return jobRepository.deleteByID(id);
     }
 
+    public List<Job> topTenJob(){
+        return jobRepository.topTenJob();
+    }
+    
     public List<Job> search(String keyword) {
         return jobRepository.search(keyword);
     }

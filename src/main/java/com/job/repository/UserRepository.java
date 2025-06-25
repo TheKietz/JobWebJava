@@ -1,5 +1,6 @@
 package com.job.repository;
 
+import com.job.enums.CommonEnums.Gender;
 import com.job.model.User;
 import com.job.enums.CommonEnums.Role;
 import com.job.enums.CommonEnums.Status;
@@ -13,7 +14,9 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -41,25 +44,12 @@ public class UserRepository {
         user.setRole(role != null ? Role.valueOf(role) : Role.EMPLOYER);
         String status = rs.getString("status");
         user.setStatus(status != null ? Status.valueOf(status) : Status.ACTIVE);
+        String gender = rs.getString("gender");
+        user.setGender(gender != null ? Gender.valueOf(gender.toUpperCase()) : Gender.Other);
+        user.setAvatarUrl(rs.getString("avatar_Url"));
         user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
         return user;
     };
-
-    public List<User> getPage(List<User> list, int page, int size) {
-        if (list == null || list.isEmpty()) {
-            System.out.println("getPage: Empty user list");
-            return new ArrayList<>();
-        }
-        int from = Math.max(0, (page - 1) * size);
-        int to = Math.min(from + size, list.size());
-        if (from >= list.size()) {
-            System.out.println("getPage: Invalid page range, from=" + from + ", list size=" + list.size());
-            return new ArrayList<>();
-        }
-        List<User> pagedList = list.subList(from, to);
-        System.out.println("getPage: Page=" + page + ", Size=" + size + ", Returned " + pagedList.size() + " users");
-        return pagedList;
-    }
 
     public List<User> findAll() {
         String sql = "SELECT * FROM users";
@@ -71,40 +61,50 @@ public class UserRepository {
     public User findById(Integer id) {
         String sql = "SELECT * FROM users WHERE id = ?";
         try {
-            return jdbcTemplate.queryForObject(sql, new Object[]{id}, new BeanPropertyRowMapper<>(User.class) {
-                @Override
-                public User mapRow(java.sql.ResultSet rs, int rowNum) throws java.sql.SQLException {
-                    User user = new User();
-                    user.setId(rs.getInt("id"));
-                    user.setFullName(rs.getString("full_name"));
-                    user.setEmail(rs.getString("email"));
-                    user.setPassword(rs.getString("password"));
-                    user.setPhone(rs.getString("phone"));
-                    String roleStr = rs.getString("role");
-                    user.setRole(roleStr != null ? Role.valueOf(roleStr) : null);
-                    String statusStr = rs.getString("status");
-                    user.setStatus(statusStr != null ? Status.valueOf(statusStr) : null);
-                    user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-                    return user;
-                }
-            });
+            return jdbcTemplate.queryForObject(sql, new Object[]{id}, userRowMapper);
         } catch (Exception e) {
-            System.err.println("Error finding user by ID: " + id + ", " + e.getMessage());
+            logger.error("Error finding job by ID: {}, {}", id, e.getMessage());
+            return null;
+        }
+//        try {
+//            return jdbcTemplate.queryForObject(sql, new Object[]{id}, new BeanPropertyRowMapper<>(User.class) {
+//                @Override
+//                public User mapRow(java.sql.ResultSet rs, int rowNum) throws java.sql.SQLException {
+//                    User user = new User();
+//                    user.setId(rs.getInt("id"));
+//                    user.setFullName(rs.getString("full_name"));
+//                    user.setEmail(rs.getString("email"));
+//                    user.setPassword(rs.getString("password"));
+//                    user.setPhone(rs.getString("phone"));
+//                    String roleStr = rs.getString("role");
+//                    user.setRole(roleStr != null ? Role.valueOf(roleStr) : null);
+//                    String statusStr = rs.getString("status");
+//                    user.setStatus(statusStr != null ? Status.valueOf(statusStr) : null);
+//                    String genderStr = rs.getString("gender");
+//                    user.setStatus(genderStr != null ? Status.valueOf(genderStr) : null);
+//                    user.setAvatarUrl(rs.getString("avatar_Url"));
+//                    user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+//                    return user;
+//                }
+//            });
+//        } catch (Exception e) {
+//            System.err.println("Error finding user by ID: " + id + ", " + e.getMessage());
+//            return null;
+//        }
+    }
+
+    public User findByEmail(String email) {
+        String sql = "SELECT * FROM users WHERE email = ?";
+        try {
+            User user = jdbcTemplate.queryForObject(sql, new Object[]{email}, new BeanPropertyRowMapper<>(User.class));
+            System.out.println("findByEmail: email=" + email + ", Found=" + (user != null ? user.getId() : "null"));
+            return user;
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("findByEmail: email=" + email + ", Not found");
             return null;
         }
     }
 
-//    public void add(User user) {
-//        String sql = "INSERT INTO users (full_name, email, password, phone, role, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
-//        jdbcTemplate.update(sql,
-//                user.getFullName(),
-//                user.getEmail(),
-//                user.getPassword(),
-//                user.getPhone(),
-//                user.getRole() != null ? user.getRole().name() : "ADMIN", 
-//                user.getStatus() != null ? user.getStatus().name() : "ACTIVE",
-//                user.getCreatedAt());
-//    }
     public void add(User user) {
         String sql = "INSERT INTO users (full_name, email, password, phone, role, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -144,6 +144,12 @@ public class UserRepository {
                 user.getStatus() != null ? user.getStatus().name() : "ACTIVE",
                 user.getCreatedAt(),
                 user.getId());
+    }
+
+    public void updateUserProfile(User user) {
+        String sql = "UPDATE users SET full_name = ?, gender = ?, phone = ?, avatar_url = ? WHERE id = ?";
+        jdbcTemplate.update(sql, user.getFullName(), user.getGender(), user.getPhone(),
+                user.getAvatarUrl(), user.getId());
     }
 
     public void save(User user) {
@@ -281,6 +287,23 @@ public class UserRepository {
         }
     }
 
+    public Map<String, Long> getRegistrationStatsByRoleAndDate(int days) {
+        String sql = "SELECT DATE(created_at) as reg_date, role, COUNT(*) as count "
+                + "FROM users "
+                + "WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL ? DAY) "
+                + "GROUP BY DATE(created_at), role";
+
+        return jdbcTemplate.query(sql, new Object[]{days}, rs -> {
+            Map<String, Long> stats = new HashMap<>();
+            while (rs.next()) {
+                String date = rs.getDate("reg_date").toLocalDate().toString(); // yyyy-MM-dd
+                String key = rs.getString("role") + "_" + date;
+                stats.put(key, rs.getLong("count"));
+            }
+            return stats;
+        });
+    }
+
     public List<User> search(String keyword) {
         if (keyword == null || keyword.isBlank()) {
             return findAll();
@@ -305,16 +328,20 @@ public class UserRepository {
         return pages;
     }
 
-    public User findByEmail(String email) {
-        String sql = "SELECT * FROM users WHERE email = ?";
-        try {
-            User user = jdbcTemplate.queryForObject(sql, new Object[]{email}, new BeanPropertyRowMapper<>(User.class));
-            System.out.println("findByEmail: email=" + email + ", Found=" + (user != null ? user.getId() : "null"));
-            return user;
-        } catch (EmptyResultDataAccessException e) {
-            System.out.println("findByEmail: email=" + email + ", Not found");
-            return null;
+    public List<User> getPage(List<User> list, int page, int size) {
+        if (list == null || list.isEmpty()) {
+            System.out.println("getPage: Empty user list");
+            return new ArrayList<>();
         }
+        int from = Math.max(0, (page - 1) * size);
+        int to = Math.min(from + size, list.size());
+        if (from >= list.size()) {
+            System.out.println("getPage: Invalid page range, from=" + from + ", list size=" + list.size());
+            return new ArrayList<>();
+        }
+        List<User> pagedList = list.subList(from, to);
+        System.out.println("getPage: Page=" + page + ", Size=" + size + ", Returned " + pagedList.size() + " users");
+        return pagedList;
     }
 
     public boolean verifyPassword(String rawPassword, String storedPassword) {

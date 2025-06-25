@@ -6,6 +6,7 @@ import com.job.model.Candidate;
 import com.job.model.User;
 import com.job.repository.CandidateRepository;
 import com.job.repository.UserRepository;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,14 @@ public class CandidateAdminService {
         return candidateRepository.deleteByID(id);
     }
 
+    public int countCandidate() {
+        return candidateRepository.countCandidates();
+    }
+
+    public int countCandidateByDateRange(LocalDate from, LocalDate to) {
+        return candidateRepository.countCandidatesByDateRange(from, to);
+    }
+    
     public List<Candidate> search(String keyword) {
         return candidateRepository.search(keyword);
     }

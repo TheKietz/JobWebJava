@@ -1,9 +1,11 @@
-
 package com.job.repository;
 
 import com.job.model.Candidate;
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -105,6 +107,27 @@ public class CandidateRepository {
         }
     }
 
+    public int countCandidates() {
+        String sql = "SELECT COUNT(*) FROM candidates";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class);
+        return count != null ? count : 0;
+    }
+
+    public int countCandidatesByDateRange(LocalDate from, LocalDate to) {
+        String sql = """
+        SELECT COUNT(*) 
+        FROM candidates e 
+        JOIN users u ON e.user_id = u.id
+        WHERE u.created_at BETWEEN ? AND ?
+    """;
+
+        Timestamp fromTime = Timestamp.valueOf(from.atStartOfDay());
+        Timestamp toTime = Timestamp.valueOf(to.plusDays(1).atStartOfDay()); // để bao trọn ngày to
+
+        Integer count = jdbcTemplate.queryForObject(sql, new Object[]{fromTime, toTime}, Integer.class);
+        return count != null ? count : 0;
+    }
+
     public List<Candidate> search(String keyword) {
         try {
             if (keyword == null || keyword.isBlank()) {
@@ -120,10 +143,14 @@ public class CandidateRepository {
     }
 
     public List<Candidate> getPage(List<Candidate> list, int page, int size) {
-        if (list.isEmpty()) return List.of();
+        if (list.isEmpty()) {
+            return List.of();
+        }
         int from = Math.max(0, (page - 1) * size);
         int to = Math.min(from + size, list.size());
-        if (from >= list.size()) return List.of();
+        if (from >= list.size()) {
+            return List.of();
+        }
         return list.subList(from, to);
     }
 

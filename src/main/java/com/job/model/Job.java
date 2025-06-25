@@ -47,6 +47,15 @@ public class Job {
 
     private LocalDateTime createdAt; // Default handled by DB
     private LocalDateTime expiredAt;
+    private int totalApplications;
+
+    public int getTotalApplications() {
+        return totalApplications;
+    }
+
+    public void setTotalApplications(int totalApplications) {
+        this.totalApplications = totalApplications;
+    }
 
     // Constructors
     public Job() {

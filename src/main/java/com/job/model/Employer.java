@@ -31,7 +31,6 @@ public class Employer {
     @Size(max = 255, message = "Description must be less than or equal to 255 characters")
     private String description;
 
-    @Pattern(regexp = "^(http|https)://.*$", message = "Invalid logo URL format")
     @Size(max = 255, message = "Logo URL must be less than or equal to 255 characters")
     private String logoUrl;
 

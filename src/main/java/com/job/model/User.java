@@ -1,12 +1,16 @@
 package com.job.model;
 
+import com.job.enums.CommonEnums.Gender;
 import com.job.enums.CommonEnums.Role;
 import com.job.enums.CommonEnums.Status;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.*;
+import java.beans.PropertyEditorSupport;
 import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 
 @Entity
 @Table(name = "users")
@@ -34,21 +38,26 @@ public class User {
 
     private Status status;
 
+    private Gender gender;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
-
+    private String avatarUrl;
     public User() {}
 
-    public User(Integer id, String fullName, String email, String password, String phone, Role role) {
+    public User(Integer id, String fullName, String email, String password, String phone, Role role, Status status, Gender gender, String avatarUrl, LocalDateTime createdAt) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.phone = phone;
         this.role = role;
-        this.status = Status.ACTIVE;
-        this.createdAt = LocalDateTime.now();
+        this.status = status;
+        this.gender = gender;
+        this.avatarUrl = avatarUrl;
+        this.createdAt = createdAt;
     }
+
+    
 
     // Getters and Setters
     public Integer getId() { return id; }
@@ -67,9 +76,24 @@ public class User {
     public void setStatus(Status status) { this.status = status; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public Gender getGender() {return gender;}
+    public void setGender(Gender gender) {this.gender = gender;}
+    public String getAvatarUrl() {return avatarUrl;}
+    public void setAvatarUrl(String avatarUrl) {this.avatarUrl = avatarUrl;}
 
     @Override
     public String toString() {
         return "User{id=" + id + ", fullName='" + fullName + "', email='" + email + "', role=" + role + "}";
+    }
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Gender.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) {
+                if (text != null) {
+                    setValue(Gender.valueOf(text.toUpperCase()));
+                }
+            }
+        });
     }
 }

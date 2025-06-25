@@ -35,7 +35,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         </c:if>
-                        <form:form method="post" modelAttribute="employer" action="${pageContext.request.contextPath}/admin/employers/save">
+                        <form:form method="post" modelAttribute="employer" action="${pageContext.request.contextPath}/admin/employers/save" enctype="multipart/form-data">
                             <form:hidden path="id"/>
                             <input type="hidden" name="size" value="${pageSize}"/>
                             <input type="hidden" name="keyword" value="${fn:escapeXml(keyword)}"/>
@@ -51,7 +51,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="companyName" class="form-label">Company Size <span class="text-danger">*</span></label>
-                                <form:input path="companySize" cssClass="form-control" type="number" id="companyName" placeholder="Enter Company Size" required="true"/>
+                                <form:input path="companySize" cssClass="form-control" type="text" value="${employer.companySize}" id="companyName" placeholder="Enter Company Size" required="true"/>
                                 <form:errors path="companySize" cssClass="text-danger small"/>
                             </div>
                             <div class="mb-3">
@@ -70,9 +70,11 @@
                                 <form:errors path="description" cssClass="text-danger small"/>
                             </div>
                             <div class="mb-3">
-                                <label for="logoUrl" class="form-label">Logo URL</label>
-                                <form:input path="logoUrl" type="url" cssClass="form-control" id="logoUrl" placeholder="Enter Logo URL (e.g., https://example.com/logo.png)"/>
-                                <form:errors path="logoUrl" cssClass="text-danger small"/>
+                                <label class="form-label">Logo URL</label>
+                                <input type="file" name="imageFile" class="form-control" />
+                                <c:if test="${employer.logoUrl != null}">
+                                    <img src="${pageContext.request.contextPath}/uploads/${employer.logoUrl}" width="120" />
+                                </c:if>
                             </div>
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-primary">Lưu</button>

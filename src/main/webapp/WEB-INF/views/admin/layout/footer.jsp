@@ -68,7 +68,7 @@
 <script src="<c:url value='/template/assets/plugins/Chart.js/Chart.min.js'/>"></script>
 
 <!-- Index js -->
-<script src="<c:url value='/template/assets/js/index.js'/>"></script>
+<%--<script src="${pageContext.request.contextPath}/template/assets/js/index.js"></script>--%>
 
 </body>
 </html>

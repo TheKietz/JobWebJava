@@ -3,8 +3,10 @@ package com.job.controller.client;
 
 import com.job.enums.CommonEnums.Role;
 import com.job.enums.CommonEnums.Status;
+import com.job.model.Candidate;
 import com.job.model.RegisterForm;
 import com.job.model.User;
+import com.job.service.client.CandidateService;
 import com.job.service.client.UserService; 
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
@@ -26,6 +28,8 @@ public class RegisterController {
 
     @Autowired
     private UserService userService; 
+    @Autowired
+    private CandidateService candidateService;
 
     @GetMapping("/signup")
     public String showRegisterForm(Model model) {
@@ -66,8 +70,16 @@ public class RegisterController {
         user.setCreatedAt(LocalDateTime.now());
 
         try {
+            // Lưu user trước
             userService.save(user);
             logger.info("User registered: id={}, email={}, role={}", user.getId(), user.getEmail(), user.getRole());
+
+            // Tạo và lưu bản ghi trong candidates
+            Candidate candidate = new Candidate();
+            candidate.setUserId(user.getId()); // Liên kết user_id
+            candidateService.add(candidate); // Lưu vào bảng candidates
+            logger.info("Candidate linked: user_id={}", user.getId());
+
             return "redirect:/login?registered=true";
         } catch (Exception e) {
             logger.error("Error registering user: email={}, error={}", registerForm.getEmail(), e.getMessage(), e);

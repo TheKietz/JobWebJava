@@ -47,3 +47,4 @@ public class JobService {
         return jobRepository.searchByFilters(categories, jobTypes, salaryRanges);
     }
 } 
+

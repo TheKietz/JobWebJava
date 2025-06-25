@@ -5,13 +5,16 @@ import com.job.model.User;
 import java.util.stream.Collectors;
 import com.job.repository.UserRepository;
 import com.job.service.client.UserService;
+import java.math.BigDecimal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Map;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class UserAdminService {
 
@@ -49,6 +52,10 @@ public class UserAdminService {
         return userRepository.deleteById(id);
     }
 
+    public Map<String, Long> getRegistrationStatsByRoleAndDate(int days) {
+        return userRepository.getRegistrationStatsByRoleAndDate(days);
+    }
+
     public List<User> search(String keyword) {
         return userRepository.search(keyword);
     }
@@ -61,7 +68,7 @@ public class UserAdminService {
         return userRepository.findByEmail(email);
     }
 
-     public boolean verifyPassword(String rawPassword, String encodedPassword) {
+    public boolean verifyPassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 

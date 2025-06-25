@@ -10,8 +10,19 @@ package com.job.enums;
  */
 public class CommonEnums {
 
+    public enum TransactionStatus {
+        PENDING, // Chờ xử lý
+        SUCCESS, // Thành công
+        FAILED, // Thất bại
+        CANCELED     // Hủy bởi người dùng hoặc hệ thống
+    }
+
     public enum Status {
         ACTIVE, INACTIVE
+    }
+
+    public enum Gender {
+        Male, Female, Other
     }
 
     public enum Role {

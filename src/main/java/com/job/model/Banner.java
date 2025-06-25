@@ -17,20 +17,17 @@ import java.time.LocalDate;
  * @author 11090
  */
 public class Banner {
+
     private Integer id;
 
     @NotBlank(message = "Title cannot be blank")
     @Size(max = 100, message = "Title must be less than or equal to 100 characters")
     private String title;
 
-    @NotBlank(message = "Image URL cannot be blank")
-    @Pattern(regexp = "^(http|https)://.*$", message = "Invalid image URL format")
-    @Size(max = 255, message = "Image URL must be less than or equal to 255 characters")
+    @Size(max = 255, message = "Image file name must be <= 255 characters")
     private String imageUrl;
 
-    @NotBlank(message = "Link URL cannot be blank")
-    @Pattern(regexp = "^(http|https)://.*$", message = "Invalid link URL format")
-    @Size(max = 255, message = "Link URL must be less than or equal to 255 characters")
+    @Size(max = 255, message = "Link URL must be <= 255 characters")
     private String linkUrl;
 
     @NotNull(message = "Position cannot be null")
@@ -45,7 +42,8 @@ public class Banner {
     private Status status; // Default handled by DB, but here for completeness
 
     // Constructors (optional)
-    public Banner() {}
+    public Banner() {
+    }
 
     public Banner(Integer id, String title, String imageUrl, String linkUrl, BannerPosition position, LocalDate startDate, LocalDate endDate, Status status) {
         this.id = id;
@@ -59,20 +57,67 @@ public class Banner {
     }
 
     // Getters and Setters
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-    public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
-    public String getLinkUrl() { return linkUrl; }
-    public void setLinkUrl(String linkUrl) { this.linkUrl = linkUrl; }
-    public BannerPosition getPosition() { return position; }
-    public void setPosition(BannerPosition position) { this.position = position; }
-    public LocalDate getStartDate() { return startDate; }
-    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
-    public LocalDate getEndDate() { return endDate; }
-    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
-    public Status getStatus() { return status; }
-    public void setStatus(Status status) { this.status = status; }
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getLinkUrl() {
+        return linkUrl;
+    }
+
+    public void setLinkUrl(String linkUrl) {
+        this.linkUrl = linkUrl;
+    }
+
+    public BannerPosition getPosition() {
+        return position;
+    }
+
+    public void setPosition(BannerPosition position) {
+        this.position = position;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }

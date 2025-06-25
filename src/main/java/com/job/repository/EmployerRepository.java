@@ -1,6 +1,9 @@
 package com.job.repository;
 
 import com.job.model.Employer;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class EmployerRepository {
+
     private static final Logger logger = LoggerFactory.getLogger(EmployerRepository.class);
 
     @Autowired
@@ -52,6 +56,11 @@ public class EmployerRepository {
             logger.error("Error finding employer by userID: {} - {}", userID, e.getMessage());
             return null;
         }
+    }
+
+    public Integer findEmployerIdByUserId(int userId) {
+        String sql = "SELECT id FROM employers WHERE user_id = ?";
+        return jdbcTemplate.queryForObject(sql, Integer.class, userId);
     }
 
     public void add(Employer employer) {
@@ -120,6 +129,27 @@ public class EmployerRepository {
         }
     }
 
+    public int countEmployers() {
+        String sql = "SELECT COUNT(*) FROM employers";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class);
+        return count != null ? count : 0;
+    }
+
+    public int countEmployersByDateRange(LocalDate from, LocalDate to) {
+        String sql = """
+        SELECT COUNT(*) 
+        FROM employers e 
+        JOIN users u ON e.user_id = u.id
+        WHERE u.created_at BETWEEN ? AND ?
+    """;
+
+        Timestamp fromTime = Timestamp.valueOf(from.atStartOfDay());
+        Timestamp toTime = Timestamp.valueOf(to.plusDays(1).atStartOfDay()); // để bao trọn ngày to
+
+        Integer count = jdbcTemplate.queryForObject(sql, new Object[]{fromTime, toTime}, Integer.class);
+        return count != null ? count : 0;
+    }
+
     public List<Employer> search(String keyword) {
         try {
             if (keyword == null || keyword.isBlank()) {
@@ -135,10 +165,14 @@ public class EmployerRepository {
     }
 
     public List<Employer> getPage(List<Employer> list, int page, int size) {
-        if (list.isEmpty()) return List.of();
+        if (list.isEmpty()) {
+            return List.of();
+        }
         int from = Math.max(0, (page - 1) * size);
         int to = Math.min(from + size, list.size());
-        if (from >= list.size()) return List.of();
+        if (from >= list.size()) {
+            return List.of();
+        }
         return list.subList(from, to);
     }
 

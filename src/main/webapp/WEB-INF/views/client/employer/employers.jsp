@@ -42,6 +42,7 @@
                                 <div class="col-md-6 col-lg-4">
                                     <div class="rounded position-relative fruite-item">
                                         <div class="fruite-img">
+
                                             <c:choose>
                                                 <c:when test="${not empty employer.logoUrl}">
                                                     <img src="${employer.logoUrl}" class="img-fluid w-100 rounded-top" alt="" style="height: 235px; object-fit: cover;">

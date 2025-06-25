@@ -1,5 +1,7 @@
 # Java build output
-target/
+/target/
+!/target/JobWebJava/uploads/
+
 *.class
 *.war
 *.jar
