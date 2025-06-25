@@ -9,7 +9,7 @@
         <div class="col-md-12">
             <c:choose>
                 <c:when test="${not empty body}">
-                    <c:import url="${body}" />
+                    <jsp:include page="${body}" />
                 </c:when>
                 <c:otherwise>
                     <p>Không có nội dung để hiển thị.</p>
