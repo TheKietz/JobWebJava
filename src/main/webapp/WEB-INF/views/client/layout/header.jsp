@@ -170,8 +170,8 @@
                             <!-- Search + Auth -->
                             <div class="d-flex align-items-center gap-3">
                                 <c:choose>
+                                    <%-- Trường hợp chưa đăng nhập --%>
                                     <c:when test="${empty sessionScope.loggedInUser}">
-                                        <!-- Chưa đăng nhập: Hiển thị Đăng ký và Đăng nhập -->
                                         <div class="d-flex align-items-center ms-3">
                                             <div class="me-2">
                                                 <a class="btn-register" href="${pageContext.request.contextPath}/signup">Đăng ký</a>
@@ -181,8 +181,21 @@
                                             </div>
                                         </div>
                                     </c:when>
+
+                                    <%-- Trường hợp đã đăng nhập nhưng không phải CANDIDATE --%>
+                                    <c:when test="${sessionScope.loggedInUser.role ne 'CANDIDATE'}">
+                                        <div class="d-flex align-items-center ms-3">
+                                            <div class="me-2">
+                                                <a class="btn-register" href="${pageContext.request.contextPath}/signup">Đăng ký</a>
+                                            </div>
+                                            <div>
+                                                <a class="btn-login" href="${pageContext.request.contextPath}/login">Đăng nhập</a>
+                                            </div>
+                                        </div>
+                                    </c:when>
+
+                                    <%-- Trường hợp đã đăng nhập và là CANDIDATE --%>
                                     <c:otherwise>
-                                        <!-- Đã đăng nhập: Hiển thị avatar dropdown -->
                                         <div class="dropdown">
                                             <a href="#" class="d-flex align-items-center nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                                 <img src="<c:url value='/template/assets1/img/avata.png'/>" alt="Avatar" class="avatar-img rounded-circle me-1">
@@ -202,12 +215,12 @@
                                                 <li><a class="dropdown-item" href="/applied-jobs">Đã ứng tuyển</a></li>
                                                 <li><a class="dropdown-item" href="/cv-management">CV của tôi</a></li>
                                                 <li><hr class="dropdown-divider"></li>
-                                                <li><form id="logoutForm" action="${pageContext.request.contextPath}/logout" method="post" style="display: none;">
-                                                    </form>
-
+                                                <li>
+                                                    <form id="logoutForm" action="${pageContext.request.contextPath}/logout" method="post" style="display: none;"></form>
                                                     <a href="#" class="dropdown-item text-danger" onclick="document.getElementById('logoutForm').submit(); return false;">
                                                         <i class="nc-icon nc-button-power"></i> Đăng xuất
-                                                    </a></li>
+                                                    </a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </c:otherwise>
