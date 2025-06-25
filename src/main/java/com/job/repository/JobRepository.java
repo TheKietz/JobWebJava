@@ -61,15 +61,32 @@ public class JobRepository {
     }
 
     public List<Job> findByEmployerID(int userId) {
-        String sql = "SELECT title, job_type, status FROM jobs WHERE employer_id = ?";
+        String sql = """
+        SELECT 
+            j.id,
+            j.title, 
+            j.job_type, 
+            j.status, 
+            j.created_at, 
+            j.expired_at,
+            COUNT(a.id) AS candidate_number
+        FROM jobs j
+        LEFT JOIN applications a ON j.id = a.job_id
+        WHERE j.employer_id = ?
+        GROUP BY j.id, j.title, j.job_type, j.status, j.created_at, j.expired_at
+    """;
+
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             Job job = new Job();
+            job.setId(rs.getInt("id"));
             job.setTitle(rs.getString("title"));
             job.setJobType(rs.getString("job_type"));
             job.setStatus(JobStatus.valueOf(rs.getString("status")));
+            job.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+            job.setExpiredAt(rs.getTimestamp("expired_at").toLocalDateTime());
+            job.setCandidateNumber(rs.getInt("candidate_number")); // Bạn cần thêm trường này trong class Job
             return job;
         }, userId);
-
     }
 
     public void add(Job job) {
@@ -162,6 +179,51 @@ public class JobRepository {
             String likeKeyword = "%" + keyword.trim().toLowerCase() + "%";
             List<Job> jobs = jdbcTemplate.query(sql, new Object[]{likeKeyword, likeKeyword}, new BeanPropertyRowMapper<>(Job.class));
             System.out.println("search: Keyword='" + keyword + "', Found " + jobs.size() + " jobs");
+            return jobs;
+        } catch (Exception e) {
+            System.err.println("Error searching jobs with keyword: " + keyword + ", " + e.getMessage());
+            e.printStackTrace();
+            return List.of();
+        }
+    }
+
+    public List<Job> employerSearch(String keyword, int employerId) {
+        try {
+            if (keyword == null || keyword.isBlank()) {
+                return findByEmployerID(employerId); // chỉ lấy job của employer đó
+            }
+
+            String sql = """
+            SELECT 
+                j.id,
+                j.title, 
+                j.job_type, 
+                j.status, 
+                j.created_at, 
+                j.expired_at,
+                COUNT(a.id) AS candidate_number
+            FROM jobs j
+            LEFT JOIN applications a ON j.id = a.job_id
+            WHERE LOWER(j.title) LIKE ? AND j.employer_id = ?
+            GROUP BY j.id, j.title, j.job_type, j.status, j.created_at, j.expired_at
+        """;
+
+            String likeKeyword = "%" + keyword.trim().toLowerCase() + "%";
+            List<Job> jobs = jdbcTemplate.query(sql,
+                    new Object[]{likeKeyword, employerId},
+                    (rs, rowNum) -> {
+                        Job job = new Job();
+                        job.setId(rs.getInt("id"));
+                        job.setTitle(rs.getString("title"));
+                        job.setJobType(rs.getString("job_type"));
+                        job.setStatus(JobStatus.valueOf(rs.getString("status")));
+                        job.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                        job.setExpiredAt(rs.getTimestamp("expired_at").toLocalDateTime());
+                        job.setCandidateNumber(rs.getInt("candidate_number"));
+                        return job;
+                    });
+
+            System.out.println("Search: Keyword='" + keyword + "', Found " + jobs.size() + " jobs");
             return jobs;
         } catch (Exception e) {
             System.err.println("Error searching jobs with keyword: " + keyword + ", " + e.getMessage());
