@@ -73,7 +73,7 @@
                                 <label class="form-label">Logo URL</label>
                                 <input type="file" name="imageFile" class="form-control" />
                                 <c:if test="${employer.logoUrl != null}">
-                                    <img src="${pageContext.request.contextPath}/uploads/${employer.logoUrl}" width="120" />
+                                    <img src="${pageContext.request.contextPath}/uploads/${employer.logoUrl}" width="120" />                                    
                                 </c:if>
                             </div>
                             <div class="mb-3">

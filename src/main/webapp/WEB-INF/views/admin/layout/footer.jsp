@@ -4,7 +4,7 @@
 <footer class="footer">
     <div class="container">
         <div class="text-center">
-            Copyright © 2018 Dashtreme Admin
+           
         </div>
     </div>
 </footer>
@@ -51,24 +51,24 @@
 </div><!--End wrapper-->
 <!--end color switcher-->
 <!-- Bootstrap core JavaScript-->
-<script src="<c:url value='/template/assets/js/jquery.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/popper.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/bootstrap.min.js'/>"></script>
+<script src="<c:url value='/template/admin/assets/js/jquery.min.js'/>"></script>
+<script src="<c:url value='/template/admin/assets/js/popper.min.js'/>"></script>
+<script src="<c:url value='/template/admin/assets/js/bootstrap.min.js'/>"></script>
 
 <!-- simplebar js -->
-<script src="<c:url value='/template/assets/plugins/simplebar/js/simplebar.js'/>"></script>
+<script src="<c:url value='/template/admin/assets/plugins/simplebar/js/simplebar.js'/>"></script>
 <!-- sidebar-menu js -->
-<script src="<c:url value='/template/assets/js/sidebar-menu.js'/>"></script>
+<script src="<c:url value='/template/admin/assets/js/sidebar-menu.js'/>"></script>
 <!-- loader scripts -->
-<script src="<c:url value='/template/assets/js/jquery.loading-indicator.js'/>"></script>
+<script src="<c:url value='/template/admin/assets/js/jquery.loading-indicator.js'/>"></script>
 <!-- Custom scripts -->
-<script src="<c:url value='/template/assets/js/app-script.js'/>"></script>
+<script src="<c:url value='/template/admin/assets/js/app-script.js'/>"></script>
 <!-- Chart js -->
 
-<script src="<c:url value='/template/assets/plugins/Chart.js/Chart.min.js'/>"></script>
+<script src="<c:url value='/template/admin/assets/plugins/Chart.js/Chart.min.js'/>"></script>
 
 <!-- Index js -->
-<%--<script src="${pageContext.request.contextPath}/template/assets/js/index.js"></script>--%>
+<%--<script src="${pageContext.request.contextPath}/template/admin/assets/js/index.js"></script>--%>
 
 </body>
 </html>

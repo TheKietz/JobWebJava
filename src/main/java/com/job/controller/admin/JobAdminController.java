@@ -1,15 +1,22 @@
 package com.job.controller.admin;
 
+import com.job.enums.CommonEnums;
+import com.job.enums.CommonEnums.JobStatus;
 import com.job.enums.CommonEnums.Role;
 import com.job.model.Employer;
 import com.job.model.Job;
+import java.util.ArrayList;
+import java.util.Arrays;
 import com.job.model.User;
 import com.job.repository.EmployerRepository;
 import com.job.service.EmployerAdminService;
 import com.job.service.JobAdminService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import java.beans.PropertyEditorSupport;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +28,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,29 +51,41 @@ public class JobAdminController {
     private EmployerRepository employerRepository;
 
     @GetMapping
-    public String list(Model model,
-            HttpSession session,
-            @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "5") int size) {
+    public String index(Model model,
+            @RequestParam(defaultValue = "") String keyword,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String status, // Tham số nhận từ UI
+            @RequestParam(required = false) List<String> categories,
+            @RequestParam(required = false) List<String> jobTypes,
+            @RequestParam(required = false) List<String> salaryRanges,
+            HttpSession session) {
+
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/jobs, redirecting to login");
             return "redirect:/admin/login";
         }
 
-        final String trimmedKeyword = (keyword != null) ? keyword.trim() : null;
-        System.out.println("Request URL: /admin/jobs?page=" + page + "&size=" + size + "&keyword=" + trimmedKeyword);
+        String trimmedKeyword = keyword != null ? keyword.trim() : "";
+        List<JobStatus> jobStatuses = new ArrayList<>();
+        String selectedStatusFromRequest = status; 
 
-        size = Math.max(1, size);
-        List<Job> jobs = jobService.search(trimmedKeyword);
-        System.out.println("Search keyword: '" + trimmedKeyword + "', Found " + jobs.size() + " jobs");
+        if (status != null && !status.isBlank()) {
+            try {
+                JobStatus jobStatus = JobStatus.valueOf(status.toUpperCase());
+                jobStatuses.add(jobStatus);
+            } catch (IllegalArgumentException e) {
+                System.err.println("Invalid JobStatus value from request: " + status);
+                selectedStatusFromRequest = null; // Đặt lại null nếu giá trị không hợp lệ
+            }
+        }
+
+        List<Job> jobs = jobService.getFilteredJobs(trimmedKeyword, categories, jobTypes, salaryRanges, jobStatuses);
 
         int totalPages = jobService.countPages(jobs, size);
         page = Math.max(1, Math.min(page, totalPages == 0 ? 1 : totalPages));
-        
         List<Job> pagedJobs = jobService.getPage(jobs, page, size);
-        
 
         Set<Integer> employerIds = pagedJobs.stream()
                 .map(Job::getEmployerId)
@@ -78,23 +99,31 @@ public class JobAdminController {
                 companyNames.put(id, employer.getCompanyName());
             }
         }
-        model.addAttribute("jobs", pagedJobs);
         model.addAttribute("companyName", companyNames);
-        model.addAttribute("keyword", trimmedKeyword);
+        Map<String, String> translatedStatuses = new HashMap<>();
+        translatedStatuses.put(JobStatus.APPROVED.name(), "Đã duyệt"); 
+        translatedStatuses.put(JobStatus.REJECTED.name(), "Từ chối");
+        translatedStatuses.put(JobStatus.PENDING.name(), "Chờ duyệt");
+        translatedStatuses.put(JobStatus.EXPIRED.name(), "Hết hạn");
+        model.addAttribute("translatedStatuses", translatedStatuses);
+        model.addAttribute("jobs", pagedJobs);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("pageSize", size);
-        if (pagedJobs.isEmpty()) {
-            model.addAttribute("message", "No jobs found.");
-        }
+        model.addAttribute("keyword", trimmedKeyword);
+        model.addAttribute("selectedStatus", selectedStatusFromRequest);
+        model.addAttribute("selectedCategories", categories);
+        model.addAttribute("selectedJobTypes", jobTypes);
+        model.addAttribute("selectedSalaryRanges", salaryRanges);
+        model.addAttribute("jobStatuses", JobStatus.values()); 
+        
+
         model.addAttribute("body", "/WEB-INF/views/admin/job/list.jsp");
         return "admin/layout/main";
     }
 
     @GetMapping("/add")
-    public String add(Model model, HttpSession session,
-            @RequestParam(value = "size", defaultValue = "5") int size,
-            @RequestParam(value = "keyword", required = false) String keyword) {
+    public String add(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/jobs/add, redirecting to login");
@@ -103,8 +132,6 @@ public class JobAdminController {
 
         model.addAttribute("job", new Job());
         model.addAttribute("employers", employerService.findAll());
-        model.addAttribute("pageSize", size);
-        model.addAttribute("keyword", keyword);
         model.addAttribute("body", "/WEB-INF/views/admin/job/form.jsp");
         return "admin/layout/main";
     }
@@ -209,5 +236,39 @@ public class JobAdminController {
             model.addAttribute("body", "/WEB-INF/views/admin/job/form.jsp");
             return "admin/layout/main";
         }
+
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(BigDecimal.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) throws IllegalArgumentException {
+                if (text != null && !text.isBlank()) {
+                    String cleaned = text.replaceAll("\\.", "");
+                    setValue(new BigDecimal(cleaned));
+                } else {
+                    setValue(null);
+                }
+            }
+        });
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        binder.registerCustomEditor(LocalDateTime.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) throws IllegalArgumentException {
+                if (text != null && !text.isBlank()) {
+                    setValue(LocalDateTime.parse(text, formatter));
+                } else {
+                    setValue(null);
+                }
+            }
+
+            @Override
+            public String getAsText() {
+                LocalDateTime value = (LocalDateTime) getValue();
+                return value != null ? value.format(formatter) : "";
+            }
+        });
     }
 }

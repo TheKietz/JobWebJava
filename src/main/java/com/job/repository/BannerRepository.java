@@ -55,10 +55,10 @@ public class BannerRepository {
     }
 
     // CREATE
-    public int save(Banner banner) {
+    public void save(Banner banner) {
         String sql = "INSERT INTO banners (title, image_url, link_url, position, status, start_date, end_date) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql,
+        jdbcTemplate.update(sql,
                 banner.getTitle(),
                 banner.getImageUrl(),
                 banner.getLinkUrl(),
@@ -69,9 +69,9 @@ public class BannerRepository {
     }
 
     // UPDATE
-    public int update(Banner banner) {
+    public void update(Banner banner) {
         String sql = "UPDATE banners SET title = ?, image_url = ?, link_url = ?, position = ?, status = ?, start_date = ?, end_date = ? WHERE id = ?";
-        return jdbcTemplate.update(sql,
+         jdbcTemplate.update(sql,
                 banner.getTitle(),
                 banner.getImageUrl(),
                 banner.getLinkUrl(),
@@ -83,9 +83,9 @@ public class BannerRepository {
     }
 
     // DELETE
-    public int delete(int id) {
+    public void delete(int id) {
         String sql = "DELETE FROM banners WHERE id = ?";
-        return jdbcTemplate.update(sql, id);
+         jdbcTemplate.update(sql, id);
     }
 
     // FIND ACTIVE BANNERS BY POSITION

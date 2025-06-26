@@ -6,23 +6,45 @@
 
     <head>
         <meta charset="utf-8" />
-        <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.request.contextPath}/template/assets3/img/apple-icon.png">
-        <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/template/assets3/img/favicon.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.request.contextPath}/template/app/assets/img/apple-icon.png">
+        <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/template/app/assets/img/favicon.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>
             Employer Dashboard
-        </title>
+        </title>        
+        <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/45.2.0/ckeditor5.css">
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
         <!--     Fonts and icons     -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Fonts awsome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         <!-- CSS Files -->
-        <link href="${pageContext.request.contextPath}/template/assets3/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/template/assets3/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/template/app/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/template/app/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
         <!-- CSS Just for demo purpose, don't include it in your project -->
-        <link href="${pageContext.request.contextPath}/template/assets3/demo/demo.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/template/app/assets/demo/demo.css" rel="stylesheet" />
 
         <style>
+            .bold-link p {
+                color: #000;         /* màu đen */
+                font-weight: 700;    /* đậm hơn */
+            }
+
+            .icon-bold {
+                color: #000 !important;       /* màu đen */
+                font-weight: bold;            /* nếu font hỗ trợ, sẽ đậm hơn */
+            }
+
+            .sidebar .nav li.active a p {
+                color: #e6902b !important;  /* Ví dụ: màu cam khi active */
+                font-weight: 700;
+            }
+
+            .sidebar .nav li.active a i {
+                color: #e6902b !important;  /* icon cũng đổi màu */
+            }
+
             .sidebar {
                 width: 260px;
                 position: fixed;
@@ -64,61 +86,161 @@
                 transition: all 0.3s ease;
             }
         </style>
+        <style>
+            .swiper-slide {
+                position: relative;
+                width: 100%;
+                height: 250px;
+                overflow: hidden;
+                border-radius: 10px;
+            }
 
+            .swiper-slide img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                border-radius: 10px;
+            }
+            .swiper {
+                width: 100%;
+                padding: 20px 0;
+            }
+            .verify-info {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+            .verify-info .status i {
+                font-size: 1.2rem;
+                color: #ccc;
+            }
+            .action-button {
+                margin-left: auto;
+            }
+            .progress-circle {
+                transform: rotate(-90deg);
+            }
+            .loyal-progress {
+                position: relative;
+                height: 10px;
+                background: #f0f0f0;
+                border-radius: 5px;
+            }
+            .custom-progress-single {
+                height: 100%;
+                background: #00b14f;
+                border-radius: 5px;
+            }
+
+            .btn-light-green {
+                background-color: #6fcf97; /* màu xanh lá sáng hơn */
+                color: white;
+                border: none;
+            }
+            .btn-light-green:hover {
+                background-color: #56b97c;
+            }
+
+            .btn-light-green:focus,
+            .btn-light-green:active {
+                background-color: #4ea36e !important;  /* đậm hơn khi nhấn */
+                box-shadow: none !important;           /* bỏ viền mặc định Bootstrap */
+                outline: none;
+            }
+
+        </style>
     </head>
 
     <body class="">
         <div class="wrapper">
             <div class="sidebar" id="sidebar" data-color="white" data-active-color="danger">
-                <div class="logo-mini">                    
-                    <a href="${pageContext.request.contextPath}/app/dashboard" class="simple-text logo-mini">        
-                        <div class="logo">
-                            <img src="${pageContext.request.contextPath}/template/assets/img/logo/logo.png" style="transform: scale(0.8); transform-origin: top left;">
-                        </div>                         
+                <div class="logo">
+                    <a href="${pageContext.request.contextPath}/app/dashboard" class="simple-text logo-mini">
+                        <div class="logo-image-small">
+                            <img src="${pageContext.request.contextPath}/template/app/assets/img/logo-small.png">
+                        </div>
+                        <!-- <p>CT</p> -->
+                    </a>
+                    <a href="${pageContext.request.contextPath}/app/dashboard" class="simple-text logo-normal">
+                        <span class="user-name">JobFInder</span>                    
                     </a>
                 </div>
                 <div class="sidebar-wrapper">
                     <ul class="nav">
                         <li class="">
-                            <a href="${pageContext.request.contextPath}/app/dashboard">
-                                <i class="nc-icon nc-bank"></i>
+                            <a class="bold-link" href="${pageContext.request.contextPath}/app/dashboard">
+                                <i class="nc-icon nc-bank icon-bold"></i>
                                 <p>Trang chủ</p>
                             </a>
                         </li>
+                        <hr>
                         <li>
-                            <a href="${pageContext.request.contextPath}/app/job-post">
-                                <i class="nc-icon nc-briefcase-24"></i>
+                            <a class="bold-link" href="${pageContext.request.contextPath}/app/jobs">
+                                <i class="nc-icon nc-briefcase-24 icon-bold"></i>
                                 <p>Tin tuyển dụng</p>
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;">
-                                <i class="nc-icon nc-badge"></i>
+                            <a class="bold-link" href="${pageContext.request.contextPath}/app/job-post1">
+                                <i class="fa fa-thumbs-up icon-bold" aria-hidden="true"></i>
+                                <p>CV đề xuất</p>
+                            </a>
+                        </li>
+                        <hr>
+                        <li>
+                            <a class="bold-link" href="javascript:;">
+                                <i class="nc-icon nc-badge icon-bold"></i>
                                 <p>Ứng viên</p>
                             </a>
                         </li>
+                        <hr>
                         <li>
-                            <a href="javascript:;">
-                                <i class="nc-icon nc-cart-simple"></i>
-                                <p>Gói dịch vụ</p>
+                            <a class="bold-link" href="javascript:;">
+                                <i class="nc-icon nc-cart-simple icon-bold"></i>
+                                <p>Mua dịch vụ</p>
                             </a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath}/app/profile">
-                                <i class="nc-icon nc-single-02"></i>
+                            <a class="bold-link" href="javascript:;">
+                                <i class="nc-icon nc-paper icon-bold"></i>
+                                <p>Theo dõi dịch vụ</p>
+                            </a>
+                        </li>
+                        <hr>
+                        <li>
+                            <a class="bold-link" href="${pageContext.request.contextPath}/app/profile">
+                                <i class="nc-icon nc-single-02 icon-bold"></i>
                                 <p>Trang cá nhân</p>
                             </a>
                         </li>
+                        <hr>
                         <li>
-                            <a href="${pageContext.request.contextPath}/app/settings">
-                                <i class="nc-icon nc-settings-gear-65"></i>
+                            <a class="bold-link" href="${pageContext.request.contextPath}/app/settings">
+                                <i class="nc-icon nc-settings-gear-65 icon-bold"></i>
                                 <p>Cài đặt tài khoản</p>
+                            </a>
+                        </li>
+                        <hr>
+                        <li>
+                            <a class="bold-link" href="${pageContext.request.contextPath}/app/settings">
+                                <i class="nc-icon nc-bell-55 icon-bold"></i>
+                                <p>Thông báo hệ thống</p>
+                            </a>
+                        </li>
+                        <hr>
+                        <li>
+                            <a class="bold-link" href="${pageContext.request.contextPath}/app/supports?tab=report">
+                                <i class="nc-icon nc-email-85 icon-bold"></i>
+                                <p>Hộp thư hỗ trợ</p>
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
-<!--                                 min-height: 100vh;-->
+            <!--                                 min-height: 100vh;-->
             <div class="main-panel" style="overflow: auto">
                 <!-- Navbar -->
                 <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">

@@ -1,5 +1,6 @@
 package com.job.service;
 
+import com.job.enums.CommonEnums.JobStatus;
 import com.job.model.Job;
 import com.job.repository.JobRepository;
 import java.util.List;
@@ -37,6 +38,10 @@ public class JobAdminService {
     
     public List<Job> search(String keyword) {
         return jobRepository.search(keyword);
+    }
+    
+    public List<Job> getFilteredJobs(String keyword, List<String> categories, List<String> jobTypes, List<String> salaryRanges, List<JobStatus> statuses) {
+        return jobRepository.statusFilters(keyword, categories, jobTypes, salaryRanges,statuses);
     }
 
     public List<Job> getPage(List<Job> list, int page, int size) {

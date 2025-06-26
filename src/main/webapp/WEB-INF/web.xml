@@ -4,11 +4,11 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
     <display-name>JobWebJava</display-name>
-    <!-- ContextLoaderListener -->
-    <!--    <listener>
+<!--    ContextLoaderListener -->
+<!--    <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>-->
-    <!-- CSRF Filter -->
+<!--    CSRF Filter -->
     <filter>
         <filter-name>csrfFilter</filter-name>
         <filter-class>com.job.filter.CsrfFilter</filter-class>
@@ -17,7 +17,6 @@
         <filter-name>csrfFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-     
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -31,6 +30,8 @@
             <max-request-size>5242880</max-request-size>
             <file-size-threshold>0</file-size-threshold>
         </multipart-config>
+       
+
     </servlet>
     <session-config>
         <session-timeout>300</session-timeout>

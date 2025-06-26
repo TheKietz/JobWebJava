@@ -28,6 +28,7 @@ public class Application {
     @DecimalMin(value = "0.0", message = "Score cannot be negative")
     @DecimalMax(value = "100.0", message = "Score cannot exceed 100")
     private BigDecimal score;
+    
     private LocalDateTime appliedAt; // Default handled by DB, but here for completeness
 
     // Constructors (optional)

@@ -2,11 +2,8 @@ package com.job.service.client;
 
 import com.job.model.Job;
 import com.job.repository.JobRepository;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -54,4 +51,9 @@ public class JobService {
     public int countJobByEmpID(Integer empId) {
         return jobRepository.countJobByEmpID(empId);
     }
+    
+    public List<Job> employerSearch(String keyword, int employerId) {
+        return jobRepository.employerSearch(keyword, employerId);
+    }
 }
+

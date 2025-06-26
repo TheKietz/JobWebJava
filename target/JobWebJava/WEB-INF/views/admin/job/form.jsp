@@ -66,7 +66,7 @@
                                 <form:errors path="title" cssClass="text-danger small"/>
                             </div>
                             <div class="mb-3">
-                                <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
+                                <label for="description"  class="form-label">Description <span class="text-danger">*</span></label>
                                 <form:textarea path="description" cssClass="form-control" id="description" placeholder="Enter Job Description" rows="5" required="true"/>
                                 <form:errors path="description" cssClass="text-danger small"/>
                             </div>
@@ -76,23 +76,23 @@
                                 <form:errors path="location" cssClass="text-danger small"/>
                             </div>
                             <div class="mb-3">
-                                <label for="salaryMin" class="form-label">Salary Min (VNĐ)</label>
+                                <label for="salaryMin" class="form-label">Salary Min (VNĐ)<span class="text-danger">*</span></label>
                                 <form:input path="salaryMin" type="text" cssClass="form-control" id="salaryMin" placeholder="Nhập lương tối thiểu"/>
                                 <form:errors path="salaryMin" cssClass="text-danger small"/>
                             </div>
                             <div class="mb-3">
-                                <label for="salaryMax" class="form-label">Salary Max (VNĐ)</label>
+                                <label for="salaryMax" class="form-label">Salary Max (VNĐ)<span class="text-danger">*</span></label>
                                 <form:input path="salaryMax" type="text" cssClass="form-control" id="salaryMax" placeholder="Nhập lương tối đa"/>
                                 <form:errors path="salaryMax" cssClass="text-danger small"/>
 
                             </div>
                             <div class="mb-3">
-                                <label for="jobType" class="form-label">Job Type</label>
+                                <label for="jobType" class="form-label">Job Type<span class="text-danger">*</span></label>
                                 <form:input path="jobType" cssClass="form-control" id="jobType" placeholder="Enter Job Type (e.g., Full-time, Remote)" pattern=".{0,50}" title="Job Type must be 0-50 characters"/>
                                 <form:errors path="jobType" cssClass="text-danger small"/>
                             </div>
                             <div class="mb-3">
-                                <label for="status" class="form-label">Status</label>
+                                <label for="status" class="form-label">Status<span class="text-danger">*</span></label>
                                 <form:select path="status" cssClass="form-control" id="status" required="true">
                                     <form:option value="" label="-- Select Status --"/>
                                     <form:option value="PENDING" label="Pending"/>
@@ -108,8 +108,8 @@
                                 <form:errors path="category" cssClass="text-danger small"/>
                             </div>
                             <div class="mb-3">
-                                <label for="expiredAt" class="form-label">Expiry Date</label>
-                                <form:input path="expiredAt" type="datetime-local" cssClass="form-control" id="expiredAt"/>
+                                <label for="expiredAt" class="form-label">Expiry Date<span class="text-danger">*</span></label>
+                                <form:input path="expiredAt" type="datetime-local" cssClass="form-control" id="expiredAt" required="true"/>
                                 <form:errors path="expiredAt" cssClass="text-danger small"/>
                             </div>
                             <div class="d-grid gap-2">
@@ -123,6 +123,12 @@
         </div>
     </div>
     <div class="overlay toggle-menu"></div>
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+        <script>
+            CKEDITOR.replace('description', {
+                height: 350
+            });
+        </script>
     <script>
         function validateForm() {
             const salaryMin = parseFloat(document.getElementById("salaryMin").value);
