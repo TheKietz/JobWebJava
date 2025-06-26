@@ -4,11 +4,11 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
     <display-name>JobWebJava</display-name>
-    <!-- ContextLoaderListener -->
-    <!--    <listener>
+<!--    ContextLoaderListener -->
+<!--    <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>-->
-    <!-- CSRF Filter -->
+<!--    CSRF Filter -->
     <filter>
         <filter-name>csrfFilter</filter-name>
         <filter-class>com.job.filter.CsrfFilter</filter-class>

@@ -12,9 +12,18 @@
 
     <context:component-scan base-package="com.job"/>
     <mvc:annotation-driven validator="validator"/>
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations" value="classpath:application.properties"/>
+<!--         Tùy chọn: nếu bạn muốn bỏ qua nếu file không tìm thấy 
+        <property name="ignoreResourceNotFound" value="true"/>
+         Tùy chọn: nếu bạn muốn bỏ qua placeholder nếu nó không được giải quyết 
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>-->
+    </bean>
     <task:annotation-driven/>
 
-    <mvc:resources mapping="/uploads/**" location="file:///D:\Web_Java\jobwebjava\target\JobWebJava\uploads\"/>
+    <mvc:resources mapping="/uploads/**" location="file:${file.upload-dir}/"/>
+    <mvc:resources mapping="/template/**" location="/template/"/>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>       
     
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 
@@ -25,9 +34,8 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     
-    <mvc:resources mapping="/template/**" location="/template/"/>
-    <mvc:resources mapping="/resources/**" location="/resources/"/>    
-    <mvc:resources mapping="/uploads/**" location="/uploads/"/>
+     
+    <!--    <mvc:resources mapping="/uploads/**" location="file:./uploads/"/>-->
     <!-- DataSource -->
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>

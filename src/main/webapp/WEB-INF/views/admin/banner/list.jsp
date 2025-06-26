@@ -66,7 +66,7 @@
                                 <c:forEach var="banner" items="${banners}">
                                     <tr>
                                         <td>${banner.title}</td>
-                                        <td><img src="${pageContext.request.contextPath}/uploads/${banner.imageUrl}" width="100" alt="alt"/></td>
+                                        <td><img src="${pageContext.request.contextPath}${banner.imageUrl}" width="100" alt="alt"/></td>
                                         <td><a href="${banner.linkUrl}" target="_blank">Xem</a></td>
                                         <td>${banner.position}</td>
                                         <td>${banner.status}</td>

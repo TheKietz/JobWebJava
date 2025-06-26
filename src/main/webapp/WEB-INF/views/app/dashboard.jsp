@@ -80,7 +80,7 @@
                     <c:forEach var="banner" items="${banners}">
                         <div class="swiper-slide">
                             <a href="${banner.linkUrl}" target="_blank">
-                                <img src="${pageContext.request.contextPath}/uploads/${banner.imageUrl}" alt="${banner.title}" />
+                                <img src="${pageContext.request.contextPath}${banner.imageUrl}" alt="${banner.title}" />
                             </a>
                         </div>
                     </c:forEach>                    

@@ -4,40 +4,37 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Góp ý sản phẩm</title>
-        <!-- Font Awesome CDN -->
-        <style>
-            .support-wrapper {
-                min-height: 600px; /* hoặc bất kỳ chiều cao nào bạn muốn */
+    <style>
+        .support-wrapper {
+            min-height: 600px; /* hoặc bất kỳ chiều cao nào bạn muốn */
 
-            }
-            .sidebar-support {
-                background-color: whitesmoke;
-                color: white;
-                min-height: 600px;
-            }
+        }
+        .sidebar-support {
+            background-color: whitesmoke;
+            color: white;
+            min-height: 600px;
+        }
 
-            .sidebar-support .list-group-item {
-                background-color: whitesmoke;
-                color: #000;
-                border: none;
-            }
+        .sidebar-support .list-group-item {
+            background-color: whitesmoke;
+            color: #000;
+            border: none;
+        }
 
-            .sidebar-support .list-group-item.active {
-                background-color: #ffffff;
+        .sidebar-support .list-group-item.active {
+            background-color: #ffffff;
+        }
 
-            }
-
-            .sidebar-support .list-group-item a {
-                color: #000;
-                text-decoration: none;
-            }
-        </style>
+        .sidebar-support .list-group-item a {
+            color: #000;
+            text-decoration: none;
+        }
+    </style>
 
 
 </head>
 <div class="card support-wrapper">
     <div class="row no-gutters">
-        <!-- Sidebar bên trái -->
         <div class="col-md-3 sidebar-support p-0">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item ${activeTab == 'report' ? 'active' : ''}">
@@ -68,7 +65,6 @@
             </ul>
         </div>
 
-        <!-- Nội dung bên phải -->
         <div class="col-md-9 p-4">
             <h5 class="mb-3">Góp ý sản phẩm</h5>
             <p class="text-muted">
@@ -76,27 +72,41 @@
                 để liên tục cải tiến, bổ sung tính năng, giúp sản phẩm Smart Recruitment Platform ngày càng 
                 hữu ích và thân thiện hơn với người dùng.
             </p>
-            <form>
+
+            <%-- Hiển thị thông báo thành công/lỗi --%>
+            <c:if test="${not empty successMessage}">
+                <div class="alert alert-success" role="alert">
+                    ${successMessage}
+                </div>
+            </c:if>
+            <c:if test="${not empty errorMessage}">
+                <div class="alert alert-danger" role="alert">
+                    ${errorMessage}
+                </div>
+            </c:if>
+
+            <form action="${pageContext.request.contextPath}/app/supports/submit-suggest" method="POST" enctype="multipart/form-data">
+                <%-- Đối tượng góp ý sẽ được map vào trường 'subject' của Feedback --%>
                 <div class="mb-3">
-                    <label for="type" class="form-label">Đối tượng góp ý <span class="text-danger">*</span></label>
-                    <select class="form-select" id="type">
-                        <option selected disabled>Chọn loại báo cáo</option>
-                        <option>Tổng quan sản phẩm</option>
-                        <option>Tính năng kích hoạt tài khoản qua email</option>
-                        <option>Tin tuyển dụng </option>
-                        <option>Lọc CV </option>
-                        <option>Quản lý CV </option>
-                        <option>Báo cáo tuyển dụng</option>
-                        <option>Khác</option>
+                    <label for="subject" class="form-label">Đối tượng góp ý <span class="text-danger">*</span></label>
+                    <select class="form-select" id="subject" name="subject" required>
+                        <option selected disabled value="">Chọn đối tượng góp ý</option>
+                        <option value="PRODUCT_OVERVIEW">Tổng quan sản phẩm</option>
+                        <option value="EMAIL_ACTIVATION_FEATURE">Tính năng kích hoạt tài khoản qua email</option>
+                        <option value="JOB_POSTINGS">Tin tuyển dụng</option>
+                        <option value="CV_FILTERING">Lọc CV</option>
+                        <option value="CV_MANAGEMENT">Quản lý CV</option>
+                        <option value="RECRUITMENT_REPORTS">Báo cáo tuyển dụng</option>
+                        <option value="OTHER">Khác</option>
                     </select>
-                </div>               
+                </div>
                 <div class="mb-3">
-                    <label for="desc" class="form-label">Nội dung góp ý <span class="text-danger">*</span></label>
-                    <textarea class="form-control" id="desc" rows="4" placeholder="Nhập nội dung chi tiết"></textarea>
+                    <label for="message" class="form-label">Nội dung góp ý <span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="message" name="message" rows="4" placeholder="Nhập nội dung chi tiết" required></textarea>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Tài liệu chứng minh</label>
-                    <input class="form-control" type="file" multiple>
+                    <input class="form-control" type="file" name="attachments" multiple>
                     <div class="form-text">Tối đa 2 file, không vượt quá 5MB. Hỗ trợ: JPG, PNG, PDF, DOCX.</div>
                 </div>
                 <div class="text-end">

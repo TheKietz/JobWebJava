@@ -34,7 +34,7 @@ public class DashboardController {
             return new ModelAndView("redirect:/app/login");
         }
 
-        List<Banner> banners = bannerService.getActiveBannersByPosition(CommonEnums.BannerPosition.HOMEPAGE_TOP);
+        List<Banner> banners = bannerService.getActiveBannersByPosition(CommonEnums.BannerPosition.HOMEPAGE_TOP); 
 
         ModelAndView mav = new ModelAndView("app/layout/main");
         mav.addObject("banners", banners);
