@@ -11,7 +11,6 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
         <style>
             .swiper-slide {
                 position: relative;
@@ -67,7 +66,14 @@
                 border: none;
             }
             .btn-light-green:hover {
-                background-color: #5ec488;
+                background-color: #56b97c;
+            }
+
+            .btn-light-green:focus,
+            .btn-light-green:active {
+                background-color: #4ea36e !important;  /* đậm hơn khi nhấn */
+                box-shadow: none !important;           /* bỏ viền mặc định Bootstrap */
+                outline: none;
             }
 
         </style>
@@ -104,7 +110,7 @@
                                         <div class="d-flex align-items-center">
                                             <!-- Hình ảnh bên trái -->
                                             <div class="me-3">
-                                                <img src="${pageContext.request.contextPath}/template/assets3/images/cv-not-watch.95fc35d.svg"
+                                                <img src="${pageContext.request.contextPath}/template/app/assets/img/cv-not-watch.95fc35d.svg"
                                                      alt="Post Job" style="width: 48px; height: 48px;" />
                                             </div>
                                             <!-- Văn bản bên phải -->
@@ -126,7 +132,7 @@
                                         <div class="d-flex align-items-center">
                                             <!-- Hình ảnh bên trái -->
                                             <div class="me-3">
-                                                <img src="${pageContext.request.contextPath}/template/assets3/images/cv-not-rate.6effe05.svg"
+                                                <img src="${pageContext.request.contextPath}/template/app/assets/img/cv-not-rate.6effe05.svg"
                                                      alt="Post Job" style="width: 48px; height: 48px;" />
                                             </div>
                                             <!-- Văn bản bên phải -->
@@ -149,7 +155,7 @@
                                         <div class="d-flex align-items-center">
                                             <!-- Hình ảnh bên trái -->
                                             <div class="me-3">
-                                                <img src="${pageContext.request.contextPath}/template/assets3/images/expired-job.4949e52.svg"
+                                                <img src="${pageContext.request.contextPath}/template/app/assets/img/expired-job.4949e52.svg"
                                                      alt="Post Job" style="width: 48px; height: 48px;" />
                                             </div>
                                             <!-- Văn bản bên phải -->
@@ -179,9 +185,9 @@
                     <div class="col-md-4 mb-3">
                         <div class="card h-100">
                             <div class="card-body text-center">
-                                <img src="${pageContext.request.contextPath}/template/images/dang-tin.svg" alt="Post Job" class="mb-2" />
+                                <img src="${pageContext.request.contextPath}/template/app/assets/img/dang-tin.svg" alt="Post Job" class="mb-2" />
                                 <h5 class="card-title">Đăng tin tuyển dụng</h5>
-                                <button class="btn btn-light-green btn-sm"
+                                <button class="btn-light-green btn-sm"
                                         onclick="window.location.href = '${pageContext.request.contextPath}/app/job-post'">
                                     Thử ngay
                                 </button>
@@ -191,18 +197,18 @@
                     <div class="col-md-4 mb-3">
                         <div class="card h-100">
                             <div class="card-body text-center">
-                                <img src="${pageContext.request.contextPath}/template/images/search.svg" alt="Search CV" class="mb-2" />
+                                <img src="${pageContext.request.contextPath}/template/app/assets/img/search.svg" alt="Search CV" class="mb-2" />
                                 <h5 class="card-title">Tìm kiếm CV</h5>
-                                <button class="btn btn-light-green btn-sm">Thử ngay</button>
+                                <button class="btn-light-green btn-sm">Thử ngay</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="card h-100">
                             <div class="card-body text-center">
-                                <img src="${pageContext.request.contextPath}/template/images/services.svg" alt="Buy Services" class="mb-2" />
+                                <img src="${pageContext.request.contextPath}/template/app/assets/img/services.svg" alt="Buy Services" class="mb-2" />
                                 <h5 class="card-title">Mua dịch vụ</h5>
-                                <button class="btn btn-light-green btn-sm">Thử ngay</button>
+                                <button class="btn-light-green btn-sm">Thử ngay</button>
                             </div>
                         </div>
                     </div>
@@ -226,6 +232,6 @@
                                                 speed: 600,
                                             });
         </script>
-    
-</body>
+
+    </body>
 </html>

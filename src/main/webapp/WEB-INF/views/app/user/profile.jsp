@@ -22,13 +22,13 @@
                         <div class="col-md-4">
                             <div class="card card-user">
                                 <div class="image">
-                                    <img src="${pageContext.request.contextPath}/template/assets3/img/damir-bosnjak.jpg" alt="Back ground">
+                                    <img src="${pageContext.request.contextPath}/template/app/assets/img/damir-bosnjak.jpg" alt="Back ground">
                                 </div>
                                 
                                 <div class="card-body">
                                     <div class="author">
                                         <a href="#">
-                                            <img class="avatar border-gray" src="${pageContext.request.contextPath}/uploads/${employer.logoUrl}" alt="Logo">
+                                            <img class="avatar border-gray" src="${pageContext.request.contextPath}${employer.logoUrl}" alt="Logo">
                                             <h5 class="title">${user.fullName}</h5>
                                         </a>
                                         <p class="description">

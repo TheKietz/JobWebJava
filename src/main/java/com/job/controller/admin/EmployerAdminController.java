@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.beans.factory.annotation.Value;
 
 @Controller
 @RequestMapping("/admin/employers")
@@ -31,6 +32,8 @@ public class EmployerAdminController {
 
     @Autowired
     private EmployerAdminService employerService;
+    @Value("${file.upload-dir}")
+    private String uploadDirLocation;
 
     @GetMapping
     public String list(Model model,
@@ -68,8 +71,8 @@ public class EmployerAdminController {
         return "admin/layout/main";
     }
 
-    @PostMapping("/add")
-    public String add(Model model, HttpSession session, 
+    @GetMapping("/add")
+    public String add(Model model, HttpSession session,
             @RequestParam(value = "size", defaultValue = "5") int size,
             @RequestParam(value = "keyword", required = false) String keyword) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -83,7 +86,6 @@ public class EmployerAdminController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("body", "/WEB-INF/views/admin/employer/form.jsp");
 
-        
         return "admin/layout/main";
     }
 
@@ -140,7 +142,6 @@ public class EmployerAdminController {
             BindingResult result,
             Model model,
             @RequestParam("imageFile") MultipartFile imageFile,
-            HttpServletRequest request,
             HttpSession session,
             @RequestParam(value = "size", defaultValue = "5") int size,
             @RequestParam(value = "keyword", required = false) String keyword) {
@@ -159,15 +160,20 @@ public class EmployerAdminController {
         }
         try {
             if (!imageFile.isEmpty()) {
-                String uploadPath = request.getServletContext().getRealPath("/uploads/");
-                File uploadDir = new File(uploadPath);
+                File uploadDir = new File(uploadDirLocation); // Sử dụng giá trị đã inject
                 if (!uploadDir.exists()) {
                     uploadDir.mkdirs();
                 }
 
-                String filename = imageFile.getOriginalFilename();
-                imageFile.transferTo(new File(uploadDir, filename));
-                employer.setLogoUrl(filename); // lưu tên file
+                String originalFilename = imageFile.getOriginalFilename();
+                String fileExtension = "";
+                int dotIndex = originalFilename.lastIndexOf('.');
+                if (dotIndex > 0 && dotIndex < originalFilename.length() - 1) {
+                    fileExtension = originalFilename.substring(dotIndex); // Lấy .jpg, .png, ...
+                }
+                String uniqueFileName = java.util.UUID.randomUUID().toString() + fileExtension;
+                imageFile.transferTo(new File(uploadDir, uniqueFileName));
+                employer.setLogoUrl(uniqueFileName); // Lưu tên file duy nhất vào DB
             }
         } catch (IOException e) {
             e.printStackTrace();

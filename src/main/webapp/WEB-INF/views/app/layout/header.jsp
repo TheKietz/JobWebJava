@@ -37,12 +37,12 @@
             }
 
             .sidebar .nav li.active a p {
-                color: #6fcf97 !important;  /* Ví dụ: màu cam khi active */
+                color: #e6902b !important;  /* Ví dụ: màu cam khi active */
                 font-weight: 700;
             }
 
             .sidebar .nav li.active a i {
-                color: #6fcf97 !important;  /* icon cũng đổi màu */
+                color: #e6902b !important;  /* icon cũng đổi màu */
             }
 
             .sidebar {
@@ -86,7 +86,72 @@
                 transition: all 0.3s ease;
             }
         </style>
+        <style>
+            .swiper-slide {
+                position: relative;
+                width: 100%;
+                height: 250px;
+                overflow: hidden;
+                border-radius: 10px;
+            }
 
+            .swiper-slide img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                border-radius: 10px;
+            }
+            .swiper {
+                width: 100%;
+                padding: 20px 0;
+            }
+            .verify-info {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+            .verify-info .status i {
+                font-size: 1.2rem;
+                color: #ccc;
+            }
+            .action-button {
+                margin-left: auto;
+            }
+            .progress-circle {
+                transform: rotate(-90deg);
+            }
+            .loyal-progress {
+                position: relative;
+                height: 10px;
+                background: #f0f0f0;
+                border-radius: 5px;
+            }
+            .custom-progress-single {
+                height: 100%;
+                background: #00b14f;
+                border-radius: 5px;
+            }
+
+            .btn-light-green {
+                background-color: #6fcf97; /* màu xanh lá sáng hơn */
+                color: white;
+                border: none;
+            }
+            .btn-light-green:hover {
+                background-color: #56b97c;
+            }
+
+            .btn-light-green:focus,
+            .btn-light-green:active {
+                background-color: #4ea36e !important;  /* đậm hơn khi nhấn */
+                box-shadow: none !important;           /* bỏ viền mặc định Bootstrap */
+                outline: none;
+            }
+
+        </style>
     </head>
 
     <body class="">
@@ -100,7 +165,7 @@
                         <!-- <p>CT</p> -->
                     </a>
                     <a href="${pageContext.request.contextPath}/app/dashboard" class="simple-text logo-normal">
-                        <span class="user-name" style="color: #02ba5a">JobFInder</span>                    
+                        <span class="user-name">JobFInder</span>                    
                     </a>
                 </div>
                 <div class="sidebar-wrapper">
