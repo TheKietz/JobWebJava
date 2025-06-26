@@ -1,8 +1,12 @@
 package com.job.controller.admin;
 
+import com.job.enums.CommonEnums;
+import com.job.enums.CommonEnums.JobStatus;
 import com.job.enums.CommonEnums.Role;
 import com.job.model.Employer;
 import com.job.model.Job;
+import java.util.ArrayList;
+import java.util.Arrays;
 import com.job.model.User;
 import com.job.repository.EmployerRepository;
 import com.job.service.EmployerAdminService;
@@ -47,27 +51,40 @@ public class JobAdminController {
     private EmployerRepository employerRepository;
 
     @GetMapping
-    public String list(Model model,
-            HttpSession session,
-            @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size) {
+    public String index(Model model,
+            @RequestParam(defaultValue = "") String keyword,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String status, // Tham số nhận từ UI
+            @RequestParam(required = false) List<String> categories,
+            @RequestParam(required = false) List<String> jobTypes,
+            @RequestParam(required = false) List<String> salaryRanges,
+            HttpSession session) {
+
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
             System.out.println("Unauthorized access to /admin/jobs, redirecting to login");
             return "redirect:/admin/login";
         }
 
-        final String trimmedKeyword = (keyword != null) ? keyword.trim() : null;
-        System.out.println("Request URL: /admin/jobs?page=" + page + "&size=" + size + "&keyword=" + trimmedKeyword);
+        String trimmedKeyword = keyword != null ? keyword.trim() : "";
+        List<JobStatus> jobStatuses = new ArrayList<>();
+        String selectedStatusFromRequest = status; 
 
-        size = Math.max(1, size);
-        List<Job> jobs = jobService.search(trimmedKeyword);
-        System.out.println("Search keyword: '" + trimmedKeyword + "', Found " + jobs.size() + " jobs");
+        if (status != null && !status.isBlank()) {
+            try {
+                JobStatus jobStatus = JobStatus.valueOf(status.toUpperCase());
+                jobStatuses.add(jobStatus);
+            } catch (IllegalArgumentException e) {
+                System.err.println("Invalid JobStatus value from request: " + status);
+                selectedStatusFromRequest = null; // Đặt lại null nếu giá trị không hợp lệ
+            }
+        }
+
+        List<Job> jobs = jobService.getFilteredJobs(trimmedKeyword, categories, jobTypes, salaryRanges, jobStatuses);
 
         int totalPages = jobService.countPages(jobs, size);
         page = Math.max(1, Math.min(page, totalPages == 0 ? 1 : totalPages));
-
         List<Job> pagedJobs = jobService.getPage(jobs, page, size);
 
         Set<Integer> employerIds = pagedJobs.stream()
@@ -82,15 +99,25 @@ public class JobAdminController {
                 companyNames.put(id, employer.getCompanyName());
             }
         }
-        model.addAttribute("jobs", pagedJobs);
         model.addAttribute("companyName", companyNames);
-        model.addAttribute("keyword", trimmedKeyword);
+        Map<String, String> translatedStatuses = new HashMap<>();
+        translatedStatuses.put(JobStatus.APPROVED.name(), "Đã duyệt"); 
+        translatedStatuses.put(JobStatus.REJECTED.name(), "Từ chối");
+        translatedStatuses.put(JobStatus.PENDING.name(), "Chờ duyệt");
+        translatedStatuses.put(JobStatus.EXPIRED.name(), "Hết hạn");
+        model.addAttribute("translatedStatuses", translatedStatuses);
+        model.addAttribute("jobs", pagedJobs);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("pageSize", size);
-        if (pagedJobs.isEmpty()) {
-            model.addAttribute("message", "No jobs found.");
-        }
+        model.addAttribute("keyword", trimmedKeyword);
+        model.addAttribute("selectedStatus", selectedStatusFromRequest);
+        model.addAttribute("selectedCategories", categories);
+        model.addAttribute("selectedJobTypes", jobTypes);
+        model.addAttribute("selectedSalaryRanges", salaryRanges);
+        model.addAttribute("jobStatuses", JobStatus.values()); 
+        
+
         model.addAttribute("body", "/WEB-INF/views/admin/job/list.jsp");
         return "admin/layout/main";
     }
@@ -218,7 +245,6 @@ public class JobAdminController {
             @Override
             public void setAsText(String text) throws IllegalArgumentException {
                 if (text != null && !text.isBlank()) {
-                    // Loại bỏ dấu chấm ngăn cách
                     String cleaned = text.replaceAll("\\.", "");
                     setValue(new BigDecimal(cleaned));
                 } else {
@@ -227,7 +253,6 @@ public class JobAdminController {
             }
         });
 
-        // Formatter cho LocalDateTime
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         binder.registerCustomEditor(LocalDateTime.class, new PropertyEditorSupport() {
             @Override

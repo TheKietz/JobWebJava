@@ -22,7 +22,7 @@ public class JobRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
+    private static final Logger logger = LoggerFactory.getLogger(JobRepository.class);
     private final RowMapper<Job> jobRowMapper = (rs, rowNum) -> {
         Job job = new Job();
         job.setId(rs.getInt("id"));
@@ -33,13 +33,23 @@ public class JobRepository {
         job.setSalaryMin(rs.getBigDecimal("salary_min"));
         job.setSalaryMax(rs.getBigDecimal("salary_max"));
         job.setJobType(rs.getString("job_type"));
-        String status = rs.getString("status");
-        job.setStatus(status != null ? JobStatus.valueOf(status) : JobStatus.APPROVED);
+        String statusStr = rs.getString("status");
+        if (statusStr != null) {
+            try {
+                job.setStatus(JobStatus.valueOf(statusStr));
+            } catch (IllegalArgumentException e) {
+                System.err.println("Invalid JobStatus value from DB: " + statusStr);
+            }
+        }
         job.setCategory(rs.getString("category"));
-        Timestamp createdAt = rs.getTimestamp("created_at");
-        job.setCreatedAt(createdAt != null ? createdAt.toLocalDateTime() : null);
-        Timestamp expiredAt = rs.getTimestamp("expired_at");
-        job.setExpiredAt(expiredAt != null ? expiredAt.toLocalDateTime() : null);
+        Timestamp createdAtTimestamp = rs.getTimestamp("created_at");
+        if (createdAtTimestamp != null) {
+            job.setCreatedAt(createdAtTimestamp.toLocalDateTime());
+        }
+        Timestamp expiredAtTimestamp = rs.getTimestamp("expired_at");
+        if (expiredAtTimestamp != null) {
+            job.setExpiredAt(expiredAtTimestamp.toLocalDateTime());
+        }
         return job;
     };
 
@@ -289,6 +299,72 @@ public class JobRepository {
         }
 
         System.out.println("Final SQL: " + sql.toString());
+        return jdbcTemplate.query(sql.toString(), params.toArray(), jobRowMapper);
+    }
+
+    public List<Job> statusFilters(String keyword, List<String> categories, List<String> jobTypes, List<String> salaryRanges, List<JobStatus> statuses) {
+        StringBuilder sql = new StringBuilder("SELECT j.* FROM jobs j "); // Đặt alias cho bảng jobs là 'j'
+        // Thêm JOIN với bảng employers, giả sử tên bảng là 'employers' và khóa chính là 'id'
+        sql.append("JOIN employers e ON j.employer_id = e.id WHERE 1=1 ");
+
+        List<Object> params = new ArrayList<>();
+
+        if (keyword != null && !keyword.isBlank()) {
+            String likeKeyword = "%" + keyword.trim().toLowerCase() + "%";
+            // Thêm tìm kiếm theo company_name của employer
+            sql.append("AND (LOWER(j.title) LIKE ? OR LOWER(j.description) LIKE ? OR LOWER(j.location) LIKE ? OR LOWER(j.category) LIKE ? OR LOWER(e.company_name) LIKE ?) ");
+            params.add(likeKeyword); // cho j.title
+            params.add(likeKeyword); // cho j.description
+            params.add(likeKeyword); // cho j.location
+            params.add(likeKeyword); // cho j.category
+            params.add(likeKeyword); // cho e.company_name (THAM SỐ MỚI)
+        }
+
+        if (statuses != null && !statuses.isEmpty()) {
+            sql.append("AND j.status IN ("); // Sử dụng alias j.status
+            for (int i = 0; i < statuses.size(); i++) {
+                sql.append("?");
+                if (i < statuses.size() - 1) {
+                    sql.append(", ");
+                }
+                params.add(statuses.get(i).name());
+            }
+            sql.append(") ");
+        }
+
+        if (categories != null && !categories.isEmpty()) {
+            sql.append("AND j.category IN (") // Sử dụng alias j.category
+                    .append(String.join(",", Collections.nCopies(categories.size(), "?")))
+                    .append(") ");
+            params.addAll(categories);
+        }
+
+        if (jobTypes != null && !jobTypes.isEmpty()) {
+            sql.append("AND j.job_type IN (") // Sử dụng alias j.job_type
+                    .append(String.join(",", Collections.nCopies(jobTypes.size(), "?")))
+                    .append(") ");
+            params.addAll(jobTypes);
+        }
+
+        if (salaryRanges != null && !salaryRanges.isEmpty()) {
+            for (String range : salaryRanges) {
+                String[] parts = range.split("-");
+                if (parts.length == 2) {
+                    try {
+                        BigDecimal min = new BigDecimal(parts[0]);
+                        BigDecimal max = new BigDecimal(parts[1]);
+                        sql.append("AND j.salary_min >= ? AND j.salary_max <= ? "); // Sử dụng alias j.salary_min/max
+                        params.add(min);
+                        params.add(max);
+                    } catch (NumberFormatException ignored) {
+                    }
+                }
+            }
+        }
+
+        System.out.println("Final SQL: " + sql.toString());
+        // In ra các tham số để dễ debug hơn
+        System.out.println("SQL Params: " + params);
         return jdbcTemplate.query(sql.toString(), params.toArray(), jobRowMapper);
     }
 
