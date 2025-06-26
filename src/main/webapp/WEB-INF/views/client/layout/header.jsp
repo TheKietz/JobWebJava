@@ -15,11 +15,11 @@
 
         <!-- Favicon & Manifest -->
         <link rel="manifest" href="<c:url value='/template/site.webmanifest'/>">
-        <link rel="shortcut icon" href="<c:url value='/template/assets1/img/favicon.ico'/>">
+        <link rel="shortcut icon" href="<c:url value='/template/client/assets1/img/favicon.ico'/>">
 
         <!-- CSS -->
-        <link rel="stylesheet" href="<c:url value='/template/assets1/css/bootstrap.min.css'/>">
-        <link rel="stylesheet" href="<c:url value='/template/assets1/css/style.css'/>">
+        <link rel="stylesheet" href="<c:url value='/template/client/assets1/css/bootstrap.min.css'/>">
+        <link rel="stylesheet" href="<c:url value='/template/client/assets1/css/style.css'/>">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
@@ -130,7 +130,7 @@
                             <!-- Logo + slogan -->
                             <div class="d-flex align-items-center gap-2">
                                 <a href="<c:url value='/'/>">
-                                    <img src="<c:url value='/template/assets1/img/logo/logo.png'/>" alt="Logo" style="height: 40px;">
+                                    <img src="<c:url value='/template/client/assets1/img/logo/logo.png'/>" alt="Logo" style="height: 40px;">
                                 </a>
                             </div>
                             <!-- Navigation -->
@@ -198,7 +198,7 @@
                                     <c:otherwise>
                                         <div class="dropdown">
                                             <a href="#" class="d-flex align-items-center nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                                <img src="<c:url value='/template/assets1/img/avata.png'/>" alt="Avatar" class="avatar-img rounded-circle me-1">
+                                                <img src="<c:url value='/template/client/assets1/img/avata.png'/>" alt="Avatar" class="avatar-img rounded-circle me-1">
                                                 <span class="d-none d-md-inline">${fn:escapeXml(sessionScope.loggedInUser.fullName)}</span>
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-end">

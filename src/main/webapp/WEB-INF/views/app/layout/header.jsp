@@ -6,8 +6,8 @@
 
     <head>
         <meta charset="utf-8" />
-        <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.request.contextPath}/template/assets3/img/apple-icon.png">
-        <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/template/assets3/img/favicon.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.request.contextPath}/template/app/assets/img/apple-icon.png">
+        <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/template/app/assets/img/favicon.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>
             Employer Dashboard
@@ -20,10 +20,10 @@
         <!-- Fonts awsome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         <!-- CSS Files -->
-        <link href="${pageContext.request.contextPath}/template/assets3/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/template/assets3/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/template/app/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/template/app/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
         <!-- CSS Just for demo purpose, don't include it in your project -->
-        <link href="${pageContext.request.contextPath}/template/assets3/demo/demo.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/template/app/assets/demo/demo.css" rel="stylesheet" />
 
         <style>
             .bold-link p {
@@ -95,7 +95,7 @@
                 <div class="logo">
                     <a href="${pageContext.request.contextPath}/app/dashboard" class="simple-text logo-mini">
                         <div class="logo-image-small">
-                            <img src="${pageContext.request.contextPath}/template/assets3/img/logo-small.png">
+                            <img src="${pageContext.request.contextPath}/template/app/assets/img/logo-small.png">
                         </div>
                         <!-- <p>CT</p> -->
                     </a>
