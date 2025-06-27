@@ -42,36 +42,37 @@ public class UserService {
         userRepository.add(user);
     }
 
+
     public void update(User user) {
         userRepository.update(user);
     }
 
-    public void updateUserProfile(User user, MultipartFile avatarFile) throws IOException {
-        if (!avatarFile.isEmpty()) {
-            String uploadDir = servletContext.getRealPath("/images/avatars/");
-            String fileName = System.currentTimeMillis() + "_" + avatarFile.getOriginalFilename();
-            File uploadDirFile = new File(uploadDir);
-            if (!uploadDirFile.exists()) {
-                uploadDirFile.mkdirs();
-            }
-            File file = new File(uploadDirFile, fileName);
-            avatarFile.transferTo(file);
-            user.setAvatarUrl("/images/avatars/" + fileName);
-        }
-        userRepository.updateUserProfile(user);
-        logger.info("Updated profile for user: id={}", user.getId());
-    }
+//    public void updateUserProfile(User user, MultipartFile avatarFile) throws IOException {
+//        if (!avatarFile.isEmpty()) {
+//            String uploadDir = servletContext.getRealPath("/images/avatars/");
+//            String fileName = System.currentTimeMillis() + "_" + avatarFile.getOriginalFilename();
+//            File uploadDirFile = new File(uploadDir);
+//            if (!uploadDirFile.exists()) {
+//                uploadDirFile.mkdirs();
+//            }
+//            File file = new File(uploadDirFile, fileName);
+//            avatarFile.transferTo(file);
+//            user.setAvatarUrl("/images/avatars/" + fileName);
+//        }
+//        userRepository.updateUserProfile(user);
+//        logger.info("Updated profile for user: id={}", user.getId());
+//    }
     
-    @Transactional
+    
     public void save(User user) {
         logger.debug("Saving user: email={}", user.getEmail());
         userRepository.save(user);
         logger.info("User saved: id={}, email={}", user.getId(), user.getEmail());
     }
-    
-    public void deleteByID(Integer id) {
-        userRepository.deleteById(id);
+    public boolean deleteByID(Integer id) {
+        return userRepository.deleteById(id);
     }
+    
 
     public List<User> search(String keyword) {
         return userRepository.search(keyword);
@@ -88,7 +89,11 @@ public class UserService {
     public boolean verifyPassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
-
+    
+    public boolean verifyRawPassword(String rawPassword, String encodedPassword) {
+        return userRepository.verifyRawPassword(rawPassword, encodedPassword);
+    }
+    
     public String encodePassword(String rawPassword) {
         return passwordEncoder.encode(rawPassword);
     }

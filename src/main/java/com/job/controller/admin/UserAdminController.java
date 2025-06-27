@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.job.controller.admin;
 
 import com.job.enums.CommonEnums.Role;
@@ -7,7 +11,7 @@ import com.job.model.Employer;
 import com.job.model.User;
 import com.job.service.EmployerAdminService;
 import com.job.service.CandidateAdminService;
-import com.job.service.UserAdminService;
+import com.job.service.client.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
@@ -31,13 +35,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/admin/users")
 public class UserAdminController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserAdminController.class);
 
     @Autowired
-    private UserAdminService userService;
+    private UserService userService;
     @Autowired
     private EmployerAdminService employerService;
     @Autowired
@@ -45,27 +48,27 @@ public class UserAdminController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @GetMapping
+    @GetMapping("/admin/users")
     public String list(Model model,
                        HttpSession session,
                        @RequestParam(value = "keyword", required = false) String keyword,
                        @RequestParam(value = "page", defaultValue = "1") int page,
                        @RequestParam(value = "size", defaultValue = "5") int size) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
-            logger.warn("Unauthorized access to /admin/users by user: {}", loggedInUser != null ? loggedInUser.getEmail() : "null");
-            return "redirect:/admin/login";
-        }
-
-        logger.debug("Listing users: keyword={}, page={}, size={}", keyword, page, size);
-        final String trimmedKeyword = keyword != null ? keyword.trim() : null;
+//        if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
+//            System.out.println("Unauthorized access to /admin/users, redirecting to login");
+//            return "redirect:/admin/login";
+//        }
+        
+        final String trimmedKeyword = (keyword != null) ? keyword.trim() : null;
+        System.out.println(userService.getClass());
+        size = Math.max(1, size);      
         List<User> users = userService.search(trimmedKeyword);
-        logger.info("Found {} users for keyword: {}", users.size(), trimmedKeyword);
-
+      
         int totalPages = userService.countPages(users, size);
         page = Math.max(1, Math.min(page, totalPages == 0 ? 1 : totalPages));
+        
         List<User> pagedUsers = userService.getPage(users, page, size);
-        logger.debug("Paged users: page={}, size={}, count={}", page, size, pagedUsers.size());
 
         Map<Integer, String> userEntityMap = new HashMap<>();
         for (User user : pagedUsers) {
@@ -97,7 +100,7 @@ public class UserAdminController {
         return "admin/layout/main";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/admin/add")
     public String add(Model model, HttpSession session, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "keyword", required = false) String keyword) {
         try {
             User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -121,7 +124,7 @@ public class UserAdminController {
         }
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/admin/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model, 
                         HttpSession session, 
                         @RequestParam(value = "size",defaultValue = "5") int size, 
@@ -151,7 +154,7 @@ public class UserAdminController {
         }
     }
 
-    @PostMapping("/save")
+    @PostMapping("/admin/save")
     public String save(@Valid @ModelAttribute("user") User user,
                        BindingResult result,
                        @RequestParam(value = "passwordConfirm", required = false) String passwordConfirm,
@@ -232,7 +235,7 @@ public class UserAdminController {
         }
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/admin/delete/{id}")
     public String delete(@PathVariable("id") Integer id,
                          HttpSession session,
                          @RequestParam(value = "size", defaultValue = "5") int size,
@@ -255,3 +258,4 @@ public class UserAdminController {
         return "redirect:/admin/users?page=1&size=" + size + "&keyword=" + (keyword == null ? "" : keyword);
     }
 }
+

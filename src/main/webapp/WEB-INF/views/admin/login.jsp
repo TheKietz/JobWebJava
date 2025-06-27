@@ -82,7 +82,7 @@
 <script src="<c:url value='/template/admin/assets/js/app-script.js'/>"></script>
 
 <!-- Client-side validation -->
-<script>
+<!--<script>
   (function () {
     'use strict';
     var forms = document.querySelectorAll('.needs-validation');
@@ -96,6 +96,6 @@
       }, false);
     });
   })();
-</script>
+</script>-->
 </body>
 </html>

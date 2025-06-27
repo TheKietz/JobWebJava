@@ -37,6 +37,15 @@ public class EmployerService {
         employerRepository.add(employer);
         logger.info("Added employer: companyName={}, userId={}", employer.getCompanyName(), employer.getUserId());
     }
+    public void update(Employer employer) {
+        if (employer.getId() == null) {
+            logger.error("Cannot update employer: id is null");
+            throw new IllegalArgumentException("id cannot be null");
+        }
+        logger.debug("Updating employer: id={}, companyName={}", employer.getId(), employer.getCompanyName());
+        employerRepository.update(employer);
+        logger.info("Updated employer: id={}, companyName={}", employer.getId(), employer.getCompanyName());
+    }
      public List<Employer> findAll() {
         return employerRepository.findAll();
     }

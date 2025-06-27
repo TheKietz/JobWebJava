@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @Component
 public class CsrfFilter implements Filter {
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -23,4 +24,5 @@ public class CsrfFilter implements Filter {
         session.setAttribute("csrfToken", csrfToken);
         chain.doFilter(request, response);
     }
+
 }

@@ -43,12 +43,17 @@ public class LoginAdminController {
         return "redirect:/admin/dashboard";
     }
         User user = userService.findByEmail(email);
-        if (user == null || !userService.verifyPassword(password, user.getPassword())) {
+        
+        boolean pass1=userService.verifyPassword(password, user.getPassword());
+        boolean pass2=userService.verifyRawPassword(password, user.getPassword());
+        if(!pass1 && !pass2)
+        {
+           if (user == null) {
             model.addAttribute("error", "Invalid email or password");
             System.out.println("Admin login failed: email=" + email);
             return "admin/login";
         }
-
+        }        
         if (user.getRole() != Role.ADMIN) {
             model.addAttribute("error", "Access restricted to admins");
             System.out.println("Non-admin attempted admin login: email=" + email + ", role=" + user.getRole());

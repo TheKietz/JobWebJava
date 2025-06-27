@@ -42,11 +42,16 @@ public class LoginController {
             RedirectAttributes redirectAttributes) {
         logger.debug("Processing login: email={}", email);
         User user = userService.findByEmail(email);
-        if (user == null || !userService.verifyPassword(password, user.getPassword())) {
-            logger.warn("Login failed: email={}", email);
-            model.addAttribute("error", "Email hoặc mật khẩu không đúng");
-            return "client/auth/login";
+        boolean pass1=userService.verifyPassword(password, user.getPassword());
+        boolean pass2=userService.verifyRawPassword(password, user.getPassword());
+        if(!pass1 && !pass2)
+        {
+           if (user == null) {
+            model.addAttribute("error", "Invalid email or password");
+            System.out.println("Admin login failed: email=" + email);
+            return "admin/login";
         }
+        } 
 
         if (user.getRole() == Role.CANDIDATE) {
 
@@ -68,7 +73,7 @@ public class LoginController {
         }
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @PostMapping(value = "/logout")
     public String logout(HttpSession session) {
         logger.debug("Logging out user: {}", session.getAttribute("loggedInUser"));
         session.invalidate();

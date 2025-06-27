@@ -1,14 +1,10 @@
 
 package com.job.service;
 
-import com.job.enums.CommonEnums.Role;
 import com.job.model.Candidate;
-import com.job.model.User;
 import com.job.repository.CandidateRepository;
-import com.job.repository.UserRepository;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

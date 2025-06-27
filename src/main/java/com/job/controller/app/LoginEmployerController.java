@@ -7,6 +7,7 @@ package com.job.controller.app;
 import com.job.dto.EmployerLoginDTO;
 import com.job.dto.EmployerRegisterDTO;
 import com.job.enums.CommonEnums.Role;
+import com.job.model.LoginForm;
 import com.job.model.User;
 import com.job.service.client.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +33,7 @@ public class LoginEmployerController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/login")
+    @GetMapping(value = {"/login", "/"})
     public String showLoginForm(Model model) {
         logger.info("Handling GET /employers/login");
         if (!model.containsAttribute("loginForm")) {
@@ -44,15 +46,22 @@ public class LoginEmployerController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String processLogin(@RequestParam("email") String email,
             @RequestParam("passwordHash") String password,
+           
             HttpSession session,
             Model model,
             RedirectAttributes redirectAttributes) {
+        
         logger.debug("Processing employer login: email={}", email);
         User user = userService.findByEmail(email);
-        if (user == null || !userService.verifyPassword(password, user.getPassword())) {
-            logger.warn("Employer login failed: email={}", email);
-            model.addAttribute("error", "Email hoặc mật khẩu không đúng");
-            return "app/auth/login";
+        boolean pass1=userService.verifyPassword(password, user.getPassword());
+        boolean pass2=userService.verifyRawPassword(password, user.getPassword());
+        if(!pass1 && !pass2)
+        {
+           if (user == null) {
+            model.addAttribute("error", "Invalid email or password");
+            System.out.println("Admin login failed: email=" + email);
+            return "app/login";
+        }
         }
 
         // Kiểm tra role
@@ -63,11 +72,11 @@ public class LoginEmployerController {
         } else if (user.getRole() == Role.CANDIDATE) {
             logger.info("Candidate login attempt on employer page: email={}, redirecting to /login", email);
             redirectAttributes.addFlashAttribute("error", "Vui lòng đăng nhập tại trang ứng viên");
-            return "redirect:/login";
+            return "redirect:/app/login";
         } else if (user.getRole() == Role.ADMIN) {
             logger.info("Admin login attempt on employer page: email={}, redirecting to /admin/login", email);
             redirectAttributes.addFlashAttribute("error", "Vui lòng đăng nhập tại trang quản trị viên");
-            return "redirect:/admin/login";
+            return "redirect:/app/login";
         } else {
             logger.warn("Invalid role for employer login: email={}, role={}", email, user.getRole());
             model.addAttribute("error", "Vai trò không hợp lệ để đăng nhập");
@@ -75,10 +84,10 @@ public class LoginEmployerController {
         }
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @GetMapping("/app/logout")
     public String logout(HttpSession session) {
-        logger.debug("Logging out employer: {}", session.getAttribute("loggedInUser"));
         session.invalidate();
+        System.out.println("Admin logged out.");
         return "redirect:/app/login";
     }
 }

@@ -72,11 +72,15 @@ public class UserAdminService {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
+    public boolean verifyRawPassword(String rawPassword, String encodedPassword) {
+        return userRepository.verifyRawPassword(rawPassword, encodedPassword);
+    }
+    
     public String encodePassword(String rawPassword) {
         return passwordEncoder.encode(rawPassword);
     }
 
-    @Transactional
+   
     public void save(User user) {
         logger.debug("Saving user: email={}", user.getEmail());
         userRepository.save(user);
