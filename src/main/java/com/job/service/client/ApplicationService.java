@@ -1,6 +1,7 @@
 
 package com.job.service.client;
 
+import com.job.dto.CandidateApplicationDTO;
 import com.job.model.Application;
 import com.job.repository.ApplicationRepository;
 import java.util.List;
@@ -19,7 +20,11 @@ public class ApplicationService {
     public List<Application> findAll() {
         return applicationRepository.findAll();
     }
-
+    
+    public List<CandidateApplicationDTO> getApplicationsByEmployerUserId(int employerUserId) {
+        return applicationRepository.findCandidatesAppliedToEmployerJobs(employerUserId);
+    }
+   
     public Application findByID(Integer applicationID) {
         return applicationRepository.findByID(applicationID);
     }
