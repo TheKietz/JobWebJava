@@ -26,27 +26,25 @@ public class FavoriteEmployerController {
 
         List<Employer> employers = favoriteEmployerService.getFavorites(candidateId);
         ModelAndView mav = new ModelAndView("client/layout/main");
-        mav.addObject("body", "/WEB-INF/views/client/employer/favorite-employers.jsp");
+        mav.addObject("body", "/WEB-INF/views/client/favorite-employer/favorite-employers.jsp");
         mav.addObject("employers", employers);
         return mav;
     }
 
     @PostMapping("/add/{employerId}")
-    public String save(@PathVariable("employerId") int employerId,
-            HttpSession session,
+    public String save(@PathVariable("employerId") int employerId, HttpSession session,
             @RequestParam(value = "redirect", required = false) String redirect) {
         Integer candidateId = (Integer) session.getAttribute("currentCandidateId");
         if (candidateId == null) {
-            return "redirect:/login"; // ⚠️ Nếu chưa đăng nhập
+            return "redirect:/login";
         }
 
         favoriteEmployerService.save(candidateId, employerId);
-        return "redirect:" + (redirect != null ? redirect : "/favorite-employers");
+        return "redirect:/employers/detail/" + employerId;
     }
 
     @PostMapping("/remove/{employerId}")
-    public String remove(@PathVariable("employerId") int employerId,
-            HttpSession session,
+    public String remove(@PathVariable("employerId") int employerId, HttpSession session,
             @RequestParam(value = "redirect", required = false) String redirect) {
         Integer candidateId = (Integer) session.getAttribute("currentCandidateId");
         if (candidateId == null) {

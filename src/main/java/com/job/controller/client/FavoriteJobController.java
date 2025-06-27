@@ -28,7 +28,8 @@ public class FavoriteJobController {
         }
 
         List<Job> jobs = favoriteJobService.getFavorites(candidateId);
-        ModelAndView mav = new ModelAndView("client/favorite-job/favorite-jobs");
+        ModelAndView mav = new ModelAndView("client/layout/main");
+        mav.addObject("body", "/WEB-INF/views/client/favorite-job/favorite-jobs.jsp");
         mav.addObject("jobs", jobs);
         return mav;
     }
@@ -39,13 +40,14 @@ public class FavoriteJobController {
         if (candidateId == null) {
             return "redirect:/login";
         }
+        
         favoriteJobService.save(candidateId, jobId);
         return "redirect:/jobs/detail/" + jobId;
     }
 
     @PostMapping("/remove/{jobId}")
-    public String remove(@PathVariable("jobId") int jobId,
-            @RequestParam(required = false) String redirect, HttpSession session) {
+    public String remove(@PathVariable("jobId") int jobId, HttpSession session,
+            @RequestParam(name = "redirect", required = false) String redirect) {
         Integer candidateId = (Integer) session.getAttribute("currentCandidateId");
         if (candidateId == null) {
             return "redirect:/login";

@@ -47,18 +47,6 @@
                     </div>
                 </div>
             </section>
-
-            <!-- Top Categories -->
-            <section class="category-list py-5 bg-light">
-                <div class="container">
-                    <h2>Top ngành nghề nổi bật</h2>
-                    <div class="list-group">
-                        <c:forEach var="category" items="${categories}">
-                            <a href="#" class="list-group-item list-group-item-action">${category.name} (${category.job_category_count} việc làm)</a>
-                        </c:forEach>
-                    </div>
-                </div>
-            </section>
         </main>
     </body>
 </html>

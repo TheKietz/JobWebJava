@@ -52,12 +52,12 @@ public class CandidateRepository {
         }
     }
 
-    public Candidate findByUserID(Integer userID) {
+    public Candidate findByUserID(Integer userId) {
         String sql = "SELECT * FROM candidates WHERE user_id = ?";
         try {
-            return jdbcTemplate.queryForObject(sql, new Object[]{userID}, candidateRowMapper);
+            return jdbcTemplate.queryForObject(sql, new Object[]{userId}, candidateRowMapper);
         } catch (Exception e) {
-            System.err.println("Error finding candidate by userID: " + userID + ", " + e.getMessage());
+            System.err.println("Error finding candidate by user ID: " + userId + ", " + e.getMessage());
             return null;
         }
     }

@@ -46,6 +46,9 @@ public class EmployerController {
     @RequestMapping(value = "/employers/detail/{id}", method = RequestMethod.GET)
     public ModelAndView employerDetail(@PathVariable("id") int id, HttpSession session) {
         Employer employer = employerService.findByID(id);
+        if (employer == null) {
+            return new ModelAndView("redirect:/");
+        }
 
         Integer candidateId = (Integer) session.getAttribute("currentCandidateId");
         boolean isFavorite = false;
@@ -56,8 +59,7 @@ public class EmployerController {
         ModelAndView mav = new ModelAndView("client/layout/main");
         mav.addObject("body", "/WEB-INF/views/client/employer/employer-detail.jsp");
         mav.addObject("employer", employer);
-        mav.addObject("isFavorite", isFavorite); // thêm để JSP có thể dùng
+        mav.addObject("isFavorite", isFavorite);
         return mav;
     }
-
 }

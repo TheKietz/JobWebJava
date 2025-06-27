@@ -12,7 +12,7 @@
                     <div class="single-job-items mb-50">
                         <div class="job-items">
                             <div class="company-img company-img-details">
-                                <img src="${pageContext.request.contextPath}/template/assets/img/icon/job-list1.png" alt="Logo công ty">
+                                <img src="${pageContext.request.contextPath}/template/client/assets1/img/icon/job-list1.png" alt="Logo công ty">
                             </div>
                             <div class="job-tittle mt-20">
                                 <h4>${job.title}</h4>
@@ -66,9 +66,7 @@
                             </li>
                         </ul>
                         <div class="apply-btn2">
-                            <button>
-                                <a href="${pageContext.request.contextPath}/client/application/apply?jobId=${job.id}" class="btn btn-success">Ứng tuyển ngay</a>
-                            </button>
+                                <a href="${pageContext.request.contextPath}/applications/apply?jobId=${job.id}" class="btn btn-success">Ứng tuyển ngay</a>
                         </div>
 
                         <div class="mt-3">

@@ -2,7 +2,9 @@ package com.job.controller.client;
 
 import com.job.enums.CommonEnums.ApplicationStatus;
 import com.job.model.Application;
+import com.job.model.Job;
 import com.job.service.client.ApplicationService;
+import com.job.service.client.JobService;
 import com.job.service.storage.FileStorageService;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -18,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/client/application")
+@RequestMapping("/applications")
 public class ApplicationController {
 
     private final String path = "/WEB-INF/views/client/application/";
@@ -26,13 +28,15 @@ public class ApplicationController {
     @Autowired
     private ApplicationService applicationService;
     @Autowired
+    private JobService jobService;
+    @Autowired
     private FileStorageService fileStorageService;
 
-    @GetMapping("/applications")
+    @GetMapping
     public String viewMyApplications(Model model, HttpSession session) {
         Integer candidateId = (Integer) session.getAttribute("currentCandidateId");
         if (candidateId == null) {
-            return "redirect:/login"; // Hoặc chuyển hướng về trang chủ tuỳ logic của bạn
+            return "redirect:/login";
         }
 
         List<Application> applications = applicationService.findByCandidateId(candidateId);
@@ -43,8 +47,20 @@ public class ApplicationController {
 
     // GET: Hiển thị form ứng tuyển
     @GetMapping("/apply")
-    public String showApplyForm(@RequestParam("jobId") Integer jobId, Model model) {
-        model.addAttribute("jobId", jobId);
+    public String showApplyForm(@RequestParam("jobId") Integer jobId, Model model, HttpSession session) {
+        Integer candidateId = (Integer) session.getAttribute("currentCandidateId");
+        if (candidateId == null) {
+            return "redirect:/login"; 
+        }
+
+        Job job = jobService.findByID(jobId);
+
+        if (job == null) {
+            model.addAttribute("error", "Không tìm thấy công việc.");
+            return "redirect:/client/job/jobs";
+        }
+
+        model.addAttribute("job", job);
         model.addAttribute("body", path + "form.jsp");
         return "client/layout/main";
     }
@@ -62,14 +78,22 @@ public class ApplicationController {
             return "redirect:/login";
         }
 
+        // Kiểm tra nếu đã ứng tuyển rồi
         if (applicationService.hasApplied(candidateId, jobId)) {
             redirectAttributes.addFlashAttribute("error", "Bạn đã ứng tuyển công việc này rồi.");
             redirectAttributes.addAttribute("jobId", jobId);
-            return "redirect:/client/application/apply";
+            return "redirect:/applications/apply";
+        }
+
+        // Kiểm tra định dạng file
+        if (resumeFile.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "Vui lòng chọn tệp CV để tải lên.");
+            redirectAttributes.addAttribute("jobId", jobId);
+            return "redirect:/applications/apply";
         }
 
         try {
-            String resumeUrl = fileStorageService.storeFile(resumeFile); // Đã kiểm tra định dạng và kích thước ở đây
+            String resumeUrl = fileStorageService.storeFile(resumeFile);
 
             Application app = new Application();
             app.setCandidateId(candidateId);
@@ -86,6 +110,7 @@ public class ApplicationController {
         }
 
         redirectAttributes.addAttribute("jobId", jobId);
-        return "redirect:/client/application/apply";
+        return "redirect:/applications/apply";
     }
+
 }

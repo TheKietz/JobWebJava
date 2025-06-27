@@ -261,44 +261,6 @@ public class JobRepository {
         return pages;
     }
 
-//    public List<Job> searchByFilters(List<String> categories, List<String> jobTypes, List<String> salaryRanges) {
-//        StringBuilder sql = new StringBuilder("SELECT * FROM jobs WHERE 1=1 ");
-//        List<Object> params = new ArrayList<>();
-//
-//        if (categories != null && !categories.isEmpty()) {
-//            sql.append("AND category IN (")
-//                    .append(String.join(",", Collections.nCopies(categories.size(), "?")))
-//                    .append(") ");
-//            params.addAll(categories);
-//        }
-//
-//        if (jobTypes != null && !jobTypes.isEmpty()) {
-//            sql.append("AND job_type IN (")
-//                    .append(String.join(",", Collections.nCopies(jobTypes.size(), "?")))
-//                    .append(") ");
-//            params.addAll(jobTypes);
-//        }
-//
-//        if (salaryRanges != null && !salaryRanges.isEmpty()) {
-//            for (String range : salaryRanges) {
-//                String[] parts = range.split("-");
-//                if (parts.length == 2) {
-//                    try {
-//                        BigDecimal min = new BigDecimal(parts[0]);
-//                        BigDecimal max = new BigDecimal(parts[1]);
-//                        sql.append("AND salary_min >= ? AND salary_max <= ? ");
-//                        params.add(min);
-//                        params.add(max);
-//                    } catch (NumberFormatException ignored) {
-//                    }
-//                }
-//            }
-//        }
-//
-//        System.out.println("Final SQL: " + sql.toString());
-//        return jdbcTemplate.query(sql.toString(), params.toArray(), jobRowMapper);
-//    }
-
     public List<Job> statusFilters(String keyword, List<String> categories, List<String> jobTypes, List<String> salaryRanges, List<JobStatus> statuses) {
         StringBuilder sql = new StringBuilder("SELECT j.* FROM jobs j "); // Đặt alias cho bảng jobs là 'j'
         // Thêm JOIN với bảng employers, giả sử tên bảng là 'employers' và khóa chính là 'id'

@@ -1,18 +1,154 @@
 @import url("https://fonts.googleapis.com/css?family=Barlow:300,400,500,600,700,900|Muli:300,400,500,600,700,800,900&display=swap");.white-bg{
-.page-container { padding: 20px; }
-.breadcrumb-box { margin-bottom: 20px; }
-.breadcrumb-title { font-size: 1.2rem; }
-.page-content { background-color: #f8f9fa; }
-.list-group-item { padding: 15px; }
-.list-group-item i { margin-right: 8px; }
-.setting-form { padding: 20px; }
-.authen-level .title { font-size: 1.5rem; }
-.verify-step-title { font-weight: bold; margin-top: 10px; }
-.verify-content__progress { margin-bottom: 20px; }
-.progress { height: 10px; }
-.text-primary { color: #007bff !important; }
-.btn-to-verify { cursor: pointer; }
-.form-control[readonly] { background-color: #e9ecef; }
+    .avatar-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .header-area {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .header-sticky {
+        padding: 10px 0;
+    }
+
+    .page-container {
+        padding: 20px;
+    }
+    .breadcrumb-box {
+        margin-bottom: 20px;
+    }
+    .breadcrumb-title {
+        font-size: 1.2rem;
+    }
+    .page-content {
+        background-color: #f8f9fa;
+    }
+    .list-group-item {
+        padding: 15px;
+    }
+    .list-group-item i {
+        margin-right: 8px;
+    }
+    .setting-form {
+        padding: 20px;
+    }
+    .authen-level .title {
+        font-size: 1.5rem;
+    }
+    .verify-step-title {
+        font-weight: bold;
+        margin-top: 10px;
+    }
+    .verify-content__progress {
+        margin-bottom: 20px;
+    }
+    .progress {
+        height: 10px;
+    }
+    .text-primary {
+        color: #007bff !important;
+    }
+    .btn-to-verify {
+        cursor: pointer;
+    }
+    .banner {
+        background: url('${pageContext.request.contextPath}/template/images/desktop_bg.png') no-repeat center;
+        background-size: cover;
+        padding: 100px 0;
+        color: whitesmoke;
+        text-align: center;
+    }
+    .banner h1 {
+        font-size: 36px;
+    }
+    .job-list .card {
+        margin-bottom: 20px;
+    }
+    .job-list .card-title {
+        font-size: 18px;
+    }
+    .category-list .list-group-item {
+        cursor: pointer;
+    }
+    .blog-post {
+        margin-bottom: 30px;
+    }
+    .btn-login {
+        background-color: #28a745;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 6px;
+        text-decoration: none !important;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: 1px solid #28a745;
+    }
+    .btn-login:hover,
+        .btn-login:focus,
+        .btn-login:active {
+        background-color: #218838;
+        border-color: #218838;
+        color: white;
+        text-decoration: none;
+    }
+    .custom-search-form {
+        background-color: #fff;
+        border-radius: 999px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        width: 100%;
+        max-width: 900px;
+    }
+
+    .search-input {
+        border: none;
+        padding: 12px 20px;
+        flex: 1;
+        border-right: 1px solid #ddd;
+        outline: none;
+        box-shadow: none;
+        font-size: 15px;
+    }
+
+    .location-box {
+        padding: 0 15px;
+        font-size: 14px;
+        color: #343a40;
+        border-right: 1px solid #ddd;
+        white-space: nowrap;
+    }
+
+    .search-button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 22px;
+        font-weight: 500;
+        border: none;
+        border-top-right-radius: 999px;
+        border-bottom-right-radius: 999px;
+        border-left: 1px solid #28a745;
+        display: flex;
+        align-items: center;
+        transition: background-color 0.3s;
+    }
+
+    .search-button:hover {
+        background-color: #218838;
+        color: white;
+    }
+
+    .custom-search-form input:focus,
+        .custom-search-form button:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .form-control[readonly] {
+        background-color: #e9ecef;
+    }
     background:#ffffff
 }
 .gray-bg{

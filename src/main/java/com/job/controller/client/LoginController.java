@@ -1,8 +1,10 @@
 package com.job.controller.client;
 
 import com.job.enums.CommonEnums.Role;
+import com.job.model.Candidate;
 import com.job.model.LoginForm;
 import com.job.model.User;
+import com.job.service.client.CandidateService;
 import com.job.service.client.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -24,6 +26,8 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private CandidateService candidateService;
 
     @GetMapping("/login")
     public String showLoginForm(Model model) {
@@ -34,10 +38,10 @@ public class LoginController {
 
     @PostMapping("/login")
     public String processLogin(@RequestParam("email") String email,
-                              @RequestParam("passwordHash") String password,
-                              HttpSession session,
-                              Model model,
-                              RedirectAttributes redirectAttributes) {
+            @RequestParam("passwordHash") String password,
+            HttpSession session,
+            Model model,
+            RedirectAttributes redirectAttributes) {
         logger.debug("Processing login: email={}", email);
         User user = userService.findByEmail(email);
         if (user == null || !userService.verifyPassword(password, user.getPassword())) {
@@ -48,6 +52,14 @@ public class LoginController {
 
         if (user.getRole() == Role.CANDIDATE) {
             session.setAttribute("loggedInUser", user);
+
+            // Gọi candidateService để lấy ra candidate theo userId
+            Candidate candidate = candidateService.findByUserID(user.getId());
+            if (candidate != null) {
+                session.setAttribute("currentCandidateId", candidate.getId());
+            } else {
+                logger.warn("Không tìm thấy candidate tương ứng với user ID {}", user.getId());
+            }
             logger.info("Candidate logged in: id={}, email={}", user.getId(), user.getEmail());
             return "redirect:/";
         } else if (user.getRole() == Role.ADMIN) {
