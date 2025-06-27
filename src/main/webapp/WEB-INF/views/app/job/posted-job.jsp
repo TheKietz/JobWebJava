@@ -39,63 +39,73 @@
                 </div> 
             </div>
         </div>
-        <div class="table-responsive">
-            <table class="table table-bordered bg-contrast">
-                <thead class="table-light thead-success">
-                    <tr>
-                        <th class="col-2">Tiêu đề</th>  
-                        <th class="col-1">Trạng thái</th>
-                        <th class="col-2">Kiểu công việc</th>
-                        <th class="col-2">Ngày tạo</th>  
-                        <th class="col-2">Ngày hết hạn</th>  
-                        <th class="col-1">CVs</th>  
-                        <th class="col-3">Chức năng</th>
-                    </tr>
-                </thead>
-                <tbody class="table table-bordered bg-white"> 
-                    <c:choose>
-                        <c:when test="${empty jobs}">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Danh sách bài tuyển dụng</h5>
+                <div class="table-responsive">
+                    <table class=" table table-hover">
+                        <thead class="table-light table-bordered thead-success">
                             <tr>
-                                <td colspan="12" class="text-center">No jobs found.</td>
+                                <th class="col-3">Tiêu đề</th>  
+                                <th class="col-1">Trạng thái</th>
+                                <th class="col-1">Kiểu công việc</th>
+                                <th class="col-2">Ngày tạo</th>  
+                                <th class="col-2">Ngày hết hạn</th>  
+                                <th class="col-1">CVs</th>  
+                                <th class="col-3">Chức năng</th>
                             </tr>
-                        </c:when>
-                        <c:otherwise>
-                            <c:forEach var="job" items="${jobs}">
-                                <tr>
-                                    <td>${fn:escapeXml(job.title)}</td> 
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${job.status=='APPROVED'}"><span class="badge bg-success">Đã duyệt</span > </c:when>
-                                            <c:when test="${job.status=='PENDING'}"><span class="badge bg-secondary">Chờ duyệt</span > </c:when>
-                                            <c:when test="${job.status=='REJECTED'}"><span class="badge bg-danger">Bị từ chối</span > </c:when>
-                                            <c:when test="${job.status=='EXPIRED'}"><span class="badge bg-warning text-dark">Hết hạn</span > </c:when>
-                                        </c:choose>
-                                    </td>
-                                    <td>${job.jobType}</td>      
-                                    <td>${job.postedAtFormatted}</td> 
-                                    <td>${job.expiryDateFormatted}</td> 
-                                    <td>${job.candidateNumber}</td> 
-                                    <td>
-                                        <a href="${pageContext.request.contextPath}/app/jobs/details/${job.id}" class="btn btn-sm btn-primary">Chi tiết</a>
-                                        <a href="${pageContext.request.contextPath}/app/jobs/delete/${job.id}" class="btn btn-sm btn-danger" onclick="return confirm('Bạn muốn xóa bài đăng này?')">Xóa</a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody class="table table-bordered bg-white"> 
+                            <c:choose>
+                                <c:when test="${empty jobs}">
+                                    <tr>
+                                        <td colspan="12" class="text-center">No jobs found.</td>
+                                    </tr>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:forEach var="job" items="${jobs}">
+                                        <tr>
+                                            <td>${fn:escapeXml(job.title)}</td> 
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${job.status=='APPROVED'}"><span class="badge bg-success" style="font-size: 0.8rem;">Đã duyệt</span > </c:when>
+                                                    <c:when test="${job.status=='PENDING'}"><span class="badge bg-secondary" style="font-size: 0.8rem;">Chờ duyệt</span > </c:when>
+                                                    <c:when test="${job.status=='REJECTED'}"><span class="badge bg-danger" style="font-size: 0.8rem;">Bị từ chối</span > </c:when>
+                                                    <c:when test="${job.status=='EXPIRED'}"><span class="badge bg-warning text-dark" style="font-size: 0.8rem;">Hết hạn</span > </c:when>
+                                                </c:choose>
+                                            </td>
+                                            <td>${job.jobType}</td>      
+                                            <td>${job.postedAtFormatted}</td> 
+                                            <td>${job.expiryDateFormatted}</td> 
+                                            <td>${job.candidateNumber}</td> 
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/app/jobs/details/${job.id}" class="btn btn-sm btn-primary">Chi tiết</a>
+                                                <a href="${pageContext.request.contextPath}/app/jobs/delete/${job.id}" class="btn btn-sm btn-danger" onclick="return confirm('Bạn muốn xóa bài đăng này?')">Xóa</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:otherwise>
+                            </c:choose>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <c:if test="${totalPages > 1}">
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                    <c:forEach begin="1" end="${totalPages}" var="page">
-                        <li class="page-item ${page == currentPage ? 'active' : ''}">
-                            <a class="page-link" href="${pageContext.request.contextPath}/app/jobs?page=${page}&size=${pageSize}&keyword=${fn:escapeXml(keyword)}">${page}</a>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </nav>
-        </c:if>
-    </body>
+   
+
+
+
+
+    <c:if test="${totalPages > 1}">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <c:forEach begin="1" end="${totalPages}" var="page">
+                    <li class="page-item ${page == currentPage ? 'active' : ''}">
+                        <a class="page-link" href="${pageContext.request.contextPath}/app/jobs?page=${page}&size=${pageSize}&keyword=${fn:escapeXml(keyword)}">${page}</a>
+                    </li>
+                </c:forEach>
+            </ul>
+        </nav>
+    </c:if>
+</body>
 </html>

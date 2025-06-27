@@ -184,14 +184,14 @@
                             </a>
                         </li>
                         <li>
-                            <a class="bold-link" href="${pageContext.request.contextPath}/app/job-post1">
+                            <a class="bold-link" href="${pageContext.request.contextPath}/app/suggest-cv">
                                 <i class="fa fa-thumbs-up icon-bold" aria-hidden="true"></i>
                                 <p>CV đề xuất</p>
                             </a>
                         </li>
                         <hr>
                         <li>
-                            <a class="bold-link" href="javascript:;">
+                            <a class="bold-link" href="${pageContext.request.contextPath}/app/applications">
                                 <i class="nc-icon nc-badge icon-bold"></i>
                                 <p>Ứng viên</p>
                             </a>
