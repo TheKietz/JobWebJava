@@ -11,18 +11,18 @@
   <meta name="author" content="Codervent"/>
   <title>Quản Trị - Đăng Nhập</title>
   <!-- loader-->
-  <link href="<c:url value='/template/assets/css/pace.min.css'/>" rel="stylesheet"/>
-  <script src="<c:url value='/template/assets/js/pace.min.js'/>"></script>
+  <link href="<c:url value='/template/admin/assets/css/pace.min.css'/>" rel="stylesheet"/>
+  <script src="<c:url value='/template/admin/assets/js/pace.min.js'/>"></script>
   <!--favicon-->
-  <link rel="icon" href="<c:url value='/template/assets/images/favicon.ico'/>" type="image/x-icon">
+  <link rel="icon" href="<c:url value='/template/admin/assets/images/favicon.ico'/>" type="image/x-icon">
   <!-- Bootstrap core CSS-->
-  <link href="<c:url value='/template/assets/css/bootstrap.min.css'/>" rel="stylesheet"/>
+  <link href="<c:url value='/template/admin/assets/css/bootstrap.min.css'/>" rel="stylesheet"/>
   <!-- animate CSS-->
-  <link href="<c:url value='/template/assets/css/animate.css'/>" rel="stylesheet" type="text/css"/>
+  <link href="<c:url value='/template/admin/assets/css/animate.css'/>" rel="stylesheet" type="text/css"/>
   <!-- Icons CSS-->
-  <link href="<c:url value='/template/assets/css/icons.css'/>" rel="stylesheet" type="text/css"/>
+  <link href="<c:url value='/template/admin/assets/css/icons.css'/>" rel="stylesheet" type="text/css"/>
   <!-- Custom Style-->
-  <link href="<c:url value='/template/assets/css/app-style.css'/>" rel="stylesheet"/>
+  <link href="<c:url value='/template/admin/assets/css/app-style.css'/>" rel="stylesheet"/>
 </head>
 
 <body class="bg-theme bg-theme1">
@@ -33,7 +33,7 @@
     <div class="card-body">
       <div class="card-content p-2">
         <div class="text-center">
-          <img src="<c:url value='/template/assets/images/logo-icon.png'/>" alt="logo icon">
+          <img src="<c:url value='/template/admin/assets/images/logo-icon.png'/>" alt="logo icon">
         </div>
         <div class="card-title text-uppercase text-center py-3">Đăng Nhập</div>
         <c:if test="${not empty error}">
@@ -74,12 +74,12 @@
 </div><!--wrapper-->
 
 <!-- Bootstrap core JavaScript-->
-<script src="<c:url value='/template/assets/js/jquery.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/popper.min.js'/>"></script>
-<script src="<c:url value='/template/assets/js/bootstrap.min.js'/>"></script>
+<script src="<c:url value='/template/admin/assets/js/jquery.min.js'/>"></script>
+<script src="<c:url value='/template/admin/assets/js/popper.min.js'/>"></script>
+<script src="<c:url value='/template/admin/assets/js/bootstrap.min.js'/>"></script>
 
 <!-- Custom scripts -->
-<script src="<c:url value='/template/assets/js/app-script.js'/>"></script>
+<script src="<c:url value='/template/admin/assets/js/app-script.js'/>"></script>
 
 <!-- Client-side validation -->
 <script>
