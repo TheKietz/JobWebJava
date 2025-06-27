@@ -1,5 +1,6 @@
 package com.job.repository;
 
+import com.job.dto.CandidateApplicationDTO;
 import com.job.model.Application;
 import java.sql.Timestamp;
 import java.util.List;
@@ -18,6 +19,31 @@ public class ApplicationRepository {
         List<Application> applications = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Application.class));
         System.out.println("findAll: Retrieved " + applications.size() + " applications");
         return applications;
+    }
+
+    public List<CandidateApplicationDTO> findCandidatesAppliedToEmployerJobs(int employerUserId) {
+        String sql = """
+            SELECT 
+                u.full_name, 
+                j.title AS job_title, 
+                a.resume_url, 
+                u.avatar_url  
+            FROM applications a
+            JOIN jobs j ON a.job_id = j.id
+            JOIN candidates c ON a.candidate_id = c.id 
+            JOIN users u ON u.id = c.user_id
+            JOIN employers e ON e.id = j.employer_id
+            WHERE e.user_id = ?
+        """;
+
+        return jdbcTemplate.query(sql, new Object[]{employerUserId}, (rs, rowNum) -> 
+            new CandidateApplicationDTO(
+                rs.getString("full_name"),
+                rs.getString("job_title"),
+                rs.getString("resume_url"),
+                rs.getString("avatar_url")
+            )
+        );
     }
 
     public Application findByID(Integer applicationID) {
