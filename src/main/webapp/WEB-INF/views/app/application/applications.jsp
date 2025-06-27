@@ -39,51 +39,57 @@
                 </div> 
             </div>
         </div>
-        <div class="table-responsive">
-            <table class="table table-bordered bg-contrast">
-                <thead class="table-light thead-success">
-                    <tr>
-                        <th class="col-1">Ảnh đại diện</th>
-                        <th class="col-2">Họ & tên</th>  
-                        <th class="col-6">Tiêu đề</th>
-                        <th class="col-1">Link CV</th>   
-                        <th class="col-2">Chức năng</th>
-                    </tr>
-                </thead>
-                <tbody class="table table-bordered bg-white"> 
-                    <c:choose>
-                        <c:when test="${empty applications}">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Danh sách bài tuyển dụng</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered bg-contrast">
+                        <thead class="table-light thead-success">
                             <tr>
-                                <td colspan="12" class="text-center">No applications found.</td>
+                                <th class="col-1">Ảnh đại diện</th>
+                                <th class="col-2">Họ & tên</th>  
+                                <th class="col-6">Tiêu đề</th>
+                                <th class="col-1">Link CV</th>   
+                                <th class="col-2">Chức năng</th>
                             </tr>
-                        </c:when>
-                        <c:otherwise>
-                            <c:forEach var="application" items="${applications}">
-                                <tr>
-                                    <td>
-                                        <img src="${pageContext.request.contextPath}${application.avatarUrl}" style="width:40 height:40"/>
-                                    </td> 
-                                    <td>
-                                        ${application.fullName}
-                                    </td>
-                                    <td>
-                                        ${application.jobTitle}
-                                    </td>
-                                    <td>
-                                        <a href="${pageContext.request.contextPath}${application.resumeUrl}" target="_blank" style="text-decoration: none;">Xem</a>
+                        </thead>
+                        <tbody class="table table-bordered bg-white"> 
+                            <c:choose>
+                                <c:when test="${empty applications}">
+                                    <tr>
+                                        <td colspan="12" class="text-center">No applications found.</td>
+                                    </tr>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:forEach var="application" items="${applications}">
+                                        <tr>
+                                            <td>
+                                                <img src="${pageContext.request.contextPath}${application.avatarUrl}" style="width:40 height:40"/>
+                                            </td> 
+                                            <td>
+                                                ${application.fullName}
+                                            </td>
+                                            <td>
+                                                ${application.jobTitle}
+                                            </td>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}${application.resumeUrl}" target="_blank" style="text-decoration: none;">Xem</a>
 
-                                    </td>
-                                    <td>
-                                        <a href="${pageContext.request.contextPath}/app/applications/details/${job.id}" class="btn btn-sm btn-primary">Chi tiết</a>
-                                        <a href="${pageContext.request.contextPath}/app/applications/delete/${job.id}" class="btn btn-sm btn-danger" onclick="return confirm('Bạn muốn xóa bài đăng này?')">Xóa</a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
-                </tbody>
-            </table>
+                                            </td>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/app/applications/details/${job.id}" class="btn btn-sm btn-primary">Chi tiết</a>
+                                                <a href="${pageContext.request.contextPath}/app/applications/delete/${job.id}" class="btn btn-sm btn-danger" onclick="return confirm('Bạn muốn xóa bài đăng này?')">Xóa</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:otherwise>
+                            </c:choose>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+
         <c:if test="${totalPages > 1}">
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
