@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <main>
     <div class="container py-5">
         <h2 class="mb-4">Danh sách việc làm đã lưu</h2>
@@ -19,7 +21,7 @@
                                         <fmt:formatNumber value="${job.salaryMin}" type="currency" currencySymbol="₫"/> -
                                         <fmt:formatNumber value="${job.salaryMax}" type="currency" currencySymbol="₫"/>
                                     </p>
-                                    <form method="post" action="<c:url value='/favorites/remove/${job.id}'/>?redirect=/favorites">
+                                    <form method="post" action="<c:url value='/favorites/remove/${job.id}'/>?redirect=/favorite-jobs">
                                         <button class="btn btn-danger btn-sm" type="submit">
                                             Bỏ lưu
                                         </button>
@@ -38,3 +40,4 @@
         </c:choose>
     </div>
 </main>
+

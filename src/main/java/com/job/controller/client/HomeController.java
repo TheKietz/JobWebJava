@@ -1,3 +1,4 @@
+
 package com.job.controller.client;
 import com.job.model.Job;
 import java.util.List;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import com.job.service.client.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 @Controller
 public class HomeController {
     @Autowired
@@ -24,4 +24,6 @@ public class HomeController {
         mav.addObject("jobs", jobs);
         return mav;
     }
+
 }
+

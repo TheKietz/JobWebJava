@@ -6,7 +6,7 @@
 <main>
     <div class="container-fluid">
         <div class="container">
-            <div class="row g-4 mb-5">
+            <div class="row g-4 mb-5 mt-1">
                 <div>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -22,7 +22,7 @@
                         <div class="row g-4">
                             <form method="get" action="<c:url value='/employers'/>">
                                 <div class="col-12">
-                                    <label for="keyword" class="form-label"><b>Từ khóa</b></label>
+                                    <label for="keyword" class="form-label"><b>Tìm kiếm</b></label>
                                     <input type="text" id="keyword" name="keyword" class="form-control" value="${keyword}" placeholder="Tìm theo tên công ty hoặc website">
                                 </div>
 
@@ -42,8 +42,16 @@
                                 <div class="col-md-6 col-lg-4">
                                     <div class="rounded position-relative fruite-item">
                                         <div class="fruite-img">
-                                            <img src="${employer.logoUrl != null ? employer.logoUrl : pageContext.request.contextPath + '/template/images/company-placeholder.png'}"
-                                                 class="img-fluid w-100 rounded-top" alt="" style="height: 235px; object-fit: cover;">
+
+                                            <c:choose>
+                                                <c:when test="${not empty employer.logoUrl}">
+                                                    <img src="${employer.logoUrl}" class="img-fluid w-100 rounded-top" alt="" style="height: 235px; object-fit: cover;">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img src="${pageContext.request.contextPath}/template/images/company-placeholder.png" class="img-fluid w-100 rounded-top" alt="" style="height: 235px; object-fit: cover;">
+                                                </c:otherwise>
+                                            </c:choose>
+
                                         </div>
                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
                                              style="top: 10px; left: 10px;">
@@ -93,7 +101,6 @@
                                     <div>Không tìm thấy công ty nào phù hợp.</div>
                                 </c:otherwise>
                             </c:choose>
-
                         </div>
                     </div>
                 </div>

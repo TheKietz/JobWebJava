@@ -3,24 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <main>
-    <!-- Khu vực tiêu đề -->
-    <div class="slider-area">
-        <div class="single-slider section-overly slider-height2 d-flex align-items-center"
-             data-background="${pageContext.request.contextPath}/template/assets/img/hero/about.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="hero-cap text-center">
-                            <h2>${employer.companyName}</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Thông tin chi tiết công ty -->
-    <div class="job-post-company pt-120 pb-120">
+    <div class="job-post-company pt-50 pb-120">
         <div class="container">
             <div class="row justify-content-between">
                 <!-- Nội dung bên trái -->
@@ -28,8 +12,15 @@
                     <div class="single-job-items mb-50">
                         <div class="job-items">
                             <div class="company-img company-img-details">
-                                <img src="${employer.logoUrl != null ? employer.logoUrl : pageContext.request.contextPath + '/template/images/company-placeholder.png'}"
-                                     alt="Logo công ty" class="img-fluid" style="max-height: 120px;">
+                                <c:choose>
+                                    <c:when test="${not empty employer.logoUrl}">
+                                        <img src="${employer.logoUrl}" class="img-fluid" style="max-height: 120px;" alt="Logo công ty">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="${pageContext.request.contextPath}/template/images/company-placeholder.png" class="img-fluid" style="max-height: 120px;" alt="Logo mặc định">
+                                    </c:otherwise>
+                                </c:choose>
+
                             </div>
                             <div class="job-tittle mt-3">
                                 <h4>${employer.companyName}</h4>
@@ -73,6 +64,25 @@
                         </ul>
                         <div class="apply-btn2 mt-4">
                             <a href="<c:url value='/jobs?employerId=${employer.id}'/>" class="btn">Xem việc làm của công ty</a>
+                        </div>
+
+                        <div class="mt-3">
+                            <c:choose>
+                                <c:when test="${isFavorite}">
+                                    <form method="post" action="<c:url value='/favorite-employers/remove/${employer.id}'/>?redirect=/employers/detail/${employer.id}">
+                                        <button type="submit" class="btn btn-outline-danger w-100">
+                                            <i class="fa fa-times-circle"></i> Bỏ lưu công ty
+                                        </button>
+                                    </form>
+                                </c:when>
+                                <c:otherwise>
+                                    <form method="post" action="<c:url value='/favorite-employers/add/${employer.id}'/>">
+                                        <button type="submit" class="btn btn-outline-primary w-100">
+                                            <i class="fa fa-bookmark"></i> Lưu công ty
+                                        </button>
+                                    </form>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>

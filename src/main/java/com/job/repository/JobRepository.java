@@ -187,12 +187,9 @@ public class JobRepository {
             }
             String sql = "SELECT * FROM jobs WHERE LOWER(title) LIKE ? OR LOWER(category) LIKE ?";
             String likeKeyword = "%" + keyword.trim().toLowerCase() + "%";
-            List<Job> jobs = jdbcTemplate.query(sql, new Object[]{likeKeyword, likeKeyword}, new BeanPropertyRowMapper<>(Job.class));
-            System.out.println("search: Keyword='" + keyword + "', Found " + jobs.size() + " jobs");
-            return jobs;
+            return jdbcTemplate.query(sql, new Object[]{likeKeyword, likeKeyword}, jobRowMapper);
         } catch (Exception e) {
-            System.err.println("Error searching jobs with keyword: " + keyword + ", " + e.getMessage());
-            e.printStackTrace();
+            logger.error("Error searching jobs with keyword: {}", keyword, e);
             return List.of();
         }
     }

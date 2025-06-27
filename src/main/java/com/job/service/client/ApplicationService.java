@@ -1,3 +1,4 @@
+
 package com.job.service.client;
 
 import com.job.model.Application;
@@ -47,3 +48,4 @@ public class ApplicationService {
         return applicationRepository.countPages(list, size);
     }
 }
+

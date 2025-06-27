@@ -1,14 +1,11 @@
+
 package com.job.service.client;
 
 import com.job.model.Job;
 import com.job.repository.JobRepository;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-
 @Service
 public class JobService {
 
@@ -59,4 +56,9 @@ public class JobService {
     public List<Job> searchByFilters(List<String> categories, List<String> jobTypes, List<String> salaryRanges) {
         return jobRepository.searchByFilters(categories, jobTypes, salaryRanges);
     }
-} 
+
+    public List<Job> findByEmployerID(int employerId) {
+        return jobRepository.findByEmployerID(employerId);
+    }
+}
+
