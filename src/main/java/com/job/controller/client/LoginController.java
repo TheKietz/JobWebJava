@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,11 +34,12 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String processLogin(@RequestParam("email") String email,
-                              @RequestParam("passwordHash") String password,
-                              HttpSession session,
-                              Model model,
-                              RedirectAttributes redirectAttributes) {
+    public String processLogin(@ModelAttribute("loginForm") LoginForm loginForm,
+            @RequestParam("email") String email,
+            @RequestParam("passwordHash") String password,
+            HttpSession session,
+            Model model,
+            RedirectAttributes redirectAttributes) {
         logger.debug("Processing login: email={}", email);
         User user = userService.findByEmail(email);
         if (user == null || !userService.verifyPassword(password, user.getPassword())) {
@@ -47,6 +49,7 @@ public class LoginController {
         }
 
         if (user.getRole() == Role.CANDIDATE) {
+
             session.setAttribute("loggedInUser", user);
             logger.info("Candidate logged in: id={}, email={}", user.getId(), user.getEmail());
             return "redirect:/";
