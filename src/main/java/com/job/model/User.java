@@ -3,8 +3,6 @@ package com.job.model;
 import com.job.enums.CommonEnums.Gender;
 import com.job.enums.CommonEnums.Role;
 import com.job.enums.CommonEnums.Status;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.*;
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDateTime;
@@ -12,8 +10,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-@Entity
-@Table(name = "users")
 public class User {
     private Integer id;
 
