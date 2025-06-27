@@ -67,7 +67,7 @@
                         </ul>
                         <div class="apply-btn2">
                             <button>
-                                <a href="#" class="btn">Ứng tuyển ngay</a>
+                                <a href="${pageContext.request.contextPath}/client/application/apply?jobId=${job.id}" class="btn btn-success">Ứng tuyển ngay</a>
                             </button>
                         </div>
 

@@ -1,4 +1,3 @@
-
 package com.job.service.client;
 
 import com.job.model.Application;
@@ -7,10 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author truonghonhatminh
- */
 @Service
 public class ApplicationService {
     @Autowired
@@ -47,5 +42,14 @@ public class ApplicationService {
     public int countPages(List<Application> list, int size) {
         return applicationRepository.countPages(list, size);
     }
+
+    public List<Application> findByCandidateId(Integer candidateId) {
+        return applicationRepository.findByCandidateId(candidateId);
+    }
+
+    public boolean hasApplied(Integer candidateId, Integer jobId) {
+        return applicationRepository.hasApplied(candidateId, jobId);
+    }
 }
+
 

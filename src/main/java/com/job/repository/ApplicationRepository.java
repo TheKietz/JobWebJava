@@ -10,9 +10,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ApplicationRepository {
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 //Long id, Long candidateId, Long jobId, String resumeUrl, ApplicationStatus status, BigDecimal score, LocalDateTime appliedAt
+
     public List<Application> findAll() {
         String sql = "SELECT * FROM applications";
         List<Application> applications = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Application.class));
@@ -39,7 +41,7 @@ public class ApplicationRepository {
     }
 
     public void update(Application application) {
-        String sql = "UPDATE applications SET candidate_id = ?, job_id = ?, resume_rrl = ?,status = ?,score = ?, applied_at = ?,  WHERE id = ?";
+        String sql = "UPDATE applications SET candidate_id = ?, job_id = ?, resume_url = ?,status = ?,score = ?, applied_at = ?,  WHERE id = ?";
         jdbcTemplate.update(sql,
                 application.getCandidateId(),
                 application.getJobId(),
@@ -59,7 +61,7 @@ public class ApplicationRepository {
         if (keyword == null || keyword.isBlank()) {
             return findAll();
         }
-        String sql = "SELECT * FROM applications WHERE LOWER(Status) LIKE ?";
+        String sql = "SELECT * FROM applications WHERE LOWER(status) LIKE ?";
         String like = "%" + keyword.trim().toLowerCase() + "%";
         List<Application> applications = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Application.class), like);
         System.out.println("search: Keyword='" + keyword + "', Found " + applications.size() + " applications");
@@ -86,5 +88,16 @@ public class ApplicationRepository {
         int pages = (int) Math.ceil((double) list.size() / Math.max(1, size));
         System.out.println("countPages: List size=" + list.size() + ", Size=" + size + ", Pages=" + pages);
         return pages;
+    }
+
+    public List<Application> findByCandidateId(Integer candidateId) {
+        String sql = "SELECT * FROM applications WHERE candidate_id = ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Application.class), candidateId);
+    }
+
+    public boolean hasApplied(Integer candidateId, Integer jobId) {
+        String sql = "SELECT COUNT(*) FROM applications WHERE candidate_id = ? AND job_id = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, candidateId, jobId);
+        return count != null && count > 0;
     }
 }

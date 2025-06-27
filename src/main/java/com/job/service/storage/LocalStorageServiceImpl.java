@@ -17,7 +17,8 @@ import org.slf4j.LoggerFactory;
 
 @Service
 public class LocalStorageServiceImpl implements FileStorageService { // Triển khai interface FileStorageService
-private static final Logger logger = LoggerFactory.getLogger(LocalStorageServiceImpl.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(LocalStorageServiceImpl.class);
 
     @Value("${file.upload-dir}")
     private String uploadDir;
@@ -36,20 +37,36 @@ private static final Logger logger = LoggerFactory.getLogger(LocalStorageService
         }
     }
 
-    @Override // Đánh dấu là phương thức triển khai từ interface
+    @Override
     public String storeFile(MultipartFile file) {
         String originalFileName = org.springframework.util.StringUtils.cleanPath(file.getOriginalFilename());
         String fileName = UUID.randomUUID().toString() + "_" + originalFileName;
 
         try {
+            // Kiểm tra tên file có chứa ký tự nguy hiểm không
             if (fileName.contains("..")) {
-                throw new RuntimeException("Sorry! Filename contains invalid path sequence " + originalFileName);
+                throw new RuntimeException("Tên file không hợp lệ: " + originalFileName);
             }
+
+            // Kiểm tra định dạng file hợp lệ (PDF, DOC, DOCX)
+            String contentType = file.getContentType();
+            if (!contentType.equals("application/pdf")
+                    && !contentType.equals("application/msword")
+                    && !contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")) {
+                throw new RuntimeException("Chỉ cho phép upload file PDF hoặc Word (doc, docx).");
+            }
+
+            // Kiểm tra kích thước file (ví dụ 5MB max)
+            if (file.getSize() > 5 * 1024 * 1024) {
+                throw new RuntimeException("File quá lớn. Giới hạn tối đa là 5MB.");
+            }
+
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
             return "/uploads/" + fileName;
         } catch (IOException ex) {
-            throw new RuntimeException("Could not store file " + originalFileName + ". Please try again!", ex);
+            throw new RuntimeException("Không thể lưu file " + originalFileName + ". Vui lòng thử lại.", ex);
         }
     }
 
