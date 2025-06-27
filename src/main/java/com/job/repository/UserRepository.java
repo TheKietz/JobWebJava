@@ -344,7 +344,7 @@ public class UserRepository {
         return pagedList;
     }
 
-    public boolean verifyPassword(String rawPassword, String storedPassword) {
+    public boolean verifyRawPassword(String rawPassword, String storedPassword) {
         boolean matches = rawPassword != null && rawPassword.equals(storedPassword);
         System.out.println("verifyPassword: rawPassword=****, storedPassword=****, matches=" + matches);
         return matches;
