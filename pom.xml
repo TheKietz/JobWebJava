@@ -142,15 +142,19 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
-                <configuration>
+                <configuration>                    
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
+               
             </plugin>
         </plugins>
     </build>
