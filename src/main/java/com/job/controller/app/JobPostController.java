@@ -98,19 +98,14 @@ public class JobPostController {
         if (loggedInUser != null && loggedInUser.getRole() == CommonEnums.Role.EMPLOYER) {
             int employerId = employerService.findEmployerIdByUserId(loggedInUser.getId());
             Job job = new Job();
-            job.setEmployerId(employerId); // Pre-set employerId
+            job.setEmployerId(employerId); 
             return job;
         }
-        return new Job(); // Default if not logged in (will fail auth check later)
+        return new Job(); 
     }
 
     @GetMapping("/add")
-    public String add(Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null || loggedInUser.getRole() != CommonEnums.Role.EMPLOYER) {
-            System.out.println("Unauthorized access to /app/jobs/add, redirecting to login");
-            return "redirect:/admin/login";
-        }
+    public String add(Model model, HttpSession session) {       
 
         model.addAttribute("job", new Job());
         model.addAttribute("body", "/WEB-INF/views/app/job/post-job.jsp");
