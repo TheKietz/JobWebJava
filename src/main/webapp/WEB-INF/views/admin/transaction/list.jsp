@@ -75,8 +75,8 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table table-bordered bg-info-light2">
-                        <thead class="table-light">
+                    <table class="table table-bordered table-hover bg-info-light2">
+                        <thead class="table-active">
                             <tr>
                                 <th>ID</th>
                                 <th>User</th>

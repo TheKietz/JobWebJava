@@ -20,10 +20,10 @@
         <!-- Fonts awsome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         <!-- CSS Files -->
+        
         <link href="${pageContext.request.contextPath}/template/app/assets/css/bootstrap.min.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/template/app/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
-        <!-- CSS Just for demo purpose, don't include it in your project -->
-        <link href="${pageContext.request.contextPath}/template/app/assets/demo/demo.css" rel="stylesheet" />
+
 
         <style>
             .bold-link p {
@@ -198,13 +198,13 @@
                         </li>
                         <hr>
                         <li>
-                            <a class="bold-link" href="javascript:;">
+                            <a class="bold-link" href="${pageContext.request.contextPath}/app/service_packages">
                                 <i class="nc-icon nc-cart-simple icon-bold"></i>
                                 <p>Mua dịch vụ</p>
                             </a>
                         </li>
                         <li>
-                            <a class="bold-link" href="javascript:;">
+                            <a class="bold-link" href="${pageContext.request.contextPath}/app/shop/employer/orders">
                                 <i class="nc-icon nc-paper icon-bold"></i>
                                 <p>Theo dõi dịch vụ</p>
                             </a>
@@ -224,13 +224,7 @@
                             </a>
                         </li>
                         <hr>
-                        <li>
-                            <a class="bold-link" href="${pageContext.request.contextPath}/app/settings">
-                                <i class="nc-icon nc-bell-55 icon-bold"></i>
-                                <p>Thông báo hệ thống</p>
-                            </a>
-                        </li>
-                        <hr>
+                        
                         <li>
                             <a class="bold-link" href="${pageContext.request.contextPath}/app/supports?tab=report">
                                 <i class="nc-icon nc-email-85 icon-bold"></i>

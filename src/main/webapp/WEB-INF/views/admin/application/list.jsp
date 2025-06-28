@@ -41,8 +41,8 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
+                <table class="table table-bordered table-hover bg-info-light2">
+                    <thead class="table-active">
                         <tr>
                             <th scope="col">#</th>                            
                             <th scope="col">Job Category</th>
@@ -53,8 +53,8 @@
                             <th scope="col">Function</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <c:choose>
+                    <tbody> 
+                       <c:choose>
                             <c:when test="${empty applications}">
                                 <tr>
                                     <td colspan="12" class="text-center">No jobs found.</td>

@@ -55,7 +55,7 @@ public class JobAdminController {
             @RequestParam(defaultValue = "") String keyword,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String status, // Tham số nhận từ UI
+            @RequestParam(required = false) String status,
             @RequestParam(required = false) List<String> categories,
             @RequestParam(required = false) List<String> jobTypes,
             @RequestParam(required = false) List<String> salaryRanges,

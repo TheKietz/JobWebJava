@@ -105,21 +105,20 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li>
-                                <a href="${pageContext.request.contextPath}/admin/service_packages/details">
+                                <a href="${pageContext.request.contextPath}/admin/service_packages">
                                     <i class="zmdi zmdi-dot-circle-alt"></i> Quản lý gói
                                 </a>
                             </li>
-                            <li >
-                                <a href="${pageContext.request.contextPath}/admin/subscriptions/details">
+                            <li>
+                                <a href="${pageContext.request.contextPath}/admin/transactions">
                                     <i class="zmdi zmdi-dot-circle-alt"></i> Các gọi đã mua
                                 </a>
                             </li>
-                            <li >
-                                <a href="${pageContext.request.contextPath}/admin/subscriptions/#">
-                                    <i class="zmdi zmdi-dot-circle-alt"></i> Các gọi đã mua
+                            <li>
+                                <a href="${pageContext.request.contextPath}/admin/orders">
+                                    <i class="zmdi zmdi-dot-circle-alt"></i> Cập nhật trạng thái đơn hàng
                                 </a>
                             </li>
-
                         </ul>
                     </li>
 
@@ -130,7 +129,7 @@
                     </li>                    
                     <%--banner--%>
                     <li>
-                        <a href="#">
+                        <a href="${pageContext.request.contextPath}/admin/banners">
                             <i class="zmdi zmdi-assignment-account"></i> <span>Banner</span>
                         </a>
                     </li>

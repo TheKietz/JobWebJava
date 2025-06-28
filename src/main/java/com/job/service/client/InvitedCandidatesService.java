@@ -34,7 +34,7 @@ public class InvitedCandidatesService {
         return invitedCandidatesRepository.findById(id);
     }
 
-    List<InvitedCandidates> getAllInvitations() {
+    public List<InvitedCandidates> getAllInvitations() {
         return invitedCandidatesRepository.findAll();
     }
 

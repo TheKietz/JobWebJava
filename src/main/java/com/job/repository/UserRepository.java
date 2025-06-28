@@ -65,32 +65,7 @@ public class UserRepository {
         } catch (Exception e) {
             logger.error("Error finding job by ID: {}, {}", id, e.getMessage());
             return null;
-        }
-//        try {
-//            return jdbcTemplate.queryForObject(sql, new Object[]{id}, new BeanPropertyRowMapper<>(User.class) {
-//                @Override
-//                public User mapRow(java.sql.ResultSet rs, int rowNum) throws java.sql.SQLException {
-//                    User user = new User();
-//                    user.setId(rs.getInt("id"));
-//                    user.setFullName(rs.getString("full_name"));
-//                    user.setEmail(rs.getString("email"));
-//                    user.setPassword(rs.getString("password"));
-//                    user.setPhone(rs.getString("phone"));
-//                    String roleStr = rs.getString("role");
-//                    user.setRole(roleStr != null ? Role.valueOf(roleStr) : null);
-//                    String statusStr = rs.getString("status");
-//                    user.setStatus(statusStr != null ? Status.valueOf(statusStr) : null);
-//                    String genderStr = rs.getString("gender");
-//                    user.setStatus(genderStr != null ? Status.valueOf(genderStr) : null);
-//                    user.setAvatarUrl(rs.getString("avatar_Url"));
-//                    user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-//                    return user;
-//                }
-//            });
-//        } catch (Exception e) {
-//            System.err.println("Error finding user by ID: " + id + ", " + e.getMessage());
-//            return null;
-//        }
+        }//        
     }
 
     public User findByEmail(String email) {

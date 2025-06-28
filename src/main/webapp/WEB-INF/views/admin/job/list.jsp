@@ -70,9 +70,9 @@
                     </form>
                 </div>
             </div>
-            <div class="table-responsive">
-                <table class="table table-bordered bg-info-light2">
-                    <thead class="table-light">
+           <div class="table-responsive">
+                    <table class="table table-bordered table-hover bg-info-light2">
+                        <thead class="table-active">
                         <tr>
                             <th class="col-1">Công ty</th>
                             <th class="col-2">Tiêu đề</th>    

@@ -87,7 +87,7 @@ public class LoginEmployerController {
     @GetMapping("/app/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        System.out.println("Admin logged out.");
+        System.out.println("Employer logged out.");
         return "redirect:/app/login";
     }
 }

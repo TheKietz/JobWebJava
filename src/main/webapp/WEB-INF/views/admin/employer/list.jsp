@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="table-responsive" style="overflow-x: auto;">
-                    <table class="table table-bordered" style="min-width: 1200px;" >
+                    <table class="table table-bordered table-hover" style="min-width: 1200px;" >
                         <thead>
                             <tr>
                                 <th>#</th>     

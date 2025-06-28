@@ -17,7 +17,8 @@ public class Application {
    private Integer id;
     private Integer candidateId; // Liên kết với Candidate.id
     private Integer jobId; // Liên kết với Job.id
-
+    private Job job;
+    
     @NotBlank(message = "Resume URL cannot be blank")
     @Pattern(regexp = "^(http|https)://.*$", message = "Invalid resume URL format")
     @Size(max = 255, message = "Resume URL must be less than or equal to 255 characters")
@@ -58,5 +59,7 @@ public class Application {
     public void setScore(BigDecimal score) { this.score = score; }
     public LocalDateTime getAppliedAt() { return appliedAt; }
     public void setAppliedAt(LocalDateTime appliedAt) { this.appliedAt = appliedAt; }
+    public Job getJob() {return job;}
+    public void setJob(Job job) {this.job = job;}
 }
 

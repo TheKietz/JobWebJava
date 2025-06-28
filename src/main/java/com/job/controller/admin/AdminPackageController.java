@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/packages")
+@RequestMapping("/admin/service_packages")
 public class AdminPackageController {
 
     @Autowired

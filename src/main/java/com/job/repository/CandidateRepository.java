@@ -74,7 +74,7 @@ public class CandidateRepository {
                            c.experience_level,
                            c.skills
                     FROM candidates c
-                    JOIN jobs j ON j.employer_id = 13
+                    JOIN jobs j ON j.employer_id = ?
                     LEFT JOIN invited_candidates ic 
                         ON ic.employer_id = j.employer_id AND ic.candidate_id = c.id
                     JOIN users u ON u.id = c.user_id
@@ -83,7 +83,7 @@ public class CandidateRepository {
                       AND (
                           c.location = j.location 
                           OR c.experience_level = j.job_type 
-                          OR c.skills LIKE CONCAT('%', j.category, '%')
+                          OR c.skills LIKE CONCAT('%', j.description, '%')
                       )
                     LIMIT 20;                    
                     """;

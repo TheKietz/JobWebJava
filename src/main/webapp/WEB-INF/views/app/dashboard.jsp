@@ -188,7 +188,7 @@
                                 <img src="${pageContext.request.contextPath}/template/app/assets/img/dang-tin.svg" alt="Post Job" class="mb-2" />
                                 <h5 class="card-title">Đăng tin tuyển dụng</h5>
                                 <button class="btn-light-green btn-sm"
-                                        onclick="window.location.href = '${pageContext.request.contextPath}/app/job-post'">
+                                        onclick="window.location.href = '${pageContext.request.contextPath}/app/jobs/add?size=&keyword='">
                                     Thử ngay
                                 </button>
                             </div>

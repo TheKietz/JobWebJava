@@ -1,7 +1,9 @@
 package com.job.repository;
 
 import com.job.dto.CandidateApplicationDTO;
+import com.job.enums.CommonEnums.ApplicationStatus;
 import com.job.model.Application;
+import com.job.model.Job;
 import java.sql.Timestamp;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,39 @@ public class ApplicationRepository {
         );
     }
 
+    public List<Application> findByCandidateId(Integer candidateId) {
+        String sql = """
+            SELECT 
+                a.*, 
+                j.id AS job_id, j.title, j.location, j.salary_min, j.salary_max, j.expired_at 
+            FROM applications a
+            JOIN jobs j ON a.job_id = j.id
+            WHERE a.candidate_id = ?
+            ORDER BY a.applied_at DESC
+        """;
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Application app = new Application();
+            app.setId(rs.getInt("id"));
+            app.setCandidateId(rs.getInt("candidate_id"));
+            app.setJobId(rs.getInt("job_id"));
+            app.setResumeUrl(rs.getString("resume_url"));
+            app.setStatus(ApplicationStatus.valueOf(rs.getString("status")));
+            app.setScore(rs.getBigDecimal("score"));
+            app.setAppliedAt(rs.getTimestamp("applied_at").toLocalDateTime());
+
+            Job job = new Job();
+            job.setId(rs.getInt("job_id"));
+            job.setTitle(rs.getString("title"));
+            job.setLocation(rs.getString("location"));
+            job.setSalaryMin(rs.getBigDecimal("salary_min"));
+            job.setSalaryMax(rs.getBigDecimal("salary_max"));
+            job.setExpiredAt(rs.getTimestamp("expired_at").toLocalDateTime());
+
+            app.setJob(job);
+            return app;
+        }, candidateId);
+    }
     public Application findByID(Integer applicationID) {
         String sql = "SELECT * FROM applications WHERE id = ?";
         List<Application> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Application.class), applicationID);
@@ -112,5 +147,10 @@ public class ApplicationRepository {
         int pages = (int) Math.ceil((double) list.size() / Math.max(1, size));
         System.out.println("countPages: List size=" + list.size() + ", Size=" + size + ", Pages=" + pages);
         return pages;
+    }
+    public boolean hasApplied(Integer candidateId, Integer jobId) {
+        String sql = "SELECT COUNT(*) FROM applications WHERE candidate_id = ? AND job_id = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, candidateId, jobId);
+        return count != null && count > 0;
     }
 }

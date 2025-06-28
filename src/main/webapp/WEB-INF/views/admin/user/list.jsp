@@ -48,9 +48,9 @@
                     </div>
                 </div>
             </div>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
+           <div class="table-responsive">
+                    <table class="table table-bordered table-hover bg-info-light2">
+                        <thead class="table-active">
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Full Name</th>

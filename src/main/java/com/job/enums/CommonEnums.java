@@ -10,6 +10,14 @@ package com.job.enums;
  */
 public class CommonEnums {
 
+    public enum PaymentStatus {
+        PAID, UNPAID, REFUNDED
+    }
+
+    public enum OrderStatus {
+        PENDING, COMPLETED, CANCELLED, FAILED,EXPIRED
+    }
+
     public enum TransactionStatus {
         PENDING, // Chờ xử lý
         SUCCESS, // Thành công
@@ -17,9 +25,10 @@ public class CommonEnums {
         CANCELED     // Hủy bởi người dùng hoặc hệ thống
     }
 
-    public enum FeedbackStatus{
+    public enum FeedbackStatus {
         PENDING, RESOLVED, CLOSED
     }
+
     public enum Status {
         ACTIVE, INACTIVE
     }

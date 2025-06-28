@@ -14,6 +14,9 @@ public class FavoriteJobRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private JobRepository jobRepository; // 👈 Inject để tái dùng rowMapper
+
     private final RowMapper<FavoriteJob> rowMapper = (rs, rowNum) -> {
         FavoriteJob fav = new FavoriteJob();
         fav.setId(rs.getInt("id"));
@@ -35,7 +38,8 @@ public class FavoriteJobRepository {
             WHERE f.candidate_id = ?
             ORDER BY f.saved_at DESC
         """;
-        return jdbcTemplate.query(sql, new JobRepository().getRowMapper());
+
+        return jdbcTemplate.query(sql, jobRepository.getRowMapper(), candidateId); 
     }
 
     public void remove(int candidateId, int jobId) {

@@ -42,9 +42,9 @@
 
             </div>
 
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
+           <div class="table-responsive">
+                    <table class="table table-bordered table-hover bg-info-light2">
+                        <thead class="table-active">
                         <tr>
                             <th>Tiêu đề</th>
                             <th>Ảnh</th>

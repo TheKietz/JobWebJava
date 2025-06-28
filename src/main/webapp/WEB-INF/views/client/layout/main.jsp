@@ -4,7 +4,7 @@
 <!-- Header -->
 <jsp:include page="/WEB-INF/views/client/layout/header.jsp" />
 
-<jsp:include page="${body}" />
+<jsp:include page="${body}" flush="true" />
 
 <jsp:include page="/WEB-INF/views/client/layout/footer.jsp" />
 

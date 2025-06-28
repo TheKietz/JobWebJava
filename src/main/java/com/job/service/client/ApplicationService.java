@@ -25,6 +25,10 @@ public class ApplicationService {
         return applicationRepository.findCandidatesAppliedToEmployerJobs(employerUserId);
     }
    
+    public List<Application> findByCandidateId(Integer candidateId) {
+        return applicationRepository.findByCandidateId(candidateId);
+    }
+    
     public Application findByID(Integer applicationID) {
         return applicationRepository.findByID(applicationID);
     }
@@ -51,6 +55,9 @@ public class ApplicationService {
 
     public int countPages(List<Application> list, int size) {
         return applicationRepository.countPages(list, size);
+    }
+    public boolean hasApplied(Integer candidateId, Integer jobId) {
+        return applicationRepository.hasApplied(candidateId, jobId);
     }
 }
 

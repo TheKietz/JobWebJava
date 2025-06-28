@@ -22,16 +22,15 @@ public class FavoriteEmployerController {
     private FavoriteEmployerService favoriteEmployerService;
     @Autowired
     private CandidateService candidateService;
-    
+
     @GetMapping
     public ModelAndView list(HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || !loggedInUser.getRole().equals(CommonEnums.Role.CANDIDATE)) {
-            
             return new ModelAndView("redirect:/login");
         }
-        
-        Candidate candidate = candidateService.findByUserID(loggedInUser.getId());        
+
+        Candidate candidate = candidateService.findByUserID(loggedInUser.getId());
         if (candidate == null) {
             return new ModelAndView("redirect:/login");
         }
@@ -44,35 +43,36 @@ public class FavoriteEmployerController {
     }
 
     @PostMapping("/add/{employerId}")
-    public String save(@PathVariable("employerId") int employerId,
-            HttpSession session,
+    public String save(@PathVariable("employerId") int employerId, HttpSession session,
             @RequestParam(value = "redirect", required = false) String redirect) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || !loggedInUser.getRole().equals(CommonEnums.Role.CANDIDATE)) {
-            
-            return ("redirect:/login");
+            return "redirect:/login";
         }
-        Candidate candidate = candidateService.findByUserID(loggedInUser.getId());        
+
+        Candidate candidate = candidateService.findByUserID(loggedInUser.getId());
         if (candidate == null) {
-            return ("redirect:/login");
+            return "redirect:/login";
         }
+
         favoriteEmployerService.save(candidate.getId(), employerId);
-        return "redirect:" + (redirect != null ? redirect : "/favorite-employers");
+        return "redirect:/employers/detail/" + employerId;
     }
 
     @PostMapping("/remove/{employerId}")
-    public String remove(@PathVariable("employerId") int employerId,
-            HttpSession session,
+    public String remove(@PathVariable("employerId") int employerId, HttpSession session,
             @RequestParam(value = "redirect", required = false) String redirect) {
+
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || !loggedInUser.getRole().equals(CommonEnums.Role.CANDIDATE)) {
-            
-            return ("redirect:/login");
+            return "redirect:/login";
         }
-        Candidate candidate = candidateService.findByUserID(loggedInUser.getId());        
+
+        Candidate candidate = candidateService.findByUserID(loggedInUser.getId());
         if (candidate == null) {
-            return ("redirect:/login");
+            return "redirect:/login";
         }
+
         favoriteEmployerService.remove(candidate.getId(), employerId);
         return "redirect:" + (redirect != null ? redirect : "/favorite-employers");
     }

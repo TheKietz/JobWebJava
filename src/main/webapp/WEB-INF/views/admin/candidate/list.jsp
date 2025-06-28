@@ -40,10 +40,11 @@
                         <a href="${pageContext.request.contextPath}/admin/candidates/add?size=${pageSize}&keyword=${fn:escapeXml(keyword)}" class="btn btn-success">Add Candidate</a>
                     </div>
                 </div>
-                <div class="table-responsive" style="overflow-x: auto;">
-                    <table class="table table-bordered" style="min-width: 1200px;" >
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover bg-info-light2">
+                        <thead class="table-active">
 
-                        <thead>
+                        
                             <tr>
                                 <th>ID</th>
                                 <th>User ID</th>
