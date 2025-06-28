@@ -13,8 +13,6 @@
     <context:component-scan base-package="com.job"/>
     <mvc:annotation-driven validator="validator"/>
     <task:annotation-driven/>
-
-    <mvc:resources mapping="/uploads/**" location="file:///D:\Web_Java\jobwebjava\target\JobWebJava\uploads\"/>
     
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 

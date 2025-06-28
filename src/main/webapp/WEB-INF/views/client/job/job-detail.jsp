@@ -65,8 +65,11 @@
                                 </span>
                             </li>
                         </ul>
-                        <div class="apply-btn2">
-                                <a href="${pageContext.request.contextPath}/applications/apply?jobId=${job.id}" class="btn btn-success">Ứng tuyển ngay</a>
+                        <div class="apply-btn2 w-100">
+                            <a href="${pageContext.request.contextPath}/applications/apply?jobId=${job.id}"
+                               class="btn btn-success w-100">
+                                <i class="fa fa-paper-plane me-2"></i> Ứng tuyển ngay
+                            </a>
                         </div>
 
                         <div class="mt-3">
@@ -81,10 +84,7 @@
                                 <c:otherwise>
                                     <form method="post" action="<c:url value='/favorite-jobs/add/${job.id}'/>">
                                         <button type="submit" class="btn btn-outline-primary w-100">
-                                            <i class="fa fa-bookmark"></i> 
-                                            <a href="${pageContext.request.contextPath}/jobs/detail/${job.id}">
-                                                Lưu công việc
-                                                <a/> 
+                                            <i class="fa fa-bookmark"></i> Lưu công việc
                                         </button>
                                     </form>
                                 </c:otherwise>

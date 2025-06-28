@@ -14,7 +14,7 @@
                             <div class="company-img company-img-details">
                                 <c:choose>
                                     <c:when test="${not empty employer.logoUrl}">
-                                        <img src="${employer.logoUrl}" class="img-fluid" style="max-height: 120px;" alt="Logo công ty">
+                                        <img src="${pageContext.request.contextPath}/uploads/${employer.logoUrl}" class="img-fluid" style="max-height: 120px;" alt="Logo công ty">
                                     </c:when>
                                     <c:otherwise>
                                         <img src="${pageContext.request.contextPath}/template/images/company-placeholder.png" class="img-fluid" style="max-height: 120px;" alt="Logo mặc định">

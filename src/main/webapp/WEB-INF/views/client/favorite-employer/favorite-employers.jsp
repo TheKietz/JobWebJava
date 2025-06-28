@@ -14,7 +14,7 @@
                         <div class="col-md-6 mb-6">
                             <div class="card h-100">
                                 <c:if test="${not empty employer.logoUrl}">
-                                    <img src="${employer.logoUrl}" alt="Logo ${employer.companyName}"
+                                    <img src="${pageContext.request.contextPath}/uploads/${employer.logoUrl}" alt="Logo ${employer.companyName}"
                                          class="card-img-top p-3" style="height: 120px; object-fit: contain;">
                                 </c:if>
                                     
