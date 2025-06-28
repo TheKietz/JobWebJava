@@ -48,11 +48,11 @@
                             <tr>
                                 <th class="col-3">Tiêu đề</th>  
                                 <th class="col-1">Trạng thái</th>
-                                <th class="col-1">Kiểu công việc</th>
-                                <th class="col-2">Ngày tạo</th>  
+                                <th class="col-1">Loại</th>
+                                <th class="col-1">Ngày tạo</th>  
                                 <th class="col-2">Ngày hết hạn</th>  
                                 <th class="col-1">CVs</th>  
-                                <th class="col-3">Chức năng</th>
+                                <th class="col-4">Chức năng</th>
                             </tr>
                         </thead>
                         <tbody class="table table-bordered bg-white"> 
@@ -79,8 +79,8 @@
                                             <td>${job.expiryDateFormatted}</td> 
                                             <td>${job.candidateNumber}</td> 
                                             <td>
-                                                <a href="${pageContext.request.contextPath}/app/jobs/details/${job.id}" class="btn btn-sm btn-primary">Chi tiết</a>
-                                                <a href="${pageContext.request.contextPath}/app/jobs/delete/${job.id}" class="btn btn-sm btn-danger" onclick="return confirm('Bạn muốn xóa bài đăng này?')">Xóa</a>
+                                                <a href="${pageContext.request.contextPath}/app/applications?keyword=${job.title}&size=" class="btn btn-sm btn-primary">Ứng viên</a>
+                                                <a href="${pageContext.request.contextPath}/app/jobs/delete/${job.id}" class="btn btn-sm btn-danger" onclick="return confirm('Bạn muốn xóa bài đăng này?')">Xóa bài</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
