@@ -12,24 +12,24 @@
         <meta name="author" content=""/>
         <title>JobFinder Admin</title>
         <!-- loader-->
-        <link href="<c:url value='/template/assets/css/pace.min.css'/>" rel="stylesheet"/>
-        <script src="<c:url value='/template/assets/js/pace.min.js'/>"></script>
+        <link href="<c:url value='/template/admin/assets/css/pace.min.css'/>" rel="stylesheet"/>
+        <script src="<c:url value='/template/admin/assets/js/pace.min.js'/>"></script>
         <!--favicon-->
         <link rel="icon" href="<c:url value='assets/images/favicon.ico'/>" type="image/x-icon">
         <!-- Vector CSS -->
-        <link href="<c:url value='/template/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css'/>" rel="stylesheet"/>
+        <link href="<c:url value='/template/admin/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css'/>" rel="stylesheet"/>
         <!-- simplebar CSS-->
-        <link href="<c:url value='/template/assets/plugins/simplebar/css/simplebar.css'/>" rel="stylesheet"/>
+        <link href="<c:url value='/template/admin/assets/plugins/simplebar/css/simplebar.css'/>" rel="stylesheet"/>
         <!-- Bootstrap core CSS-->
-        <link href="<c:url value='/template/assets/css/bootstrap.min.css'/>" rel="stylesheet"/>
+        <link href="<c:url value='/template/admin/assets/css/bootstrap.min.css'/>" rel="stylesheet"/>
         <!-- animate CSS-->
-        <link href="<c:url value='/template/assets/css/animate.css'/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value='/template/admin/assets/css/animate.css'/>" rel="stylesheet" type="text/css"/>
         <!-- Icons CSS-->
-        <link href="<c:url value='/template/assets/css/icons.css'/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value='/template/admin/assets/css/icons.css'/>" rel="stylesheet" type="text/css"/>
         <!-- Sidebar CSS-->
-        <link href="<c:url value='/template/assets/css/sidebar-menu.css'/>" rel="stylesheet"/>
+        <link href="<c:url value='/template/admin/assets/css/sidebar-menu.css'/>" rel="stylesheet"/>
         <!-- Custom Style-->
-        <link href="<c:url value='/template/assets/css/app-style.css'/>" rel="stylesheet"/>
+        <link href="<c:url value='/template/admin/assets/css/app-style.css'/>" rel="stylesheet"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
 
         <script>
@@ -51,10 +51,10 @@
             <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
                 <div class="brand-logo">
                     <a href="${pageContext.request.contextPath}/admin/dashboard">
-                        <img src="<c:url value='/template/assets1/img/logo/logo2_footer.png'/>" alt="Logo" style="height: 40px;">                        
+                        <img src="<c:url value='/template/admin/assets/img/logo/logo2_footer.png'/>" alt="Logo" style="height: 40px;">                        
                     </a>
                 </div>
-                <ul class="sidebar-menu do-nicescrol">                    
+                <ul class="sidebar-menu do-nicescrol" id="adminSidebarNavList">                    
                     <li>
                         <a href="${pageContext.request.contextPath}/admin/dashboard">
                             <i class="zmdi zmdi-view-dashboard"></i> <span>Trang chủ</span>
@@ -119,10 +119,10 @@
                                     <i class="zmdi zmdi-dot-circle-alt"></i> Các gọi đã mua
                                 </a>
                             </li>
-                                                        
+
                         </ul>
                     </li>
-                    
+
                     <li>
                         <a href="#">
                             <i class="zmdi zmdi-assignment-account"></i> <span>Báo cáo thống kê</span>
@@ -166,9 +166,8 @@
                         </li>
                         <li class="nav-item">
                             <form class="search-bar" action="${pageContext.request.contextPath}/admin/users" method="get">
-                                <input type="hidden" name="page" value="1">
-                                <input type="hidden" name="size" value="${pageSize}">
-                                <input type="search" class="form-control" name="keyword" aria-label="Search" placeholder="Search by company name or email" value="${fn:escapeXml(keyword)}">
+
+                                <input type="text" id="sidebarMenuSearchInput" class="form-control" placeholder="Tìm chức năng...">
                                 <a href="javascript:void(0);" onclick="this.closest('form').submit();"><i class="icon-magnifier"></i></a>
                             </form>
                         </li>
@@ -196,7 +195,7 @@
                         <li class="nav-item">
                             <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
                                 <span class="user-profile">
-                                    <img src="${pageContext.request.contextPath}/template/assets1/img/avata.png" class="img-circle" alt="user avatar">
+                                    <img src="${pageContext.request.contextPath}/template/admin/assets/img/avata.png" class="img-circle" alt="user avatar">
                                 </span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
@@ -234,4 +233,17 @@
             <!--End topbar header-->
 
             <div class="clearfix"></div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const input = document.getElementById("sidebarMenuSearchInput");
+                    const items = document.querySelectorAll("#adminSidebarNavList li");
 
+                    input.addEventListener("input", function () {
+                        const keyword = this.value.toLowerCase().trim();
+                        items.forEach(li => {
+                            const text = li.textContent.toLowerCase();
+                            li.style.display = text.includes(keyword) ? "" : "none";
+                        });
+                    });
+                });
+            </script>
