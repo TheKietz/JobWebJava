@@ -25,7 +25,7 @@ public class CommonEnums {
     }
 
     public enum Gender {
-        Male, Female, Other
+        MALE, FEMALE, OTHER
     }
 
     public enum Role {
