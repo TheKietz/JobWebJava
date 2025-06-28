@@ -47,22 +47,21 @@ public class UserService {
         userRepository.update(user);
     }
 
-//    public void updateUserProfile(User user, MultipartFile avatarFile) throws IOException {
-//        if (!avatarFile.isEmpty()) {
-//            String uploadDir = servletContext.getRealPath("/images/avatars/");
-//            String fileName = System.currentTimeMillis() + "_" + avatarFile.getOriginalFilename();
-//            File uploadDirFile = new File(uploadDir);
-//            if (!uploadDirFile.exists()) {
-//                uploadDirFile.mkdirs();
-//            }
-//            File file = new File(uploadDirFile, fileName);
-//            avatarFile.transferTo(file);
-//            user.setAvatarUrl("/images/avatars/" + fileName);
-//        }
-//        userRepository.updateUserProfile(user);
-//        logger.info("Updated profile for user: id={}", user.getId());
-//    }
-    
+    public void updateUserProfile(User user, MultipartFile avatarFile) throws IOException {
+        if (!avatarFile.isEmpty()) {
+            String uploadDir = servletContext.getRealPath("/images/avatars/");
+            String fileName = System.currentTimeMillis() + "_" + avatarFile.getOriginalFilename();
+            File uploadDirFile = new File(uploadDir);
+            if (!uploadDirFile.exists()) {
+                uploadDirFile.mkdirs();
+            }
+            File file = new File(uploadDirFile, fileName);
+            avatarFile.transferTo(file);
+            user.setAvatarUrl("/images/avatars/" + fileName);
+        }
+        userRepository.updateUserProfile(user);
+        logger.info("Updated profile for user: id={}", user.getId());
+    }
     
     public void save(User user) {
         logger.debug("Saving user: email={}", user.getEmail());

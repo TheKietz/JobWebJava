@@ -81,7 +81,7 @@
 
 
 
-            <section class="banner">
+            <section class="banner  w-100">
                 <div class="container">
                     <h1 style="color: #02ba5a">JobFinder- Tiếp lợi thế, nối thành công</h1>
                     <p>Với hệ sinh thái HR Tech, JobFinder luôn đồng hành để bạn thành công trong sự nghiệp</p>
@@ -126,9 +126,13 @@
                                                 </c:when>
                                                 <c:otherwise>Thỏa thuận</c:otherwise>
                                             </c:choose><br/>
-                                            <strong>Loại công việc:</strong> ${job.jobType}
+                                            <strong>Ngành: </strong> ${job.category}<br/>
+                                            <strong>Loại công việc:</strong> ${job.jobType}<br/>
+                                            <strong>Mô tả: </strong> ${job.description}
                                         </p>
-                                        <a href="${pageContext.request.contextPath}/jobs/detail/${job.id}" class="btn btn-primary btn-sm">Xem chi tiết</a>
+                                        <a href="${pageContext.request.contextPath}/jobs/detail/${job.id}" class="btn btn-primary btn-sm">
+                                            Xem chi tiết
+                                        </a>
                                     </div>
                                 </div>
                             </div>

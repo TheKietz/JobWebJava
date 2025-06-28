@@ -30,7 +30,7 @@
     <body>
         <header>
             <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
-                <div class="container-fluid d-flex align-items-center">
+                <div class="container-fluid d-flex align-items-center ms-4 me-4">
                     <!-- Logo trái -->
                     <a class="navbar-brand d-flex align-items-center gap-2" href="<c:url value='/'/>">
                         <img src="<c:url value='/template/client/assets1/img/logo/logo.png'/>" alt="Logo" style="height: 40px;">
@@ -63,10 +63,6 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Tạo CV</a>
-                            </li>
-
-                            <li class="nav-item">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/app/login">Đăng tin tuyển dụng</a>
                             </li>
                         </ul>
@@ -96,12 +92,20 @@
                                             <small>${fn:escapeXml(sessionScope.loggedInUser.email)}</small>
                                         </li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/favorites">Việc làm đã lưu</a></li>
-                                        <li><a class="dropdown-item" href="/applied-jobs">Đã ứng tuyển</a></li>
-                                        <li><a class="dropdown-item" href="/cv-management">CV của tôi</a></li>
+
+                                        <!-- Mục mới: Hồ sơ cá nhân -->
+                                        <li>
+                                            <a class="dropdown-item" href="${pageContext.request.contextPath}/profile">
+                                                <i class="bi bi-person-circle me-1"></i>Hồ sơ cá nhân
+                                            </a>
+                                        </li>
+
+                                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/favorite-jobs">Việc làm đã lưu</a></li>
+                                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/applications">Đã ứng tuyển</a></li>
+                                        <li><a class="dropdown-item" href="#">CV của tôi</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li>
-                                            <form id="logoutForm" action="${pageContext.request.contextPath}/logout" method="get" style="display: none;"></form>
+                                            <form id="logoutForm" action="${pageContext.request.contextPath}/logout" method="post" style="display: none;"></form>
                                             <a href="#" class="dropdown-item text-danger" onclick="document.getElementById('logoutForm').submit(); return false;">
                                                 <i class="bi bi-box-arrow-right me-1"></i>Đăng xuất
                                             </a>
@@ -114,6 +118,5 @@
                 </div>
             </nav>
         </header>
-
     </body>
 </html>

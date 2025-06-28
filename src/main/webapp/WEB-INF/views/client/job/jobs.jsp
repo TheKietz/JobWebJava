@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="row g-4 fruite">
-                     <!-- Bộ lọc đơn giản (nếu cần mở rộng) -->
+                    <!-- Bộ lọc đơn giản (nếu cần mở rộng) -->
                     <div class="col-12 col-md-4">
                         <div class="row g-4">
                             <form method="get" action="<c:url value='/jobs'/>">
@@ -40,16 +40,12 @@
                         <div class="row g-4">
                             <c:forEach var="job" items="${jobs}">
                                 <div class="col-md-6 col-lg-4">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="<c:url value='/template/images/job.png'/>"
-                                                 class="img-fluid w-100 rounded-top" alt="" style="height: 235px;">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                             style="top: 10px; left: 10px;">
+                                    <div class="rounded border border-secondary d-flex flex-column h-100 p-4 position-relative">
+                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
                                             ${job.category}
                                         </div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+
+                                        <div class="pt-5 flex-grow-1">
                                             <h4 style="font-size: 15px;">
                                                 <a href="<c:url value='/jobs/detail/${job.id}'/>">
                                                     ${job.title}
@@ -59,18 +55,18 @@
                                                 Địa điểm: ${job.location} <br/>
                                                 Hình thức: ${job.jobType}
                                             </p>
-                                            <div class="d-flex flex-lg-wrap justify-content-center">
-                                                <p class="text-dark fs-5 fw-bold mb-3"
-                                                   style="font-size: 15px; width: 100%;">
-                                                    <fmt:formatNumber value="${job.salaryMin}" type="currency" currencySymbol="₫"/>
-                                                    -
-                                                    <fmt:formatNumber value="${job.salaryMax}" type="currency" currencySymbol="₫"/>
-                                                </p>
-                                                <a href="<c:url value='/jobs/detail/${job.id}'/>"
-                                                   class="btn mx-auto btn border border-secondary rounded-pill px-3 text-primary">
-                                                    <i class="fa fa-eye me-2 text-primary"></i> Xem chi tiết
-                                                </a>
-                                            </div>
+                                            <p class="text-dark fs-5 fw-bold mb-3" style="font-size: 15px;">
+                                                <fmt:formatNumber value="${job.salaryMin}" type="currency" currencySymbol="₫"/>
+                                                -
+                                                <fmt:formatNumber value="${job.salaryMax}" type="currency" currencySymbol="₫"/>
+                                            </p>
+                                        </div>
+
+                                        <div class="mt-auto">
+                                            <a href="<c:url value='/jobs/detail/${job.id}'/>"
+                                               class="btn btn border border-secondary rounded-pill px-3 text-primary w-100">
+                                                <i class="fa fa-eye me-2 text-primary"></i> Xem chi tiết
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

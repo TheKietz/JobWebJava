@@ -55,14 +55,13 @@ public class LoginEmployerController {
         User user = userService.findByEmail(email);
         boolean pass1=userService.verifyPassword(password, user.getPassword());
         boolean pass2=userService.verifyRawPassword(password, user.getPassword());
-        if(!pass1 && !pass2)
-        {
-           if (user == null) {
+        
+           if (user == null || !pass1) {
             model.addAttribute("error", "Invalid email or password");
             System.out.println("Admin login failed: email=" + email);
             return "app/login";
         }
-        }
+        
 
         // Kiểm tra role
         if (user.getRole() == Role.EMPLOYER) {
@@ -84,7 +83,7 @@ public class LoginEmployerController {
         }
     }
 
-    @GetMapping("/app/logout")
+    @PostMapping("/app/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         System.out.println("Employer logged out.");

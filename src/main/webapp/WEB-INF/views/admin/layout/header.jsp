@@ -218,9 +218,12 @@
                                 <li class="dropdown-divider"></li>
 
                                 <li>
-                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/logout">
-                                        <i class="icon-power mr-2"></i> Logout
-                                    </a>
+                                    <form action="${pageContext.request.contextPath}/admin/logout" method="post" style="display: inline;">
+                                        <button type="submit" class="dropdown-item" style="border: none; background: none;">
+                                            <i class="icon-power mr-2"></i> Logout
+                                        </button>
+                                    </form>
+
                                 </li>
 
 

@@ -36,28 +36,38 @@
                     </div>
 
                     <!-- Danh sách công ty -->
-                    <div class="col-12 col-md-8 text-center">
+                    <div class="col-12 col-md-8">
                         <div class="row g-4">
                             <c:forEach var="employer" items="${employers}">
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
+                                <div class="col-md-6 col-lg-4 d-flex">
+                                    <div class="rounded border border-secondary d-flex flex-column h-100 w-100 position-relative">
 
+                                        <!-- Ảnh logo -->
+                                        <div class="fruite-img">
                                             <c:choose>
                                                 <c:when test="${not empty employer.logoUrl}">
-                                                    <img src="${employer.logoUrl}" class="img-fluid w-100 rounded-top" alt="" style="height: 235px; object-fit: cover;">
+                                                    <img src="${pageContext.request.contextPath}/uploads/${employer.logoUrl}"
+                                                         class="img-fluid w-100 rounded-top"
+                                                         style="height: 200px; object-fit: cover;"
+                                                         alt="${employer.companyName}" />
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <img src="${pageContext.request.contextPath}/template/images/company-placeholder.png" class="img-fluid w-100 rounded-top" alt="" style="height: 235px; object-fit: cover;">
+                                                    <img src="${pageContext.request.contextPath}/template/images/company-placeholder.png"
+                                                         class="img-fluid w-100 rounded-top"
+                                                         style="height: 200px; object-fit: cover;"
+                                                         alt="Placeholder Logo" />
                                                 </c:otherwise>
                                             </c:choose>
-
                                         </div>
+
+                                        <!-- Badge -->
                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
                                              style="top: 10px; left: 10px;">
                                             ${employer.companySize}
                                         </div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+
+                                        <!-- Nội dung -->
+                                        <div class="p-4 flex-grow-1 d-flex flex-column">
                                             <h4 style="font-size: 15px;">
                                                 <a href="<c:url value='/employers/detail/${employer.id}'/>">
                                                     ${employer.companyName}
@@ -67,40 +77,19 @@
                                                 Địa chỉ: ${employer.address}<br/>
                                                 Website: <a href="${employer.website}" target="_blank">${employer.website}</a>
                                             </p>
-                                            <div class="d-flex justify-content-center">
+
+                                            <!-- Nút luôn nằm dưới -->
+                                            <div class="mt-auto text-center">
                                                 <a href="${pageContext.request.contextPath}/employers/detail/${employer.id}"
                                                    class="btn btn-sm border border-secondary rounded-pill px-3 text-primary">
                                                     <i class="fa fa-eye me-2 text-primary"></i> Xem chi tiết
                                                 </a>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </c:forEach>
-
-                            <!-- Pagination -->
-                            <c:choose>
-                                <c:when test="${not empty employers}">
-                                    <div class="d-flex justify-content-center mt-5">
-                                        <ul class="pagination">
-                                            <li class="page-item ${page == 1 ? 'disabled' : ''}">
-                                                <a class="page-link" href="?page=${page - 1}">&laquo;</a>
-                                            </li>
-                                            <c:forEach var="i" begin="1" end="${totalPages}">
-                                                <li class="page-item ${page == i ? 'active' : ''}">
-                                                    <a class="page-link" href="?page=${i}">${i}</a>
-                                                </li>
-                                            </c:forEach>
-                                            <li class="page-item ${page == totalPages ? 'disabled' : ''}">
-                                                <a class="page-link" href="?page=${page + 1}">&raquo;</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </c:when>
-                                <c:otherwise>
-                                    <div>Không tìm thấy công ty nào phù hợp.</div>
-                                </c:otherwise>
-                            </c:choose>
                         </div>
                     </div>
                 </div>

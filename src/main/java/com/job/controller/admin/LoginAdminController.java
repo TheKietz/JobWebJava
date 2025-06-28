@@ -66,7 +66,7 @@ public class LoginAdminController {
         return "redirect:/admin/dashboard";
     }
 
-    @GetMapping("/admin/logout")
+    @PostMapping("/admin/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         System.out.println("Admin logged out.");
