@@ -169,7 +169,7 @@
                     </a>
                 </div>
                 <div class="sidebar-wrapper">
-                    <ul class="nav">
+                    <ul class="nav" id="sidebarNavList">
                         <li class="">
                             <a class="bold-link" href="${pageContext.request.contextPath}/app/dashboard">
                                 <i class="nc-icon nc-bank icon-bold"></i>
@@ -262,7 +262,7 @@
                         <div class="collapse navbar-collapse justify-content-end" id="navigation">
                             <form>
                                 <div class="input-group no-border">
-                                    <input type="text" value="" class="form-control" placeholder="Search...">
+                                    <input type="text" id="sidebarSearchInput" value=""  class="form-control" placeholder="Search...">
                                     <div class="input-group-append">
                                         <div class="input-group-text">
                                             <i class="nc-icon nc-zoom-split"></i>
@@ -333,3 +333,41 @@
                         });
                     });
                 </script>
+                <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const sidebarSearchInput = document.getElementById("sidebarSearchInput");
+                const sidebarNavList = document.getElementById("sidebarNavList");
+
+                if (sidebarSearchInput && sidebarNavList) { // Đảm bảo các phần tử tồn tại
+                    const navListItems = sidebarNavList.querySelectorAll("li"); // Lấy tất cả các thẻ <li> trong danh sách nav
+
+                    sidebarSearchInput.addEventListener("input", function () {
+                        const searchTerm = sidebarSearchInput.value.toLowerCase().trim(); // Lấy từ khóa tìm kiếm, chuyển về chữ thường và bỏ khoảng trắng đầu cuối
+
+                        navListItems.forEach(item => {
+                            // Lấy thẻ <p> chứa văn bản trong mỗi mục sidebar
+                            const pElement = item.querySelector("a.bold-link p");
+                            const hrElement = item.nextElementSibling; // Lấy thẻ <hr> liền kề (nếu có)
+
+                            if (pElement) {
+                                const itemText = pElement.textContent.toLowerCase(); // Lấy văn bản của mục, chuyển về chữ thường
+
+                                if (itemText.includes(searchTerm)) {
+                                    // Nếu văn bản của mục chứa từ khóa tìm kiếm, hiển thị mục đó
+                                    item.style.display = ""; // Đặt lại về giá trị display mặc định (ví dụ: "list-item" hoặc "block")
+                                    if (hrElement && hrElement.tagName === 'HR') { // Nếu có thẻ <hr> liền kề, hiển thị nó
+                                        hrElement.style.display = "";
+                                    }
+                                } else {
+                                    // Nếu không khớp, ẩn mục đó
+                                    item.style.display = "none";
+                                    if (hrElement && hrElement.tagName === 'HR') { // Ẩn luôn thẻ <hr> liền kề
+                                        hrElement.style.display = "none";
+                                    }
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+        </script>
