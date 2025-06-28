@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class HomeController {
     @Autowired
     private JobService jobService;
+    
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public ModelAndView homePage() {
         List<Job> jobs = jobService.findAll();
