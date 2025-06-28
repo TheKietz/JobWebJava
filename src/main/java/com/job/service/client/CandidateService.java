@@ -1,6 +1,7 @@
 
 package com.job.service.client;
 
+import com.job.dto.RecommentCandidateDTO;
 import com.job.enums.CommonEnums.Role;
 import com.job.model.Candidate;
 import com.job.model.User;
@@ -30,6 +31,10 @@ public class CandidateService {
 
     public Candidate findByUserID(Integer userID) {
         return candidateRepository.findByUserID(userID);
+    }
+    
+    public List<RecommentCandidateDTO> findRecommentCandidateForEmp(Integer userID){
+        return candidateRepository.findRecommentCandidateForEmp(userID);
     }
 
     public void add(Candidate candidate) {
