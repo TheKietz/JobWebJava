@@ -64,10 +64,10 @@
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${empty application.avatarUrl}">                                                   
-                                                        <img src="${pageContext.request.contextPath}/template/app/assets/img/default_avatar.png" style="width:40px; height:40px" alt="Ảnh đại diện"/>
+                                                        <img src="${pageContext.request.contextPath}/template/app/assets/img/default_avatar.png" style="width:100px; height:100px" alt="Ảnh đại diện"/>
                                                     </c:when>
                                                     <c:otherwise> 
-                                                        <img src="${pageContext.request.contextPath}${application.avatarUrl}" style="width:40px; height:40px" alt="Ảnh đại diện"/>
+                                                        <img src="${pageContext.request.contextPath}${application.avatarUrl}" style="width:100px; height:100px" alt="Ảnh đại diện"/>
                                                     </c:otherwise>    
                                                 </c:choose>
                                             </td> 
