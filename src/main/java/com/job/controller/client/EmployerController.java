@@ -1,6 +1,10 @@
 package com.job.controller.client;
 
+import com.job.enums.CommonEnums;
+import com.job.model.Candidate;
 import com.job.model.Employer;
+import com.job.model.User;
+import com.job.service.client.CandidateService;
 import com.job.service.client.EmployerService;
 import com.job.service.client.FavoriteEmployerService;
 import jakarta.servlet.http.HttpSession;
@@ -16,6 +20,9 @@ public class EmployerController {
 
     @Autowired
     private EmployerService employerService;
+    @Autowired
+    private CandidateService candidateService;
+
     @Autowired
     private FavoriteEmployerService favoriteEmployerService;
 
@@ -50,10 +57,14 @@ public class EmployerController {
             return new ModelAndView("redirect:/");
         }
 
-        Integer candidateId = (Integer) session.getAttribute("currentCandidateId");
         boolean isFavorite = false;
-        if (candidateId != null) {
-            isFavorite = favoriteEmployerService.isFavorited(candidateId, id);
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+        if (loggedInUser != null && loggedInUser.getRole().equals(CommonEnums.Role.CANDIDATE)) {
+            Candidate candidate = candidateService.findByUserID(loggedInUser.getId());
+            if (candidate != null) {
+               isFavorite = favoriteEmployerService.isFavorited(candidate.getId(), id);
+            }
         }
 
         ModelAndView mav = new ModelAndView("client/layout/main");

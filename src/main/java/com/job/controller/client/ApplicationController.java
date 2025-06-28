@@ -1,9 +1,13 @@
 package com.job.controller.client;
 
+import com.job.enums.CommonEnums;
 import com.job.enums.CommonEnums.ApplicationStatus;
 import com.job.model.Application;
+import com.job.model.Candidate;
 import com.job.model.Job;
+import com.job.model.User;
 import com.job.service.client.ApplicationService;
+import com.job.service.client.CandidateService;
 import com.job.service.client.JobService;
 import com.job.service.storage.FileStorageService;
 import jakarta.servlet.http.HttpSession;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -31,15 +36,22 @@ public class ApplicationController {
     private JobService jobService;
     @Autowired
     private FileStorageService fileStorageService;
+    @Autowired
+    private CandidateService candidateService;
 
     @GetMapping
     public String viewMyApplications(Model model, HttpSession session) {
-        Integer candidateId = (Integer) session.getAttribute("currentCandidateId");
-        if (candidateId == null) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || !loggedInUser.getRole().equals(CommonEnums.Role.CANDIDATE)) {
             return "redirect:/login";
         }
 
-        List<Application> applications = applicationService.findByCandidateId(candidateId);
+        Candidate candidate = candidateService.findByUserID(loggedInUser.getId());
+        if (candidate == null) {
+            return "redirect:/login";
+        }
+
+        List<Application> applications = applicationService.findByCandidateId(candidate.getId());
         model.addAttribute("applications", applications);
         model.addAttribute("body", path + "applications.jsp");
         return "client/layout/main";
@@ -47,14 +59,18 @@ public class ApplicationController {
 
     // GET: Hiển thị form ứng tuyển
     @GetMapping("/apply")
-    public String showApplyForm(@RequestParam("jobId") Integer jobId, Model model, HttpSession session) {
-        Integer candidateId = (Integer) session.getAttribute("currentCandidateId");
-        if (candidateId == null) {
-            return "redirect:/login"; 
+     public String showApplyForm(@RequestParam("jobId") Integer jobId, Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || !loggedInUser.getRole().equals(CommonEnums.Role.CANDIDATE)) {
+            return "redirect:/login";
+        }
+
+        Candidate candidate = candidateService.findByUserID(loggedInUser.getId());
+        if (candidate == null) {
+            return "redirect:/login";
         }
 
         Job job = jobService.findByID(jobId);
-
         if (job == null) {
             model.addAttribute("error", "Không tìm thấy công việc.");
             return "redirect:/client/job/jobs";
@@ -73,10 +89,17 @@ public class ApplicationController {
             HttpSession session,
             RedirectAttributes redirectAttributes) {
 
-        Integer candidateId = (Integer) session.getAttribute("currentCandidateId");
-        if (candidateId == null) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || !loggedInUser.getRole().equals(CommonEnums.Role.CANDIDATE)) {
             return "redirect:/login";
         }
+
+        Candidate candidate = candidateService.findByUserID(loggedInUser.getId());
+        if (candidate == null) {
+            return "redirect:/login";
+        }
+
+        Integer candidateId = candidate.getId();
 
         // Kiểm tra nếu đã ứng tuyển rồi
         if (applicationService.hasApplied(candidateId, jobId)) {
@@ -85,7 +108,6 @@ public class ApplicationController {
             return "redirect:/applications/apply";
         }
 
-        // Kiểm tra định dạng file
         if (resumeFile.isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "Vui lòng chọn tệp CV để tải lên.");
             redirectAttributes.addAttribute("jobId", jobId);
@@ -112,5 +134,4 @@ public class ApplicationController {
         redirectAttributes.addAttribute("jobId", jobId);
         return "redirect:/applications/apply";
     }
-
 }
