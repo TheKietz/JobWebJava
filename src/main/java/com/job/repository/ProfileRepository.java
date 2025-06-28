@@ -45,4 +45,17 @@ public class ProfileRepository {
             return profile;
         });
     }
+
+    public void updateCandidate(CandidateProfileDTO profile) {
+        String sqlUser = "UPDATE users SET full_name = ?, phone = ? WHERE id = ?";
+        jdbcTemplate.update(sqlUser, profile.getFullName(), profile.getPhone(), profile.getUserId());
+
+        String sqlCandidate = "UPDATE candidates SET skills = ?, location = ?, experience_level = ? WHERE user_id = ?";
+        jdbcTemplate.update(sqlCandidate, profile.getSkills(), profile.getLocation(), profile.getExperienceLevel(), profile.getUserId());
+    }
+
+    public int deactivateUserById(int userId) {
+        String sql = "UPDATE users SET status = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, "UNACTIVE", userId);
+    }
 }

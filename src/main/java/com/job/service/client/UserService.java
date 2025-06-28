@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-    @Autowired 
+    @Autowired
     private ServletContext servletContext;
     @Autowired
     private UserRepository userRepository;
@@ -61,14 +61,14 @@ public class UserService {
         userRepository.updateUserProfile(user);
         logger.info("Updated profile for user: id={}", user.getId());
     }
-    
+
     @Transactional
     public void save(User user) {
         logger.debug("Saving user: email={}", user.getEmail());
         userRepository.save(user);
         logger.info("User saved: id={}, email={}", user.getId(), user.getEmail());
     }
-    
+
     public void deleteByID(Integer id) {
         userRepository.deleteById(id);
     }

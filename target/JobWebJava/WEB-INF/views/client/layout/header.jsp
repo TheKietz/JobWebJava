@@ -30,7 +30,7 @@
     <body>
         <header>
             <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
-                <div class="container-fluid d-flex align-items-center">
+                <div class="container-fluid d-flex align-items-center ms-4 me-4">
                     <!-- Logo trái -->
                     <a class="navbar-brand d-flex align-items-center gap-2" href="<c:url value='/'/>">
                         <img src="<c:url value='/template/client/assets1/img/logo/logo.png'/>" alt="Logo" style="height: 40px;">
