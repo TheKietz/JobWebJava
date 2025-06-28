@@ -1,5 +1,6 @@
 package com.job.repository;
 
+import com.job.dto.RecommentCandidateDTO;
 import com.job.model.Candidate;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -60,6 +61,44 @@ public class CandidateRepository {
             System.err.println("Error finding candidate by userID: " + userID + ", " + e.getMessage());
             return null;
         }
+    }
+
+    public List<RecommentCandidateDTO> findRecommentCandidateForEmp(int employerUserId) {
+        String sql = """
+                    SELECT DISTINCT c.id,
+                           u.avatar_url, 
+                           u.full_name, 
+                           j.category,
+                           c.resume_url,
+                           c.location,
+                           c.experience_level,
+                           c.skills
+                    FROM candidates c
+                    JOIN jobs j ON j.employer_id = 13
+                    LEFT JOIN invited_candidates ic 
+                        ON ic.employer_id = j.employer_id AND ic.candidate_id = c.id
+                    JOIN users u ON u.id = c.user_id
+                    WHERE j.status = 'APPROVED'
+                      AND ic.id IS NULL
+                      AND (
+                          c.location = j.location 
+                          OR c.experience_level = j.job_type 
+                          OR c.skills LIKE CONCAT('%', j.category, '%')
+                      )
+                    LIMIT 20;                    
+                    """;
+        return jdbcTemplate.query(sql, new Object[]{employerUserId}, (rs, rowNum)
+                -> new RecommentCandidateDTO(
+                        rs.getInt("id"),
+                        rs.getString("avatar_url"),
+                        rs.getString("full_name"),
+                        rs.getString("category"),
+                        rs.getString("resume_url"),
+                        rs.getString("location"),
+                        rs.getString("experience_level"),
+                        rs.getString("skills")
+                )
+        );
     }
 
     public void add(Candidate candidate) {
