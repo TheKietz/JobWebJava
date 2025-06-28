@@ -43,10 +43,10 @@ com/job/controller/client/CVController.class
 com/job/controller/admin/CandidateAdminController.class
 com/job/model/User$1.class
 com/job/service/client/ApplicationService.class
-com/job/controller/app/ProfileController.class
 com/job/config/SecurityConfig.class
 com/job/service/client/FavoriteEmployerService.class
 com/job/model/LoginForm.class
+com/job/dto/CandidateProfileDTO.class
 com/job/enums/CommonEnums$BannerPosition.class
 com/job/model/RecentSearch.class
 com/job/filter/CsrfFilter.class
@@ -55,10 +55,12 @@ com/job/model/CV.class
 com/job/repository/BannerRepository.class
 com/job/model/Job.class
 com/job/controller/app/DashboardController.class
+com/job/repository/ProfileRepository.class
 com/job/controller/app/AccountSettingsController.class
 com/job/model/Message.class
 com/job/service/client/EmployerService.class
 com/job/controller/admin/DashboardAdminController.class
+com/job/controller/app/EmployerProfileController.class
 com/job/service/storage/FileStorageService.class
 com/job/model/SystemSetting.class
 com/job/dto/EmployerRegisterDTO.class
@@ -70,6 +72,7 @@ com/job/service/ApplicationAdminService.class
 com/job/enums/CommonEnums$FeedbackStatus.class
 com/job/controller/admin/JobAdminController$2.class
 com/job/repository/EmployerRepository.class
+com/job/controller/client/CandidateProfileController.class
 com/job/controller/client/FavoriteEmployerController.class
 com/job/enums/CommonEnums$Role.class
 com/job/service/FeedbackAdminService.class
@@ -90,12 +93,14 @@ com/job/model/FavoriteJob.class
 com/job/model/JobRecommendation.class
 com/job/controller/app/RegisterEmployerController.class
 com/job/repository/UserRepository.class
+com/job/service/client/CandidateProfile.class
 com/job/repository/CandidateRepository.class
 com/job/controller/app/SupportController.class
 com/job/repository/TransactionRepository.class
 com/job/controller/client/HomeController.class
 com/job/controller/client/RegisterController.class
 com/job/repository/CVRepository$1.class
+com/job/service/client/ProfileService.class
 com/job/controller/admin/EmployerAdminController.class
 com/job/repository/ServicePackageRepository.class
 com/job/service/TransactionService.class

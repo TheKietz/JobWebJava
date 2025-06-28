@@ -4,7 +4,10 @@
 <!-- Header -->
 <jsp:include page="/WEB-INF/views/client/layout/header.jsp" />
 
-<jsp:include page="${body}" flush="true" />
+
+<div class="container mt-4">
+    <jsp:include page="${body}" flush="true" />
+</div>
 
 <jsp:include page="/WEB-INF/views/client/layout/footer.jsp" />
 

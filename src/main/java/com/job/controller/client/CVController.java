@@ -20,7 +20,9 @@ public class CVController {
     @GetMapping
     public ModelAndView list(HttpSession session) {
         Integer candidateId = (Integer) session.getAttribute("currentCandidateId");
-        if (candidateId == null) return new ModelAndView("redirect:/login");
+        if (candidateId == null) {
+            return new ModelAndView("redirect:/login");
+        }
 
         List<CV> cvs = cvService.getByCandidateId(candidateId);
         ModelAndView mav = new ModelAndView("client/layout/main");
@@ -29,19 +31,24 @@ public class CVController {
         return mav;
     }
 
-    @PostMapping("/create")
-    public String create(@ModelAttribute CV cv, HttpSession session) {
-        Integer candidateId = (Integer) session.getAttribute("currentCandidateId");
-        if (candidateId != null) {
-            cv.setCandidateId(candidateId);
-            cvService.create(cv);
-        }
-        return "redirect:/cv";
-    }
-
-    @PostMapping("/delete/{id}")
-    public String delete(@PathVariable int id) {
-        cvService.delete(id);
-        return "redirect:/cv";
-    }
+//    @PostMapping("/create")
+//    public String create(@ModelAttribute CV cv, HttpSession session) {
+//        Integer candidateId = (Integer) session.getAttribute("currentCandidateId");
+//        if (candidateId != null) {
+//            cv.setCandidateId(candidateId);
+//
+//            // Gọi hàm sinh file Word
+//            String fileUrl = cvService.generateDocx(cv);
+//            cv.setFileUrl(fileUrl);
+//
+//            cvService.create(cv);
+//        }
+//        return "redirect:/cv";
+//    }
+//
+//    @PostMapping("/delete/{id}")
+//    public String delete(@PathVariable int id) {
+//        cvService.delete(id);
+//        return "redirect:/cv";
+//    }
 }

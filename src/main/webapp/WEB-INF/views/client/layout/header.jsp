@@ -63,10 +63,6 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Tạo CV</a>
-                            </li>
-
-                            <li class="nav-item">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/app/login">Đăng tin tuyển dụng</a>
                             </li>
                         </ul>
@@ -96,6 +92,14 @@
                                             <small>${fn:escapeXml(sessionScope.loggedInUser.email)}</small>
                                         </li>
                                         <li><hr class="dropdown-divider"></li>
+
+                                        <!-- Mục mới: Hồ sơ cá nhân -->
+                                        <li>
+                                            <a class="dropdown-item" href="${pageContext.request.contextPath}/profile">
+                                                <i class="bi bi-person-circle me-1"></i>Hồ sơ cá nhân
+                                            </a>
+                                        </li>
+
                                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/favorites">Việc làm đã lưu</a></li>
                                         <li><a class="dropdown-item" href="/applied-jobs">Đã ứng tuyển</a></li>
                                         <li><a class="dropdown-item" href="/cv-management">CV của tôi</a></li>
@@ -114,7 +118,6 @@
                 </div>
             </nav>
         </header>
-
     </body>
 </html>
 

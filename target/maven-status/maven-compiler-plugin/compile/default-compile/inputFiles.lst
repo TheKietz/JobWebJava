@@ -5,6 +5,7 @@
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/model/RecentSearch.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/model/Candidate.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/controller/client/CVController.java
+/Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/service/client/ProfileService.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/model/JobRecommendation.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/repository/EmployerRepository.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/repository/ServicePackageRepository.java
@@ -24,6 +25,7 @@
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/dto/EmployerLoginDTO.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/config/WebConfig.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/model/Job.java
+/Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/dto/CandidateProfileDTO.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/controller/client/ApplicationController.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/service/EmployerAdminService.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/repository/FavoriteJobRepository.java
@@ -38,13 +40,16 @@
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/config/JacksonConfig.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/controller/admin/ApplicationAdminController.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/model/Notification.java
+/Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/controller/client/CandidateProfileController.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/repository/UserRepository.java
+/Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/service/client/CandidateProfile.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/repository/ApplicationRepository.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/dto/EmployerRegisterDTO.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/model/Feedback.java
-/Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/controller/app/ProfileController.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/service/UserAdminService.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/service/TransactionService.java
+/Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/controller/app/EmployerProfileController.java
+/Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/repository/ProfileRepository.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/controller/app/RegisterEmployerController.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/model/Application.java
 /Users/truonghonhatminh/NetBeansProjects/JobWebJava/src/main/java/com/job/model/FavoriteEmployer.java
