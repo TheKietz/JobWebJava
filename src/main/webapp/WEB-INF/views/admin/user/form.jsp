@@ -72,7 +72,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="roleDisplay" class="form-label">Vai trò</label>
-                                <input type="text" class="form-control" id="roleDisplay" value="${user.role != null ? user.role.name() : 'ADMIN'}" disabled="true"/>
+                                <form:input type="text" class="form-control" id="roleDisplay" value="${user.role != null ? user.role.name() : 'ADMIN'}" disabled="true"/>
                                 <form:errors path="role" cssClass="text-danger small"/>
                             </div>
                             <div class="mb-3">
