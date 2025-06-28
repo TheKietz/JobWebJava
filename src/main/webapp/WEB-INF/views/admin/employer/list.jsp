@@ -44,26 +44,28 @@
                     <table class="table table-bordered" style="min-width: 1200px;" >
                         <thead>
                             <tr>
-                                <th>ID</th>                                
+                                <th>#</th>     
+                                <th>Logo</th>
                                 <th>Company Name</th>
                                 <th>Company Size</th>
                                 <th>Address</th>
                                 <th>Website</th>
-                                <th>Logo</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="employer" items="${employers}">
+                            <c:forEach var="employer" items="${employers}" varStatus="loop">
+                                
                                 <tr>
-                                    <td>${employer.id}</td>                                    
+                                    <td>${loop.count}</td>
+                                    <td>
+                                        <img src="${pageContext.request.contextPath}/uploads/${employer.logoUrl}" style="width:50px; height:50px" alt="Logo"/>                                        
+                                    </td>                                    
                                     <td>${fn:escapeXml(employer.companyName)}</td>
                                     <td>${employer.companySize}</td>
                                     <td>${fn:escapeXml(employer.address)}</td>
                                     <td>${employer.website}</td>
-                                    <td>
-                                        <img src="${pageContext.request.contextPath}/uploads/${employer.logoUrl}" width="100" alt="alt"/>                                        
-                                    </td>
+
                                     <td>
                                         <a href="${pageContext.request.contextPath}/admin/employers/edit/${employer.id}?size=${pageSize}&keyword=${fn:escapeXml(keyword)}" class="btn btn-sm btn-primary">Edit</a>
                                         <a href="${pageContext.request.contextPath}/admin/employers/delete/${employer.id}?size=${pageSize}&keyword=${fn:escapeXml(keyword)}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this employer?')">Delete</a>
