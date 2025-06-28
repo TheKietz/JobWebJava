@@ -19,14 +19,12 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-3 text-end">
-                <a href="${pageContext.request.contextPath}/app/applications/add?size=${pageSize}&keyword=${fn:escapeXml(keyword)}" class="btn btn-success">Đăng tin</a>
-            </div>
+
             <div class="col-md-3 text-right">
                 <div >                    
                     <form action="${pageContext.request.contextPath}/app/applications" method="get" class="form-inline d-inline">
                         <div class="form-group mr-2 mb-0 d-flex align-items-center">
-                            <label class="mr-2">Jobs per page:</label>
+                            <label class="mr-2">Size mỗi trang:</label>
                             <select name="size" class="form-control form-control-sm" onchange="this.form.submit()">
                                 <option value="5" ${pageSize == 5 ? 'selected' : ''}>5</option>
                                 <option value="10" ${pageSize == 10 ? 'selected' : ''}>10</option>
@@ -41,12 +39,12 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Danh sách bài tuyển dụng</h5>
+                <h5 class="card-title">Danh sách ứng viên</h5>
                 <div class="table-responsive">
-                    <table class="table table-bordered bg-contrast">
+                    <table class="table table-hover bg-contrast">
                         <thead class="table-light thead-success">
                             <tr>
-                                <th class="col-1">Ảnh đại diện</th>
+                                <th class="col-1"></th>
                                 <th class="col-2">Họ & tên</th>  
                                 <th class="col-6">Tiêu đề</th>
                                 <th class="col-1">Link CV</th>   
@@ -64,7 +62,14 @@
                                     <c:forEach var="application" items="${applications}">
                                         <tr>
                                             <td>
-                                                <img src="${pageContext.request.contextPath}${application.avatarUrl}" style="width:40 height:40"/>
+                                                <c:choose>
+                                                    <c:when test="${empty application.avatarUrl}">                                                   
+                                                        <img src="${pageContext.request.contextPath}/template/app/assets/img/default_avatar.png" style="width:40px; height:40px" alt="Ảnh đại diện"/>
+                                                    </c:when>
+                                                    <c:otherwise> 
+                                                        <img src="${pageContext.request.contextPath}${application.avatarUrl}" style="width:40px; height:40px" alt="Ảnh đại diện"/>
+                                                    </c:otherwise>    
+                                                </c:choose>
                                             </td> 
                                             <td>
                                                 ${application.fullName}
