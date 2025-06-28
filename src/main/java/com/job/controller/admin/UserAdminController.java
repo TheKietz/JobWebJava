@@ -55,10 +55,10 @@ public class UserAdminController {
                        @RequestParam(value = "page", defaultValue = "1") int page,
                        @RequestParam(value = "size", defaultValue = "5") int size) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-//        if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
-//            System.out.println("Unauthorized access to /admin/users, redirecting to login");
-//            return "redirect:/admin/login";
-//        }
+        if (loggedInUser == null || loggedInUser.getRole() != Role.ADMIN) {
+            System.out.println("Unauthorized access to /admin/users, redirecting to login");
+            return "redirect:/admin/login";
+        }
         
         final String trimmedKeyword = (keyword != null) ? keyword.trim() : null;
         System.out.println(userService.getClass());
