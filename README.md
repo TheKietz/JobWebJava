@@ -24,7 +24,7 @@
 - **Bảo mật & Tiện ích:** BCrypt (mã hóa mật khẩu), SLF4J (Ghi log hệ thống), CSRF Filter.
 
 ## Hướng dẫn cài đặt
-1. Clone repository: `git clone https://github.com/your-username/JobPortal.git`
+1. Clone repository: `git clone https://github.com/thekietz/jobwebjava.git`
 2. Tạo database SQLServer và import file script.
 3. Cập nhật thông tin kết nối Database trong file `dispatcher-servlet.xml` (bean `dataSource`).
 4. Build và deploy project lên Apache Tomcat Server (v10+).
